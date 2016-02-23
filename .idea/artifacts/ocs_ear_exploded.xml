@@ -6,6 +6,9 @@
       <element id="directory" name="ejb.jar">
         <element id="artifact" artifact-name="ocs:ejb exploded" />
       </element>
+      <element id="directory" name="lib">
+        <element id="library" level="project" name="Java EE 6-Java EE 6" />
+      </element>
     </root>
   </artifact>
 </component>
