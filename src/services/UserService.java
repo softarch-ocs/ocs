@@ -18,6 +18,7 @@ public class UserService {
             tx.commit();
         } catch (HibernateException ex) {
             tx.rollback();
+            throw ex;
         }
     }
 

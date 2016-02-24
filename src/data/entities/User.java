@@ -1,9 +1,21 @@
 package data.entities;
 
-import data.entities.JobFeature;
 import java.util.List;
 
 public class User {
+    public static enum Role {
+        USER(0), ADMIN(1);
+        
+        private final int value;
+        Role(int value) {
+            this.value = value;
+        }
+        
+        public int value() {
+            return value;
+        }
+    }
+    
     private int id;
     private String email;
     private String password;

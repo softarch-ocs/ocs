@@ -1,7 +1,6 @@
 package controllers;
 
 import data.entities.User;
-import org.hibernate.service.spi.InjectService;
 import services.UserService;
 
 import javax.faces.bean.ManagedBean;
@@ -20,6 +19,7 @@ public class RegisterUserController {
 
         this.userService = userService;
         user = new User();
+        user.setRole(User.Role.USER.value());
     }
 
     public RegisterUserController() {
