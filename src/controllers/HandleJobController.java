@@ -1,4 +1,6 @@
 package controllers;
+import data.entities.Job;
+
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
@@ -6,7 +8,7 @@ import javax.faces.bean.ViewScoped;
 @ManagedBean
 @ViewScoped
 public class HandleJobController {
-    //private JobEntity entity;
+    private Job entity;
     private Long id;
 
     public Long getId() {
@@ -16,21 +18,18 @@ public class HandleJobController {
     public void initEdit(Long id){
         System.out.println("Init edit");
         this.id = id;
-        //throw new RuntimeException("kljsdasd");
     }
-
-
 
     public boolean isEditing(){
         System.out.println("Is editing");
         return id != null;
     }
 
-
-    /*public JobEntity getEntity() {
+    public Job getEntity() {
         return entity;
-    }*/
+    }
 
-
-
+    public void save(){
+        //TODO: Set logic of saving or updating
+    }
 }

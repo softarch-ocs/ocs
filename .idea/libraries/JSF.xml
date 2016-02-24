@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="JSF" type="jsf">
-    <CLASSES>
-      <root url="jar://$USER_HOME$/glassfish-4.1.1/glassfish/modules/javax.faces.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>
