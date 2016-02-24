@@ -4,6 +4,7 @@
     <facet type="hibernate" name="Hibernate">
       <configuration>
         <datasource-map>
+          <unit-entry name="data:hibernate.cfg.xml" />
           <unit-entry name="data:persistance.xml" value="8c200ba0-4f7c-41a5-bbd7-d19c942f97fb" />
         </datasource-map>
         <naming-strategy-map />
@@ -18,6 +19,7 @@
         <webroots>
           <root url="file://$MODULE_DIR$/web" relative="/" />
         </webroots>
+        <sourceRoots />
       </configuration>
     </facet>
     <facet type="javaeeApplication" name="javaEEApplication">
@@ -46,6 +48,6 @@
     <orderEntry type="library" scope="PROVIDED" name="GlassFish 4.1.1" level="application_server_libraries" />
     <orderEntry type="library" name="Hibernate Validator-5.0.1" level="project" />
     <orderEntry type="library" name="ejb-3.2" level="project" />
-    <orderEntry type="library" name="JSF" level="project" />
+    <orderEntry type="library" name="Java EE 6-Java EE 6 (2)" level="project" />
   </component>
 </module>
