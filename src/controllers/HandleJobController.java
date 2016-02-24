@@ -22,7 +22,7 @@ public class HandleJobController {
         super();
         entity = new Job();
         entity.setName("name placeholder");
-        entity.setSalary(0x7fffff);
+        entity.setSalary(0);
         entity.setDescription("description placeholder");
     }
 
@@ -33,9 +33,13 @@ public class HandleJobController {
     public void initEdit(Long id){
         System.out.println("Init edit");
         this.id = id;
+        entity = new Job();
         entity.setName("name placeholder");
-        entity.setSalary(0x7fffff);
+        entity.setSalary(0);
         entity.setDescription("description placeholder");
+        if(id!=null)
+            this.entity = new JobServices().readJob(Integer.parseInt(""+id));
+        
     }
 
     public boolean isEditing(){
@@ -54,7 +58,9 @@ public class HandleJobController {
 
         JobServices jobServices = new JobServices();
         if(isEditing()){
-            jobServices.updateJob(this.id, entity);
+            System.out.println("edit> "+ entity.getId()+ " " + entity.getName() + " " + entity.getSalary() + " " + entity.getDescription());
+            boolean xd = jobServices.updateJob(entity.getId(), entity.getName(),entity.getDescription(),entity.getSalary());
+            System.out.println("hernan dice "+xd);
         }else{
             jobServices.createJob(entity.getName(), entity.getDescription(), entity.getSalary());
         }
