@@ -1,0 +1,60 @@
+<ui:composition
+        template="../WEB-INF/layout.xhtml"
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <ui:define name="content">
+        #{ handleJobController.initEdit( id ) }
+        <div class="container">
+
+            <div class="starter-template">
+                <form class="form-horizontal">
+                    <fieldset>
+
+                        <!-- Form Name -->
+                        <legend><h:outputText value='#{handleJobController.isEditing() ? "Editing ".concat( handleJobController.getId() )  : "New Job"}'></h:outputText></legend>
+
+                        <!-- Text input-->
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="nameInput">Job Name</label>
+                            <div class="col-md-4">
+                                <input id="nameInput" name="nameInput" type="text" placeholder="name" class="form-control input-md" required=""/>
+
+                            </div>
+                        </div>
+
+                        <!-- Text input-->
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="salaryInput">Salary</label>
+                            <div class="col-md-2">
+                                <input id="salaryInput" name="salaryInput"  pattern= "[0-9]"  type="text" placeholder="salary" class="form-control input-md" required=""/>
+
+                            </div>
+                        </div>
+
+                        <!-- Text input-->
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="descriptionInput">Description</label>
+                            <div class="col-md-5">
+                                <textarea id="descriptionInput" name="descriptionInput" type="text" placeholder="job description..." class="form-control input-md" rows="3"></textarea>
+
+                            </div>
+                        </div>
+
+                        <!-- Button -->
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="acceptButton"></label>
+                            <div class="col-md-4">
+                                <button id="acceptButton" name="acceptButton" class="btn btn-success">Save</button>
+                            </div>
+                        </div>
+
+                    </fieldset>
+                </form>
+            </div>
+        </div><!-- /.container -->
+    </ui:define>
+
+</ui:composition>
