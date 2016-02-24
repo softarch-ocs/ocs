@@ -2,6 +2,7 @@ package services;
 
 import data.dao.HibernateUtil;
 import data.entities.User;
+import java.util.List;
 import java.util.Map;
 import javax.faces.context.FacesContext;
 import org.hibernate.HibernateException;
@@ -80,14 +81,29 @@ public class UserService {
     
     public User getUserById(int id) {
         Session session = sessionFactory.getCurrentSession();
-        return (User)session.get(User.class, id);
+        Transaction tx = session.beginTransaction();
+
+        try {
+            return (User)session.get(User.class, id);
+        } finally {
+            tx.commit();
+        }
     }
     
     private User getUserByEmailAndPassword(String email, String password) {
         Session session = sessionFactory.getCurrentSession();
-        return (User)session.createCriteria(User.class)
+        
+        Transaction tx = session.beginTransaction();
+
+        try {
+            List<User> results = (List<User>)session.createCriteria(User.class)
                 .add(Restrictions.eq("email", email))
                 .add(Restrictions.eq("password", password))
-                .list().get(0);
+                .list();
+            
+            return results.isEmpty() ? null : results.get(0);
+        } finally {
+            tx.commit();
+        }
     }
 }
