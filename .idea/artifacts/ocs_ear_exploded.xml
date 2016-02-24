@@ -10,6 +10,7 @@
         <element id="library" level="project" name="Hibernate 4.2.2-4.2.2" />
         <element id="library" level="project" name="Hibernate Validator-5.0.1" />
         <element id="library" level="project" name="Mojarra-2.2.1" />
+        <element id="library" level="project" name="Java EE 6-Java EE 6" />
       </element>
     </root>
   </artifact>
