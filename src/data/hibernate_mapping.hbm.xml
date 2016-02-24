@@ -17,9 +17,10 @@
         <property name="salary">
             <column name="salary" sql-type="int(11)" not-null="true"/>
         </property>
-        <list name="jobFeatures" inverse="false" cascade="all">
-            <key column="id" not-null="true" />
-            <one-to-many class="JobFeature"/>
+        <list name="jobFeatures" cascade="all">
+            <key column="jobFeaturesId" not-null="true"/>
+            <list-index column="jobFeaturesId"/>
+            <one-to-many class="data.entities.JobFeature"/>
         </list>
     </class>
     <class name="data.entities.JobFeature" table="JobFeature" schema="OCS">
@@ -32,11 +33,6 @@
         <property name="description">
             <column name="description" sql-type="varchar(140)" length="140" not-null="true"/>
         </property>
-    </class>
-    <class name="data.entities.JobRequestedFeaturesEntity" table="JobRequestedFeatures" schema="OCS">
-        <id name="id">
-            <column name="id" sql-type="int(11)"/>
-        </id>
     </class>
     <class name="data.entities.User" table="User" schema="OCS">
         <id name="id">
@@ -66,20 +62,23 @@
         <property name="role">
             <column name="role" sql-type="int(11)" not-null="true"/>
         </property>
-        <list name="jobFeatures" inverse="false" cascade="all">
-            <key column="id" not-null="true" />
-            <one-to-many class="JobFeature"/>
+
+        <list name="jobFeatures" cascade="all">
+            <key column="jobFeaturesId" not-null="true"/>
+            <list-index column="jobFeaturesId"/>
+            <one-to-many class="data.entities.JobFeature"/>
         </list>
-    </class>
-    <class name="data.entities.UserJobFeaturesEntity" table="UserJobFeatures" schema="OCS">
-        <id name="id">
-            <column name="id" sql-type="int(11)"/>
-        </id>
     </class>
     <class name="data.entities.UsersJobs" table="UsersJobs" schema="OCS">
         <id name="id">
             <column name="id" sql-type="int(11)"/>
         </id>
+        <property name="userId">
+            <column name="userId" sql-type="int(11)" not-null="true"/>
+        </property>
+        <property name="jobId">
+            <column name="jobId" sql-type="int(11)" not-null="true"/>
+        </property>
         <property name="startTime">
             <column name="startTime" sql-type="date" not-null="true"/>
         </property>
