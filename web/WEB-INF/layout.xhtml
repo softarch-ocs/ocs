@@ -5,58 +5,65 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
-<h:head>
-    <title>OCS</title>
-    <!-- Bootstrap core CSS -->
-    <h:outputStylesheet library="css" name="bootstrap.min.css"></h:outputStylesheet>
+    <h:head>
+        <title>OCS</title>
+        <!-- Bootstrap core CSS -->
+        <h:outputStylesheet library="css" name="bootstrap.min.css"></h:outputStylesheet>
 
 
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <h:outputStylesheet library="css" name="ie10-viewport-bug-workaround.css"></h:outputStylesheet>
+        <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+        <h:outputStylesheet library="css" name="ie10-viewport-bug-workaround.css"></h:outputStylesheet>
 
 
-    <!-- Custom styles for this template -->
-    <h:outputStylesheet library="css" name="starter-template.css"></h:outputStylesheet>
+        <!-- Custom styles for this template -->
+        <h:outputStylesheet library="css" name="starter-template.css"></h:outputStylesheet>
 
-    <h:outputStylesheet library="css" name="ocs.css"></h:outputStylesheet>
-</h:head>
-<h:body>
+        <h:outputStylesheet library="css" name="ocs.css"></h:outputStylesheet>
+    </h:head>
+    <h:body>
 
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="#">Organizational Coverage System</a>
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#{request.contextPath}/index.xhtml">Organizational Coverage System</a>
+                </div>
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li><a href="#{request.contextPath}/index.xhtml">Home</a></li>
+                        <li><a href="#{request.contextPath}/jobs/showJobs.xhtml">Jobs</a></li>
+                    </ul>
+                    <p class="navbar-text navbar-right">
+                        <c:if test="#{userController.getCurrentUser() != null}">
+                            Signed in as #{userController.getCurrentUser().firstName} 
+                            #{userController.getCurrentUser().lastName}
+                        </c:if>
+                        <c:if test="#{userController.getCurrentUser() == null}">
+                            <a href="#{request.contextPath}/users/login.xhtml" class="navbar-link">Login</a>
+                        </c:if>
+                    </p>
+                </div>
+                
             </div>
-            <p class="navbar-text navbar-right">
-                <c:if test="#{userController.getCurrentUser() != null}">
-                    Signed in as #{userController.getCurrentUser().firstName} 
-                    #{userController.getCurrentUser().lastName}
-                </c:if>
-                <c:if test="#{userController.getCurrentUser() == null}">
-                    <a href="#{request.contextPath}/users/login.xhtml" class="navbar-link">Login</a>
-                </c:if>
-            </p>
+        </nav>
+
+        <div class="container padding">
+            <ui:insert name="content"></ui:insert>
         </div>
-    </nav>
 
-    <div class="container padding">
-        <ui:insert name="content"></ui:insert>
-    </div>
-
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <h:outputScript library="js" name="jquery.min.js"></h:outputScript>
-    <h:outputScript library="js" name="bootstrap.min.js"></h:outputScript>
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <h:outputScript library="js" name="ie10-viewport-bug-workaround.js"></h:outputScript>
+        <!-- Bootstrap core JavaScript
+        ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+        <h:outputScript library="js" name="jquery.min.js"></h:outputScript>
+        <h:outputScript library="js" name="bootstrap.min.js"></h:outputScript>
+        <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+        <h:outputScript library="js" name="ie10-viewport-bug-workaround.js"></h:outputScript>
 
 
-</h:body>
+    </h:body>
 </html>
