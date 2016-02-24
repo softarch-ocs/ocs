@@ -1,7 +1,6 @@
 package controllers;
 import data.dao.HibernateUtil;
 import data.entities.Job;
-import jdk.nashorn.internal.runtime.ListAdapter;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
