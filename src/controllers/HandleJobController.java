@@ -13,7 +13,7 @@ public class HandleJobController {
         return id;
     }
 
-    public void initEdit(Long id ){
+    public void initEdit(Long id){
         System.out.println("Init edit");
         this.id = id;
         //throw new RuntimeException("kljsdasd");
