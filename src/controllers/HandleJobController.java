@@ -10,11 +10,13 @@ import javax.faces.bean.ViewScoped;
 public class HandleJobController {
     private Job entity;
     private Long id;
-    private String lok;
 
     public HandleJobController(){
         super();
         entity = new Job();
+        entity.setName("name placeholder");
+        entity.setSalary(0x7fffff);
+        entity.setDescription("description placeholder");
     }
 
     public Long getId() {
@@ -24,6 +26,9 @@ public class HandleJobController {
     public void initEdit(Long id){
         System.out.println("Init edit");
         this.id = id;
+        entity.setName("name placeholder");
+        entity.setSalary(0x7fffff);
+        entity.setDescription("description placeholder");
     }
 
     public boolean isEditing(){
