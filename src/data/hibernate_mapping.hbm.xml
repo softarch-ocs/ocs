@@ -4,7 +4,7 @@
     "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
 
-    <class name="data.entities.JobEntity" table="Job" schema="OCS">
+    <class name="data.entities.Job" table="Job" schema="OCS">
         <id name="id">
             <column name="id" sql-type="int(11)"/>
         </id>
@@ -17,8 +17,12 @@
         <property name="salary">
             <column name="salary" sql-type="int(11)" not-null="true"/>
         </property>
+        <list name="jobFeatures" inverse="false" cascade="all">
+            <key column="id" not-null="true" />
+            <one-to-many class="JobFeature"/>
+        </list>
     </class>
-    <class name="data.entities.JobFeatureEntity" table="JobFeature" schema="OCS">
+    <class name="data.entities.JobFeature" table="JobFeature" schema="OCS">
         <id name="id">
             <column name="id" sql-type="int(11)"/>
         </id>
@@ -34,7 +38,7 @@
             <column name="id" sql-type="int(11)"/>
         </id>
     </class>
-    <class name="data.entities.UserEntity" table="User" schema="OCS">
+    <class name="data.entities.User" table="User" schema="OCS">
         <id name="id">
             <column name="id" sql-type="int(11)"/>
         </id>
@@ -62,13 +66,17 @@
         <property name="role">
             <column name="role" sql-type="int(11)" not-null="true"/>
         </property>
+        <list name="jobFeatures" inverse="false" cascade="all">
+            <key column="id" not-null="true" />
+            <one-to-many class="JobFeature"/>
+        </list>
     </class>
     <class name="data.entities.UserJobFeaturesEntity" table="UserJobFeatures" schema="OCS">
         <id name="id">
             <column name="id" sql-type="int(11)"/>
         </id>
     </class>
-    <class name="data.entities.UsersJobsEntity" table="UsersJobs" schema="OCS">
+    <class name="data.entities.UsersJobs" table="UsersJobs" schema="OCS">
         <id name="id">
             <column name="id" sql-type="int(11)"/>
         </id>

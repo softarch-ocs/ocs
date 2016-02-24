@@ -1,6 +1,6 @@
 package data.entities;
 
-public class JobFeatureEntity {
+public class JobFeature {
     private int id;
     private String name;
     private String description;
@@ -34,7 +34,7 @@ public class JobFeatureEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        JobFeatureEntity that = (JobFeatureEntity) o;
+        JobFeature that = (JobFeature) o;
 
         if (id != that.id) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;

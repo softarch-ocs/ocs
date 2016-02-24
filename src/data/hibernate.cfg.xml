@@ -6,7 +6,7 @@
   <session-factory>
     <property name="connection.url">jdbc:mysql://localhost:3306/OCS</property>
     <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
-    <mapping resource="data/hibernate_mapping.xml"/>
+    <mapping resource="data/hibernate_mapping.hbm.xml"/>
     <!-- DB schema will be updated if needed -->
     <!-- <property name="hbm2ddl.auto">update</property> -->
   </session-factory>
