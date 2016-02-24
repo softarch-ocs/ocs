@@ -3,10 +3,8 @@ import data.dao.HibernateUtil;
 import data.entities.Job;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
 import org.hibernate.criterion.Restrictions;
-import org.hibernate.mapping.Array;
+import services.jobs.JobServices;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -53,42 +51,12 @@ public class HandleJobController {
     }
 
     public void save(){
-        //TODO: Set logic of saving or updating
-        System.out.println("here");
-        Session session;
-        session = HibernateUtil.getSessionFactory().openSession();
-        List existingJobs = new ArrayList();
-        try {
-            session.beginTransaction();
-            Criteria criteria = session.createCriteria(Job.class)
-                    .add(Restrictions.eq("id", entity.getId()));
-            existingJobs = criteria.list();
-            session.getTransaction().commit();
-        } catch (Exception e) {
-            e.printStackTrace();
+
+        JobServices jobServices = new JobServices();
+        if(isEditing()){
+            jobServices.updateJob(this.id, entity);
+        }else{
+            jobServices.createJob(entity.getName(), entity.getDescription(), entity.getSalary());
         }
-
-        try {
-            session.beginTransaction();
-
-            if(existingJobs.isEmpty()){
-                session.save(entity);
-            }else{
-                Job updatedJob = (Job) existingJobs.get(0);
-                updatedJob.setDescription(entity.getDescription());
-                updatedJob.setJobFeatures(entity.getJobFeatures());
-                updatedJob.setName(entity.getName());
-                updatedJob.setSalary(entity.getSalary());
-                session.update(updatedJob);
-            }
-
-            session.getTransaction().commit();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-
-
-        System.out.println("Is editing");
     }
 }
