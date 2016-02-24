@@ -1,0 +1,61 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        template="../WEB-INF/layout.xhtml">
+    <ui:define name="content">
+        <h1>Register</h1>
+
+        <form class="form-horizontal">
+            <div class="form-group">
+                <label for="inputFirstName" class="col-sm-2 control-label">First name</label>
+                <div class="col-sm-10">
+                    <input type="email" class="form-control" id="inputFirstName" placeholder="First name"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputLastName" class="col-sm-2 control-label">Last name</label>
+                <div class="col-sm-10">
+                    <input type="email" class="form-control" id="inputLastName" placeholder="Last name"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputPersonalId" class="col-sm-2 control-label">Personal ID</label>
+                <div class="col-sm-10">
+                    <input type="email" class="form-control" id="inputPersonalId" placeholder="Personal ID"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputEmail" class="col-sm-2 control-label">Email</label>
+                <div class="col-sm-10">
+                    <input type="email" class="form-control" id="inputEmail" placeholder="Email"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputPassword" class="col-sm-2 control-label">Password</label>
+                <div class="col-sm-10">
+                    <input type="password" class="form-control" id="inputPassword" placeholder="Password"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputAddress" class="col-sm-2 control-label">Address</label>
+                <div class="col-sm-10">
+                    <input type="email" class="form-control" id="inputAddress" placeholder="Email"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputNumber" class="col-sm-2 control-label">Phone number</label>
+                <div class="col-sm-10">
+                    <input type="email" class="form-control" id="inputNumber" placeholder="Phone number"/>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn btn-default">Register</button>
+                </div>
+            </div>
+        </form>
+    </ui:define>
+</ui:composition>
