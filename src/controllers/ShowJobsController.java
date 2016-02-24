@@ -25,7 +25,6 @@ public class ShowJobsController {
         
         JobServices jobServices = new JobServices();
         jobs = jobServices.readAllJobs();
-        System.out.println("kD " + jobs.size());
         
     }
 }

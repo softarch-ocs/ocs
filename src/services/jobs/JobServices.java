@@ -125,8 +125,29 @@ public class JobServices {
 
         return true;
     }
+    
+    public Job readJob( int jobID ){
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction tx = null;
+        Job job = null;
+        try{
+            tx = session.beginTransaction();
+            job = ( Job ) session.get( Job.class, jobID );
+            tx.commit();
 
-    public boolean updateJob( long jobID, Job entity ){
+        }catch ( HibernateException e ) {
+            if ( tx != null ) tx.rollback();
+        }
+
+        session.close();
+
+        return job;
+    }
+    
+    
+    
+    /*public boolean updateJob( long jobID, Job entity ){
+        
 
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction tx = null;
@@ -149,7 +170,7 @@ public class JobServices {
         session.close();
 
         return true;
-    }
+    } */
 
     public boolean deleteJob( int jobID ){
 
