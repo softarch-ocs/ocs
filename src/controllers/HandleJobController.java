@@ -21,9 +21,9 @@ public class HandleJobController {
     public HandleJobController(){
         super();
         entity = new Job();
-        entity.setName("");
-        entity.setSalary(0);
-        entity.setDescription("");
+        entity.setName("name placeholder");
+        entity.setSalary(0x7fffff);
+        entity.setDescription("description placeholder");
     }
 
     public Long getId() {
@@ -33,9 +33,6 @@ public class HandleJobController {
     public void initEdit(Long id){
         System.out.println("Init edit");
         this.id = id;
-        entity.setName("");
-        entity.setSalary(0);
-        entity.setDescription("");
     }
 
     public boolean isEditing(){
