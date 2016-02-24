@@ -10,7 +10,7 @@
         <div class="container">
 
             <div class="starter-template">
-                <form class="form-horizontal">
+                <h:form>
                     <fieldset>
 
                         <!-- Form Name -->
@@ -18,41 +18,67 @@
 
                         <!-- Text input-->
                         <div class="form-group">
-                            <label class="col-md-4 control-label" for="nameInput">Job Name</label>
-                            <div class="col-md-4">
-                                <input id="nameInput" name="nameInput" type="text" placeholder="name" class="form-control input-md" required=""/>
+                            <label  for="nameInput">Job Name</label>
 
-                            </div>
+                                <h:inputText
+                                        id="nameInput"
+                                        name="nameInput"
+                                        type="text"
+                                        placeholder="name"
+                                        value="#{handleJobController.getEntity().name}"
+                                        styleClass ="form-control input-md"
+                                        required="true"
+                                        requiredMessage="Required"/>
+
                         </div>
 
-                        <!-- Text input-->
+                        <!-- Salary input-->
+
                         <div class="form-group">
-                            <label class="col-md-4 control-label" for="salaryInput">Salary</label>
-                            <div class="col-md-2">
-                                <input id="salaryInput" name="salaryInput"  pattern= "[0-9]"  type="text" placeholder="salary" class="form-control input-md" required=""/>
+                            <label for="nameInput">Salary</label>
 
-                            </div>
+                                <h:inputText
+                                        id="salaryInput"
+                                        name="salaryInput"
+                                        type="text"
+                                        pattern="[0-9]+"
+                                        placeholder="salary"
+                                        value="#{handleJobController.getEntity().salary}"
+                                        styleClass ="form-control input-md"
+                                        required="true"
+                                        requiredMessage="Required"/>
+
                         </div>
 
-                        <!-- Text input-->
+                        <!-- Description input-->
+
                         <div class="form-group">
-                            <label class="col-md-4 control-label" for="descriptionInput">Description</label>
-                            <div class="col-md-5">
-                                <textarea id="descriptionInput" name="descriptionInput" type="text" placeholder="job description..." class="form-control input-md" rows="3"></textarea>
+                            <label for="nameInput">Description</label>
 
-                            </div>
+                            <h:inputText
+                                    id="descriptionInput"
+                                    name="descriptionInput"
+                                    type="text"
+                                    placeholder="description"
+                                    value="#{handleJobController.getEntity().description}"
+                                    styleClass ="form-control input-md"
+                                    required="true"
+                                    requiredMessage="Required"/>
+
                         </div>
+
+
 
                         <!-- Button -->
                         <div class="form-group">
                             <label class="col-md-4 control-label" for="acceptButton"></label>
                             <div class="col-md-4">
-                                <button id="acceptButton" name="acceptButton" class="btn btn-success">Save</button>
+                                    <h:commandButton styleClass ="btn btn-success" action="#{handleJobController.save()}" value="Save"/>
                             </div>
                         </div>
 
                     </fieldset>
-                </form>
+                </h:form>
             </div>
         </div><!-- /.container -->
     </ui:define>

@@ -10,6 +10,12 @@ import javax.faces.bean.ViewScoped;
 public class HandleJobController {
     private Job entity;
     private Long id;
+    private String lok;
+
+    public HandleJobController(){
+        super();
+        entity = new Job();
+    }
 
     public Long getId() {
         return id;
@@ -29,7 +35,12 @@ public class HandleJobController {
         return entity;
     }
 
+    public void setEntity(Job entity){
+        this.entity = entity;
+    }
+
     public void save(){
         //TODO: Set logic of saving or updating
+        System.out.println("here");
     }
 }
