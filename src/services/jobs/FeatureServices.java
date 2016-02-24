@@ -46,7 +46,7 @@ public class FeatureServices {
         List<JobFeature> features = null;
         try{
             tx = session.beginTransaction();
-            features = session.createQuery("FROM JobFeature ").list();
+            features = session.createQuery("FROM JobFeature").list();
             tx.commit();
 
         }catch ( HibernateException e ) {

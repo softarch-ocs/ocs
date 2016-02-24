@@ -62,14 +62,13 @@ public class JobServices {
         return jobs;
     }
 
-    //TODO query
     public List<User> readUsersInAJob( int jobID ){
         Session session = factory.openSession();
         Transaction tx = null;
         List<User> jobs = null;
         try{
             tx = session.beginTransaction();
-            jobs = session.createQuery("FROM User").list();
+            jobs = session.createQuery("SELECT User FROM UsersJobs UJ INNER JOIN User WHERE UJ.jobId = :jobID").list();
             tx.commit();
 
         }catch ( HibernateException e ) {
@@ -81,14 +80,16 @@ public class JobServices {
         return jobs;
     }
 
-    //TODO query
     public List<JobFeature> readJobFeatures( int jobID ){
         Session session = factory.openSession();
         Transaction tx = null;
         List<JobFeature> features = null;
         try{
             tx = session.beginTransaction();
-            features = session.createQuery("FROM JobFeature").list();
+            Job job = (Job) session.get( Job.class, jobID );
+            if( job != null ){
+                features = job.getJobFeatures();
+            }
             tx.commit();
 
         }catch ( HibernateException e ) {
