@@ -30,7 +30,15 @@ public class LoginController {
             throw new IllegalArgumentException("loginBean");
         }
         
-        userService.login(loginBean.getEmail(), loginBean.getPassword());
+        
+        if( userService.login(loginBean.getEmail(), loginBean.getPassword()) ){
+            return "/index.xhtml";
+        }
         return "success";
+    }
+    
+    public String logout(){
+        userService.logout();
+        return "/index.xhtml";
     }
 }

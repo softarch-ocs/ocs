@@ -42,8 +42,14 @@
                         <c:if test="#{userController.getCurrentUser() != null}">
                             Signed in as #{userController.getCurrentUser().firstName} 
                             #{userController.getCurrentUser().lastName}
+                            <h:form class="navbar-form navbar-right" >
+                                <h:commandButton  class="btn btn-default" value="Logout" action="#{loginController.logout()}" ></h:commandButton>
+                            </h:form>
+                            
                         </c:if>
+                        
                         <c:if test="#{userController.getCurrentUser() == null}">
+                            
                             <a href="#{request.contextPath}/users/login.xhtml" class="navbar-link">Login</a>
                         </c:if>
                     </p>

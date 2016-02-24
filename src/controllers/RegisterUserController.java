@@ -32,6 +32,6 @@ public class RegisterUserController {
 
     public String register() {
         userService.registerNewUser(user);
-        return "success";
+        return "/users/login.xhtml";
     }
 }

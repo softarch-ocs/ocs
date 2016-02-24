@@ -66,6 +66,14 @@ public class UserService {
         sessionMap.put("USER_ID", user.getId());
     }
     
+    public void logout(){
+        Map<String, Object> sessionMap = 
+                FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
+        
+        
+        sessionMap.remove("USER_ID");
+    }
+    
     public User getLoggedInUser() {
         Map<String, Object> sessionMap = 
                 FacesContext.getCurrentInstance().getExternalContext().getSessionMap();

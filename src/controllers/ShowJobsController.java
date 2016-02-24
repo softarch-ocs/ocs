@@ -26,10 +26,6 @@ public class ShowJobsController {
         JobServices jobServices = new JobServices();
         jobs = jobServices.readAllJobs();
         System.out.println("kD " + jobs.size());
-        Job xd = new Job();
-        xd.setName("SDLKJSKJADL");
-        xd.setDescription("KSDJSLDKJSKLDJS");
-        xd.setSalary(23);
-        jobs.add(xd);
+        
     }
 }
