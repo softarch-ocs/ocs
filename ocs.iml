@@ -4,10 +4,10 @@
     <facet type="hibernate" name="Hibernate">
       <configuration>
         <datasource-map>
-          <unit-entry name="hibernate.cfg.xml" />
+          <unit-entry name="data:persistance.xml" value="8c200ba0-4f7c-41a5-bbd7-d19c942f97fb" />
         </datasource-map>
         <naming-strategy-map />
-        <deploymentDescriptor name="hibernate.cfg.xml" url="file://$MODULE_DIR$/src/hibernate.cfg.xml" />
+        <deploymentDescriptor name="hibernate.cfg.xml" url="file://$MODULE_DIR$/src/data/hibernate.cfg.xml" />
       </configuration>
     </facet>
     <facet type="web" name="Web">
@@ -29,9 +29,6 @@
     </facet>
     <facet type="ejb" name="EJB">
       <configuration>
-        <descriptors>
-          <deploymentDescriptor name="ibm-ejb-jar-ext-pme.xml" url="file://$MODULE_DIR$/META-INF/ibm-ejb-jar-ext-pme.xml" />
-        </descriptors>
         <ejbRoots>
           <root url="file://$MODULE_DIR$/src" />
         </ejbRoots>
@@ -46,9 +43,9 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="Hibernate 4.2.2-4.2.2" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="GlassFish 4.1.1" level="application_server_libraries" />
     <orderEntry type="library" name="Hibernate Validator-5.0.1" level="project" />
     <orderEntry type="library" name="ejb-3.2" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="GlassFish 4.1.0" level="application_server_libraries" />
-    <orderEntry type="library" name="Java EE 6-Java EE 6" level="project" />
+    <orderEntry type="library" name="JSF" level="project" />
   </component>
 </module>
