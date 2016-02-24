@@ -1,0 +1,36 @@
+<ui:composition
+        template="../WEB-INF/layout.xhtml"
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <ui:define name="content">
+
+        <div class="container">
+        <div class="table-responsive">
+            <h2>Current Jobs</h2>
+            <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Salary</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <ui:repeat var="job" value="#{showJobsController.jobs}" varStatus="status">
+                        <tr>
+                            <td><a href='editJob.xhtml?id=${job.id}'>#{job.name}</a> </td>
+                            <td>#{job.salary}</td>
+                            <td>#{job.description}</td>
+                        </tr>
+
+                    </ui:repeat>
+
+                </table>
+        </div>
+
+        </div><!-- /.container -->
+    </ui:define>
+
+</ui:composition>
