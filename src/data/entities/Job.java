@@ -4,17 +4,22 @@ import java.util.List;
 import data.entities.JobFeature;
 
 public class Job {
+
     private int id;
     private String name;
     private String description;
     private Integer salary;
     private List<JobFeature> jobFeatures;
 
+    public Job(List<JobFeature> jobFeatures) {
+        this.jobFeatures = jobFeatures;
+    }
+
     public int getId() {
         return id;
     }
 
-    public void setId(int id) {
+    private void setId(int id) {
         this.id = id;
     }
 
@@ -46,22 +51,29 @@ public class Job {
         return jobFeatures;
     }
 
-    public void setJobFeatures(List<JobFeature> jobFeatures) {
-        this.jobFeatures = jobFeatures;
-    }
-
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Job)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Job)) {
+            return false;
+        }
 
         Job job = (Job) o;
 
-        if (getId() != job.getId()) return false;
-        if (getName() != null ? !getName().equals(job.getName()) : job.getName() != null) return false;
-        if (getDescription() != null ? !getDescription().equals(job.getDescription()) : job.getDescription() != null)
+        if (getId() != job.getId()) {
             return false;
-        if (getSalary() != null ? !getSalary().equals(job.getSalary()) : job.getSalary() != null) return false;
+        }
+        if (getName() != null ? !getName().equals(job.getName()) : job.getName() != null) {
+            return false;
+        }
+        if (getDescription() != null ? !getDescription().equals(job.getDescription()) : job.getDescription() != null) {
+            return false;
+        }
+        if (getSalary() != null ? !getSalary().equals(job.getSalary()) : job.getSalary() != null) {
+            return false;
+        }
         return getJobFeatures() != null ? getJobFeatures().equals(job.getJobFeatures()) : job.getJobFeatures() == null;
 
     }

@@ -27,12 +27,16 @@ public class User {
     private Integer role;
     private List<JobFeature> jobFeatures;
 
+    public User(List<JobFeature> jobFeatures) {
+        this.jobFeatures = jobFeatures;
+    }
+
 
     public int getId() {
         return id;
     }
 
-    public void setId(int id) {
+    private void setId(int id) {
         this.id = id;
     }
 
@@ -102,10 +106,6 @@ public class User {
 
     public List<JobFeature> getJobFeatures() {
         return jobFeatures;
-    }
-
-    public void setJobFeatures(List<JobFeature> jobFeatures) {
-        this.jobFeatures = jobFeatures;
     }
 
     @Override
