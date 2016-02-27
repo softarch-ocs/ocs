@@ -1,7 +1,9 @@
-package services.jobs;
+package services;
 
 import data.dao.HibernateUtil;
+import data.entities.Job;
 import data.entities.JobFeature;
+import data.entities.User;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -36,7 +38,15 @@ public class FeatureServices {
 
         }        
     }
-
+     
+    public List<JobFeature> readFeatures( User user ){
+        return user.getJobFeatures();
+    }
+    
+    public List<JobFeature> readFeatures( Job job ){
+        return job.getJobFeatures();
+    }
+    
     public List<JobFeature> readAllFeatures(){
         Session session = sessionFactory.getCurrentSession();
         Transaction tx = null;
@@ -68,13 +78,56 @@ public class FeatureServices {
         }
     }
 
-    public void deleteFeature( JobFeature feature ){
+    public void addFeature( User user, JobFeature feature ){
+        Session session = sessionFactory.getCurrentSession();
+        Transaction tx = null;
+        try{
+            tx = session.beginTransaction();
+            user.getJobFeatures().add( feature );
+            session.update( user );
+            tx.commit();
+
+        }catch (HibernateException e) {
+            if (tx!=null) tx.rollback();
+        }
+    }
+    
+    public void addFeature( Job job, JobFeature feature ){
+        Session session = sessionFactory.getCurrentSession();
+        Transaction tx = null;
+        try{
+            tx = session.beginTransaction();
+            job.getJobFeatures().add( feature );
+            session.update( job );
+            tx.commit();
+
+        }catch (HibernateException e) {
+            if (tx!=null) tx.rollback();
+        }
+    }
+    
+    public void deleteFeature( User user, JobFeature feature ){
 
         Session session = sessionFactory.getCurrentSession();
         Transaction tx = null;
         try{
             tx = session.beginTransaction();
-            session.delete( feature );
+            user.getJobFeatures().remove( feature );
+            session.update( user );
+            tx.commit();
+        }catch (HibernateException e) {
+            if (tx!=null) tx.rollback();
+        }
+    }
+    
+    public void deleteFeature( Job job, JobFeature feature ){
+
+        Session session = sessionFactory.getCurrentSession();
+        Transaction tx = null;
+        try{
+            tx = session.beginTransaction();
+            job.getJobFeatures().remove( feature );
+            session.update( job );
             tx.commit();
         }catch (HibernateException e) {
             if (tx!=null) tx.rollback();
