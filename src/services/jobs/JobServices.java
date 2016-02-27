@@ -5,83 +5,84 @@ import data.dao.HibernateUtil;
 import data.entities.Job;
 import data.entities.JobFeature;
 import data.entities.User;
+import data.entities.UsersJobs;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
 import java.util.List;
+import org.hibernate.FetchMode;
+import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Restrictions;
 
 
 public class JobServices {
 
-
-    public Integer createJob( String name, String description, int salary ){
-        Session session = HibernateUtil.getSessionFactory().openSession();
+    private SessionFactory sessionFactory;
+    
+    public JobServices( SessionFactory sessionFactory ) {
+        this.sessionFactory = sessionFactory;
+    }
+    
+    public JobServices() {
+        this( HibernateUtil.getSessionFactory() );
+    }
+    
+    
+    public void createJob( Job job ){
+        Session session = sessionFactory.getCurrentSession();
         Transaction tx = null;
-        Integer jobID = null;
+        
         try{
             tx = session.beginTransaction();
-
-            Job job = new Job();
-
-            job.setName(name);
-            job.setDescription(description);
-            job.setSalary( salary );
-
-            jobID = ( Integer ) session.save( job );
-
+            session.save( job );
             tx.commit();
 
-
-        }catch (HibernateException e) {
+        }catch ( HibernateException e ) {
             if (tx!=null) tx.rollback();
-
         }
 
-        session.close();
-        return jobID;
     }
 
-
     public List<Job> readAllJobs(){
-        Session session = HibernateUtil.getSessionFactory().openSession();
+        Session session = sessionFactory.getCurrentSession();
         Transaction tx = null;
         List<Job> jobs = null;
         try{
             tx = session.beginTransaction();
-            jobs = session.createQuery("FROM Job").list();
+            jobs = session.createCriteria( Job.class ).list();
             tx.commit();
-
         }catch ( HibernateException e ) {
             if ( tx != null ) tx.rollback();
         }
-
-        session.close();
 
         return jobs;
     }
 
+    
+    //TODO replace query with criterias
     public List<User> readUsersInAJob( int jobID ){
-        Session session = HibernateUtil.getSessionFactory().openSession();
+        Session session = sessionFactory.getCurrentSession();
         Transaction tx = null;
         List<User> jobs = null;
+        
         try{
             tx = session.beginTransaction();
-            jobs = session.createQuery("SELECT User FROM UsersJobs UJ INNER JOIN User WHERE UJ.jobId = :jobID").list();
+            
+            jobs = session.createQuery("SELECT User FROM UsersJobs UJ, User U WHERE UJ.jobId = U.jobID").list();
             tx.commit();
 
         }catch ( HibernateException e ) {
             if ( tx != null ) tx.rollback();
         }
 
-        session.close();
 
         return jobs;
     }
 
     public List<JobFeature> readJobFeatures( int jobID ){
-        Session session = HibernateUtil.getSessionFactory().openSession();
+        Session session = sessionFactory.getCurrentSession();
         Transaction tx = null;
         List<JobFeature> features = null;
         try{
@@ -96,38 +97,11 @@ public class JobServices {
             if ( tx != null ) tx.rollback();
         }
 
-        session.close();
-
         return features;
     }
 
-    public boolean updateJob( int jobID, String name, String description, int salary ){
-
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        Transaction tx = null;
-        try{
-            tx = session.beginTransaction();
-            Job job = ( Job ) session.get( Job.class, jobID );
-            job.setName(name);
-            job.setDescription(description);
-            job.setSalary(salary);
-
-            session.update( job );
-            tx.commit();
-
-        }catch (HibernateException e) {
-            if (tx!=null) tx.rollback();
-            session.close();
-            return false;
-        }
-
-        session.close();
-
-        return true;
-    }
-    
     public Job readJob( int jobID ){
-        Session session = HibernateUtil.getSessionFactory().openSession();
+        Session session = sessionFactory.getCurrentSession();
         Transaction tx = null;
         Job job = null;
         try{
@@ -139,57 +113,37 @@ public class JobServices {
             if ( tx != null ) tx.rollback();
         }
 
-        session.close();
-
         return job;
     }
     
+    public void updateJob( Job newJob ){
+
+        Session session = sessionFactory.getCurrentSession();
+        Transaction tx = null;
+        try{
+            tx = session.beginTransaction();
+
+            session.update( newJob );
+            tx.commit();
+
+        }catch ( HibernateException e ) {
+            if (tx!=null) tx.rollback();
+        }
+    }
     
-    
-    /*public boolean updateJob( long jobID, Job entity ){
-        
+    public void deleteJob( int jobID ){
 
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction tx = null;
         try{
             tx = session.beginTransaction();
             Job job = ( Job ) session.get( Job.class, jobID );
-            job.setDescription(entity.getDescription());
-            job.setName(entity.getName());
-            job.setSalary(entity.getSalary());
-
-            session.update( job );
-            tx.commit();
-
-        }catch (HibernateException e) {
-            if (tx!=null) tx.rollback();
-            session.close();
-            return false;
-        }
-
-        session.close();
-
-        return true;
-    } */
-
-    public boolean deleteJob( int jobID ){
-
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        Transaction tx = null;
-        try{
-            tx = session.beginTransaction();
-            Job job =
-                    ( Job )session.get( Job.class, jobID );
             session.delete( job );
             tx.commit();
         }catch (HibernateException e) {
             if (tx!=null) tx.rollback();
-            session.close();
-            return false;
         }
-
-        session.close();
-        return true;
+        
     }
 
 }
