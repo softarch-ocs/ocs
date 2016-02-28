@@ -1,6 +1,9 @@
 package controllers;
-import data.dao.HibernateUtil;
+
 import data.entities.Job;
+import data.entities.JobArea;
+import java.util.ArrayList;
+import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
@@ -8,8 +11,6 @@ import services.jobs.JobServices;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import java.util.ArrayList;
-import java.util.List;
 
 
 @ManagedBean
@@ -17,17 +18,33 @@ import java.util.List;
 public class HandleJobController {
     private Job entity;
     private Long id;
+    private List<JobArea> areas;
+    private JobServices jobServices;
+    
+    public HandleJobController(JobServices jobServices){
+        if(jobServices == null){
+            throw new IllegalArgumentException("jobServices");
+        }
+        
+        this.jobServices = jobServices;
+    }
 
     public HandleJobController(){
-        super();
+        this( new JobServices() );
         entity = new Job();
         entity.setName("name placeholder");
         entity.setSalary(0);
         entity.setDescription("description placeholder");
+        
+        areas = jobServices.readAllJobsArea();               
     }
 
     public Long getId() {
         return id;
+    }
+    
+    public List<JobArea> getAreas(){
+        return areas;
     }
 
     public void initEdit(Long id){
@@ -38,7 +55,7 @@ public class HandleJobController {
         entity.setSalary(0);
         entity.setDescription("description placeholder");
         if(id!=null)
-            this.entity = new JobServices().readJob(Integer.parseInt(""+id));
+            this.entity = jobServices.readJobWithJobArea(Integer.parseInt(""+id));
         
     }
 
@@ -55,14 +72,10 @@ public class HandleJobController {
     }
 
     public void save(){
-
-        JobServices jobServices = new JobServices();
-        if(isEditing()){
-            System.out.println("edit> "+ entity.getId()+ " " + entity.getName() + " " + entity.getSalary() + " " + entity.getDescription());
-            boolean xd = jobServices.updateJob(entity.getId(), entity.getName(),entity.getDescription(),entity.getSalary());
-            System.out.println("hernan dice "+xd);
+        if( isEditing() ){
+            jobServices.updateJob( entity );
         }else{
-            jobServices.createJob(entity.getName(), entity.getDescription(), entity.getSalary());
+            jobServices.createJob( entity );
         }
     }
 }

@@ -9,24 +9,18 @@
 
         <div class="container">
         <div class="table-responsive">
-            <h2>Current Jobs</h2>
+            <h2>Your Features</h2>
             <table class="table">
                     <thead>
                         <tr>
                             <th>Name</th>
-                            <th>Salary</th>
                             <th>Description</th>
-                            <th>Area</th>
-                            
                         </tr>
                     </thead>
-                    <ui:repeat var="job" value="#{showJobsController.jobs}" varStatus="status">
+                    <ui:repeat var="feature" value="#{showUserFeaturesController.features}" varStatus="status">
                         <tr>
-                            <td><a href='editJob.xhtml?id=${job.id}'>#{job.name}</a> </td>
-                            <td>#{job.salary}</td>
-                            <td>#{job.description}</td>
-                            <td>#{job.jobArea.name}</td>
-                            <td><a href='../features/showJobFeatures.xhtml?id=${job.id}'>Show Features</a> </td>
+                            <td>#{feature.name}</td>
+                            <td>#{feature.description}</td>
                         </tr>
 
                     </ui:repeat>

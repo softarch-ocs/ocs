@@ -66,8 +66,15 @@
                                     requiredMessage="Required"/>
 
                         </div>
-
-
+                        
+                        <!-- Job areas -->
+                        <div class="form-group">
+                                <label for="nameInput">Areas</label>
+                                <h:selectOneMenu value="#{handleJobController.getEntity().jobArea}"  converter="#{jobAreaConverter}" class="form-control" >
+                                   <f:selectItems value="#{handleJobController.areas}" var="area" itemValue="#{area}" itemLabel="#{area.name}" />
+                            </h:selectOneMenu>
+                        </div>
+                        
 
                         <!-- Button -->
                         <div class="form-group">
