@@ -8,6 +8,10 @@
         template="/WEB-INF/layout.xhtml">
     <ui:define name="content">
         <h1>Login</h1>
+        
+        <div class="alert alert-danger" role="alert" jsf:rendered="#{not empty facesContext.messageList}">
+            <h:messages></h:messages>
+        </div>
 
         <h:form class="form-horizontal">
             <div class="form-group">

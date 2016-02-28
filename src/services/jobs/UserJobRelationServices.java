@@ -28,6 +28,7 @@ public class UserJobRelationServices {
         
         try{
             tx = session.beginTransaction();
+
             session.save( userJob );
             tx.commit();
 

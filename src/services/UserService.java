@@ -1,6 +1,7 @@
 package services;
 
 import data.dao.HibernateUtil;
+import data.dao.TransactionContext;
 import data.entities.User;
 import java.util.List;
 import java.util.Map;
@@ -8,8 +9,8 @@ import javax.faces.context.FacesContext;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
+import services.exceptions.OcsPersistenceException;
 
 public class UserService {
     private SessionFactory sessionFactory;
@@ -24,14 +25,11 @@ public class UserService {
     public void registerNewUser(User user) {
         Session session = sessionFactory.getCurrentSession();
 
-        Transaction tx = session.beginTransaction();
-
-        try {
+        try (TransactionContext ctx = new TransactionContext(session)) {
             session.save(user);
-            tx.commit();
+            ctx.commit();
         } catch (HibernateException ex) {
-            tx.rollback();
-            throw ex;
+            throw new OcsPersistenceException(ex);
         }
     }
     
@@ -89,29 +87,31 @@ public class UserService {
     
     public User getUserById(int id) {
         Session session = sessionFactory.getCurrentSession();
-        Transaction tx = session.beginTransaction();
 
-        try {
-            return (User)session.get(User.class, id);
-        } finally {
-            tx.commit();
+        try (TransactionContext ctx = new TransactionContext(session)) {
+            User result = (User)session.get(User.class, id);
+            ctx.commit();
+            
+            return result;
+        } catch (HibernateException ex) {
+            throw new OcsPersistenceException(ex);
         }
     }
     
     private User getUserByEmailAndPassword(String email, String password) {
         Session session = sessionFactory.getCurrentSession();
         
-        Transaction tx = session.beginTransaction();
-
-        try {
+        try (TransactionContext ctx = new TransactionContext(session)) {
             List<User> results = (List<User>)session.createCriteria(User.class)
                 .add(Restrictions.eq("email", email))
                 .add(Restrictions.eq("password", password))
                 .list();
             
+            ctx.commit();
+            
             return results.isEmpty() ? null : results.get(0);
-        } finally {
-            tx.commit();
+        } catch (HibernateException ex) {
+            throw new OcsPersistenceException(ex);
         }
     }
 }

@@ -1,10 +1,12 @@
 package controllers;
 
 import data.entities.User;
+import javax.faces.application.FacesMessage;
 import services.UserService;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import presentation.beans.LoginBean;
 
 @ManagedBean
@@ -31,10 +33,13 @@ public class LoginController {
         }
         
         
-        if( userService.login(loginBean.getEmail(), loginBean.getPassword()) ){
+        if (userService.login(loginBean.getEmail(), loginBean.getPassword())) {
             return "/index.xhtml";
+        } else {
+            FacesContext.getCurrentInstance().addMessage(null, 
+                    new FacesMessage("Invalid credentials"));
+            return "";
         }
-        return "success";
     }
     
     public String logout(){

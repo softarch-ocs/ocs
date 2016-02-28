@@ -4,11 +4,13 @@ import data.dao.HibernateUtil;
 import data.entities.Job;
 import data.entities.JobFeature;
 import data.entities.User;
+
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import java.util.List;
+
 import org.hibernate.SessionFactory;
 
 public class JobServices {
@@ -125,6 +127,7 @@ public class JobServices {
         }
     }
     
+
     public void deleteJob( Job job ){
 
         Session session = HibernateUtil.getSessionFactory().openSession();
