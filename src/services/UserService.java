@@ -115,6 +115,21 @@ public class UserService {
         }
     }
     
+    public List<User> getAllUsers() {
+        Session session = sessionFactory.getCurrentSession();
+        
+        try (TransactionContext ctx = new TransactionContext(session)) {
+            List<User> results = (List<User>)session.createCriteria(User.class)
+                .list();
+            
+            ctx.commit();
+            
+            return results;
+        } catch (HibernateException ex) {
+            throw new OcsPersistenceException(ex);
+        }
+    }
+    
     private User getUserByEmailAndPassword(String email, String password) {
         Session session = sessionFactory.getCurrentSession();
         
