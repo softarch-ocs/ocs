@@ -2,6 +2,7 @@ package services;
 
 import data.dao.HibernateUtil;
 import data.dao.TransactionContext;
+import data.entities.Job;
 import data.entities.User;
 import java.util.List;
 import java.util.Map;
@@ -128,6 +129,20 @@ public class UserService {
             return results.isEmpty() ? null : results.get(0);
         } catch (HibernateException ex) {
             throw new OcsPersistenceException(ex);
+        }
+    }
+    
+    public void updateUser( User newUser ){
+
+        Session session = sessionFactory.getCurrentSession();
+
+        try( TransactionContext ctx = new TransactionContext(session) ){
+
+            session.update( newUser );
+            ctx.commit();
+
+        }catch ( HibernateException e ) {
+            throw new OcsPersistenceException(e);
         }
     }
 }

@@ -57,22 +57,28 @@ public class ShowFeaturesController {
         jobFeatures = new ArrayList<>();
         features = featureService.readAllFeatures();
 
-        User user = userService.getLoggedInUser();
-
-        if (user != null) {
-            userFeatures = featureService.readFeatures(user);
-        }
-
     }
 
     public void initJobFeatures(Integer id) {
         if (id == null) {
-            throw new IllegalArgumentException("id");
+            throw new IllegalArgumentException("id ShowFeaturesController:initJobFeatures");
         }
 
         Job job = jobService.readJob(id);
         if (job != null) {
             jobFeatures = featureService.readFeatures(job);
+        }
+
+    }
+    
+    public void initUserFeatures(Integer id) {
+        if (id == null) {
+            throw new IllegalArgumentException("id ShowFeaturesController:initUserFeatures");
+        }
+
+        User user = userService.getUserById(id);
+        if (user != null) {
+            jobFeatures = featureService.readFeatures(user);
         }
 
     }
