@@ -5,6 +5,8 @@
  */
 package controllers;
 
+import DTO.statistics.JobYearDTO;
+import java.util.List;
 import java.util.Map;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -19,7 +21,8 @@ import services.jobs.StatisticsService;
 @ViewScoped
 public class StatisticsController {
     private StatisticsService statisticsService;
-    private Map<String,Integer> areaData;
+    private Map<String,Long> areaData, genderData;
+    private List<JobYearDTO> yearData;
     
     public StatisticsController(StatisticsService statisticsService) {
         if( statisticsService == null ){
@@ -32,10 +35,23 @@ public class StatisticsController {
     public StatisticsController() {
         this(new StatisticsService());
         areaData = statisticsService.getAreaData();
+        genderData = statisticsService.getGenderData();
+        yearData = statisticsService.getAgeData();
     }
 
-    public Map<String, Integer> getAreaData() {
+    public List<JobYearDTO> getYearData() {
+        return yearData;
+    }
+
+    
+    public Map<String, Long> getAreaData() {
         return areaData;
     }    
+
+    public Map<String, Long> getGenderData() {
+        return genderData;
+    }
+    
+    
     
 }
