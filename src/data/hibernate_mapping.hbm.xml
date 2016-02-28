@@ -76,6 +76,12 @@
         <property name="role">
             <column name="role" sql-type="int(11)" not-null="true"/>
         </property>
+        <property name="gender">
+            <column name="gender" sql-type="int(11)" not-null="true"/>
+        </property>
+        <property name="birthday">
+            <column name="birthday" sql-type="date" not-null="true"/>
+        </property>
 
         <list name="jobFeatures" cascade="all">
             <key column="userId"/>
