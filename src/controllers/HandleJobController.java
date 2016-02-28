@@ -2,6 +2,8 @@ package controllers;
 
 import data.entities.Job;
 import data.entities.JobArea;
+import java.util.ArrayList;
+import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
@@ -17,22 +19,24 @@ public class HandleJobController {
     private Job entity;
     private Long id;
     private List<JobArea> areas;
+    private JobServices jobServices;
+    
+    public HandleJobController(JobServices jobServices){
+        if(jobServices == null){
+            throw new IllegalArgumentException("jobServices");
+        }
+        
+        this.jobServices = jobServices;
+    }
 
     public HandleJobController(){
-        super();
+        this( new JobServices() );
         entity = new Job();
         entity.setName("name placeholder");
         entity.setSalary(0);
         entity.setDescription("description placeholder");
         
-        areas = new ArrayList<>();
-        JobArea area = new JobArea();
-        area.setName("Area1");
-        areas.add(area);
-        
-        area = new JobArea();
-        area.setName("Area2");
-        areas.add(area);
+        areas = jobServices.readAllJobsArea();               
     }
 
     public Long getId() {
@@ -51,7 +55,7 @@ public class HandleJobController {
         entity.setSalary(0);
         entity.setDescription("description placeholder");
         if(id!=null)
-            this.entity = new JobServices().readJob(Integer.parseInt(""+id));
+            this.entity = jobServices.readJobWithJobArea(Integer.parseInt(""+id));
         
     }
 
@@ -68,8 +72,6 @@ public class HandleJobController {
     }
 
     public void save(){
-
-        JobServices jobServices = new JobServices();
         if( isEditing() ){
             jobServices.updateJob( entity );
         }else{
