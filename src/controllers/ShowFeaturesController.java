@@ -97,17 +97,17 @@ public class ShowFeaturesController {
     
     public void initNotJobFeatures(Integer id) {
         if (id == null) {
-            throw new IllegalArgumentException("id ShowFeaturesController:initNotJobFeatures");
+            throw new IllegalArgumentException("id ShowFeaturesController:initJobFeatures");
         }
 
         Job job = jobService.readJob(id);
         if (job != null) {
-            jobFeatures = featureService.readNotFeatures(job);
+            jobFeatures = featureService.readFeatures(job);
         }
 
     }
     
-    public void initUserFeatures(Integer id) {
+    public void initNotUserFeatures(Integer id) {
         if (id == null) {
             throw new IllegalArgumentException("id ShowFeaturesController:initUserFeatures");
         }
