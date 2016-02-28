@@ -1,5 +1,5 @@
 package controllers;
-import data.dao.HibernateUtil;
+
 import data.entities.Job;
 import data.entities.JobArea;
 import org.hibernate.Criteria;
@@ -9,8 +9,6 @@ import services.jobs.JobServices;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import java.util.ArrayList;
-import java.util.List;
 
 
 @ManagedBean
@@ -72,12 +70,10 @@ public class HandleJobController {
     public void save(){
 
         JobServices jobServices = new JobServices();
-        if(isEditing()){
-            System.out.println("edit> "+ entity.getId()+ " " + entity.getName() + " " + entity.getSalary() + " " + entity.getDescription());
-            boolean xd = jobServices.updateJob(entity.getId(), entity.getName(),entity.getDescription(),entity.getSalary());
-            System.out.println("hernan dice "+xd);
+        if( isEditing() ){
+            jobServices.updateJob( entity );
         }else{
-            jobServices.createJob(entity.getName(), entity.getDescription(), entity.getSalary());
+            jobServices.createJob( entity );
         }
     }
 }

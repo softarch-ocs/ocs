@@ -1,4 +1,4 @@
-package services.jobs;
+package services;
 
 import data.dao.HibernateUtil;
 import data.entities.Job;
@@ -10,83 +10,50 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import java.util.List;
-
 import org.hibernate.SessionFactory;
 
-public class JobServices {
-
+public class FeatureServices {
+    
     private SessionFactory sessionFactory;
     
-    public JobServices( SessionFactory sessionFactory ) {
+    public FeatureServices( SessionFactory sessionFactory ) {
         this.sessionFactory = sessionFactory;
     }
     
-    public JobServices() {
+    public FeatureServices() {
         this( HibernateUtil.getSessionFactory() );
     }
-    
-    
-    public void createJob( Job job ){
+
+    public void createFeature( JobFeature feature ){
+
         Session session = sessionFactory.getCurrentSession();
         Transaction tx = null;
         
         try{
-            tx = session.beginTransaction();
-            session.save( job );
+            tx = session.beginTransaction();           
+            session.save( feature );
             tx.commit();
-
-        }catch ( HibernateException e ) {
+        }catch (HibernateException e) {
             if (tx!=null) tx.rollback();
-        }
 
+        }        
     }
-
-    public List<Job> readAllJobs(){
-        Session session = sessionFactory.getCurrentSession();
-        Transaction tx = null;
-        List<Job> jobs = null;
-        try{
-            tx = session.beginTransaction();
-            jobs = session.createCriteria( Job.class ).list();
-            tx.commit();
-        }catch ( HibernateException e ) {
-            if ( tx != null ) tx.rollback();
-        }
-
-        return jobs;
+     
+    public List<JobFeature> readFeatures( User user ){
+        return user.getJobFeatures();
     }
-
     
-    //TODO replace query with criterias
-    public List<User> readUsersInAJob( int jobID ){
-        Session session = sessionFactory.getCurrentSession();
-        Transaction tx = null;
-        List<User> jobs = null;
-        
-        try{
-            tx = session.beginTransaction();
-            
-            jobs = session.createQuery("SELECT User FROM UsersJobs UJ, User U WHERE UJ.jobId = U.jobID").list();
-            tx.commit();
-
-        }catch ( HibernateException e ) {
-            if ( tx != null ) tx.rollback();
-        }
-
-
-        return jobs;
+    public List<JobFeature> readFeatures( Job job ){
+        return job.getJobFeatures();
     }
-
-    public List<JobFeature> readJobFeatures( int jobID ){
+    
+    public List<JobFeature> readAllFeatures(){
         Session session = sessionFactory.getCurrentSession();
         Transaction tx = null;
         List<JobFeature> features = null;
         try{
             tx = session.beginTransaction();
-            Job job = (Job) session.get( Job.class, jobID );
-            if( job != null ){
-                features = job.getJobFeatures();
-            }
+            features = session.createCriteria( JobFeature.class ).list();
             tx.commit();
 
         }catch ( HibernateException e ) {
@@ -96,52 +63,75 @@ public class JobServices {
         return features;
     }
 
-    public Job readJob( int jobID ){
+    public void updateFeature( JobFeature feature ){
+
         Session session = sessionFactory.getCurrentSession();
         Transaction tx = null;
-        Job job = null;
         try{
             tx = session.beginTransaction();
-            job = ( Job ) session.get( Job.class, jobID );
+
+            session.update( feature );
             tx.commit();
 
-        }catch ( HibernateException e ) {
-            if ( tx != null ) tx.rollback();
+        }catch (HibernateException e) {
+            if (tx!=null) tx.rollback();
         }
-
-        return job;
     }
-    
-    public void updateJob( Job newJob ){
 
+    public void addFeature( User user, JobFeature feature ){
         Session session = sessionFactory.getCurrentSession();
         Transaction tx = null;
         try{
             tx = session.beginTransaction();
-
-            session.update( newJob );
+            user.getJobFeatures().add( feature );
+            session.update( user );
             tx.commit();
 
-        }catch ( HibernateException e ) {
+        }catch (HibernateException e) {
             if (tx!=null) tx.rollback();
         }
     }
     
-
-    public void deleteJob( Job job ){
-
-        Session session = HibernateUtil.getSessionFactory().openSession();
+    public void addFeature( Job job, JobFeature feature ){
+        Session session = sessionFactory.getCurrentSession();
         Transaction tx = null;
         try{
             tx = session.beginTransaction();
-            session.delete( job );
+            job.getJobFeatures().add( feature );
+            session.update( job );
+            tx.commit();
+
+        }catch (HibernateException e) {
+            if (tx!=null) tx.rollback();
+        }
+    }
+    
+    public void deleteFeature( User user, JobFeature feature ){
+
+        Session session = sessionFactory.getCurrentSession();
+        Transaction tx = null;
+        try{
+            tx = session.beginTransaction();
+            user.getJobFeatures().remove( feature );
+            session.update( user );
             tx.commit();
         }catch (HibernateException e) {
             if (tx!=null) tx.rollback();
         }
-        
     }
     
-    
+    public void deleteFeature( Job job, JobFeature feature ){
+
+        Session session = sessionFactory.getCurrentSession();
+        Transaction tx = null;
+        try{
+            tx = session.beginTransaction();
+            job.getJobFeatures().remove( feature );
+            session.update( job );
+            tx.commit();
+        }catch (HibernateException e) {
+            if (tx!=null) tx.rollback();
+        }
+    }
 
 }
