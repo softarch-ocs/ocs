@@ -16,8 +16,11 @@ public class ShowJobsController extends BaseController {
     private List<Job> jobs;
     private JobServices jobServices;
     
-    public ShowJobsController(JobServices jobServices){
+    public ShowJobsController(UserService userService, JobServices jobServices) {
+        super(userService);
         this.jobServices = jobServices;
+        
+        jobs = jobServices.readAllJobsWithArea();
     }
     
 
@@ -28,14 +31,9 @@ public class ShowJobsController extends BaseController {
     public void setJobs(List<Job> jobs) {
         this.jobs = jobs;
     }
-    
-    public ShowJobsController(UserService userService) {
-        super(userService);
-        jobs = jobServices.readAllJobsWithArea();
-    }
 
     public ShowJobsController() {
-        this(new UserService());
+        this(new UserService(), new JobServices());
     }
     
     @PostConstruct
