@@ -15,7 +15,6 @@ import java.util.List;
 import org.hibernate.FetchMode;
 
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Expression;
 import org.hibernate.criterion.Restrictions;
 import services.exceptions.OcsPersistenceException;
 

@@ -10,7 +10,9 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import java.util.List;
+import org.hibernate.FetchMode;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 
 public class FeatureServices {
     
@@ -56,10 +58,12 @@ public class FeatureServices {
     }
     
     public List<JobFeature> readFeatures( User user ){
+        user = readUserWithFeatures( user.getId() );
         return user.getJobFeatures();
     }
     
     public List<JobFeature> readFeatures( Job job ){
+        job = readJobWithFeatures( job.getId() );
         return job.getJobFeatures();
     }
     
@@ -150,4 +154,38 @@ public class FeatureServices {
         }
     }
 
+    private Job readJobWithFeatures(int jobID) {
+        Session session = sessionFactory.getCurrentSession();
+        Transaction tx = null;
+        Job job = null;
+        try{
+            tx = session.beginTransaction();
+            job = ( Job ) session.createCriteria(Job.class).add( Restrictions.eq("id", jobID) ).setFetchMode("jobFeatures", FetchMode.JOIN).uniqueResult();
+            
+            tx.commit();
+
+        }catch ( HibernateException e ) {
+            if ( tx != null ) tx.rollback();
+        }
+
+        return job;
+    }
+    
+    private User readUserWithFeatures( int userID ) {
+        Session session = sessionFactory.getCurrentSession();
+        Transaction tx = null;
+        User user = null;
+        try{
+            tx = session.beginTransaction();
+            user = ( User ) session.createCriteria( User.class ).add( Restrictions.eq("id", userID) ).setFetchMode("jobFeatures", FetchMode.JOIN).uniqueResult();
+            
+            tx.commit();
+
+        }catch ( HibernateException e ) {
+            if ( tx != null ) tx.rollback();
+        }
+
+        return user;
+    }
+    
 }
