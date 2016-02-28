@@ -1,21 +1,40 @@
 package data.entities;
 
+import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class User {
+
     public static enum Role {
         USER(0), ADMIN(1);
-        
+
         private final int value;
+
         Role(int value) {
             this.value = value;
         }
-        
+
         public int value() {
             return value;
         }
     }
     
+    public static enum Gender {
+        Female(0), Male(1);
+
+        private final int value;
+
+        Gender(int value) {
+            this.value = value;
+        }
+
+        public int value() {
+            return value;
+        }
+    }
+
     private int id;
     private String email;
     private String password;
@@ -25,14 +44,19 @@ public class User {
     private String lastName;
     private String personalId;
     private Integer role;
+    private Date birthday;
+    private Integer gender;
     private List<JobFeature> jobFeatures;
 
+    public User() {
+        this.jobFeatures = new ArrayList<>();
+    }
 
     public int getId() {
         return id;
     }
 
-    public void setId(int id) {
+    private void setId(int id) {
         this.id = id;
     }
 
@@ -104,47 +128,93 @@ public class User {
         return jobFeatures;
     }
 
-    public void setJobFeatures(List<JobFeature> jobFeatures) {
+    private void setJobFeatures(List<JobFeature> jobFeatures) {
         this.jobFeatures = jobFeatures;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof User)) return false;
+    public Date getBirthday() {
+        return birthday;
+    }
 
-        User user = (User) o;
+    public void setBirthday(Date birthday) {
+        this.birthday = birthday;
+    }
 
-        if (getId() != user.getId()) return false;
-        if (getEmail() != null ? !getEmail().equals(user.getEmail()) : user.getEmail() != null) return false;
-        if (getPassword() != null ? !getPassword().equals(user.getPassword()) : user.getPassword() != null)
-            return false;
-        if (getPhoneNumber() != null ? !getPhoneNumber().equals(user.getPhoneNumber()) : user.getPhoneNumber() != null)
-            return false;
-        if (getAddress() != null ? !getAddress().equals(user.getAddress()) : user.getAddress() != null) return false;
-        if (getFirstName() != null ? !getFirstName().equals(user.getFirstName()) : user.getFirstName() != null)
-            return false;
-        if (getLastName() != null ? !getLastName().equals(user.getLastName()) : user.getLastName() != null)
-            return false;
-        if (getPersonalId() != null ? !getPersonalId().equals(user.getPersonalId()) : user.getPersonalId() != null)
-            return false;
-        if (getRole() != null ? !getRole().equals(user.getRole()) : user.getRole() != null) return false;
-        return getJobFeatures() != null ? getJobFeatures().equals(user.getJobFeatures()) : user.getJobFeatures() == null;
+    public Integer getGender() {
+        return gender;
+    }
 
+    public void setGender(Integer gender) {
+        this.gender = gender;
     }
 
     @Override
     public int hashCode() {
-        int result = getId();
-        result = 31 * result + (getEmail() != null ? getEmail().hashCode() : 0);
-        result = 31 * result + (getPassword() != null ? getPassword().hashCode() : 0);
-        result = 31 * result + (getPhoneNumber() != null ? getPhoneNumber().hashCode() : 0);
-        result = 31 * result + (getAddress() != null ? getAddress().hashCode() : 0);
-        result = 31 * result + (getFirstName() != null ? getFirstName().hashCode() : 0);
-        result = 31 * result + (getLastName() != null ? getLastName().hashCode() : 0);
-        result = 31 * result + (getPersonalId() != null ? getPersonalId().hashCode() : 0);
-        result = 31 * result + (getRole() != null ? getRole().hashCode() : 0);
-        result = 31 * result + (getJobFeatures() != null ? getJobFeatures().hashCode() : 0);
-        return result;
+        int hash = 7;
+        hash = 89 * hash + this.id;
+        hash = 89 * hash + Objects.hashCode(this.email);
+        hash = 89 * hash + Objects.hashCode(this.password);
+        hash = 89 * hash + Objects.hashCode(this.phoneNumber);
+        hash = 89 * hash + Objects.hashCode(this.address);
+        hash = 89 * hash + Objects.hashCode(this.firstName);
+        hash = 89 * hash + Objects.hashCode(this.lastName);
+        hash = 89 * hash + Objects.hashCode(this.personalId);
+        hash = 89 * hash + Objects.hashCode(this.role);
+        hash = 89 * hash + Objects.hashCode(this.birthday);
+        hash = 89 * hash + Objects.hashCode(this.gender);
+        hash = 89 * hash + Objects.hashCode(this.jobFeatures);
+        return hash;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null) {
+            return false;
+        }
+        if (!(o instanceof User)) {
+            return false;
+        }
+        final User other = (User) o;
+        if (this.id != other.id) {
+            return false;
+        }
+        if (!Objects.equals(this.email, other.email)) {
+            return false;
+        }
+        if (!Objects.equals(this.password, other.password)) {
+            return false;
+        }
+        if (!Objects.equals(this.phoneNumber, other.phoneNumber)) {
+            return false;
+        }
+        if (!Objects.equals(this.address, other.address)) {
+            return false;
+        }
+        if (!Objects.equals(this.firstName, other.firstName)) {
+            return false;
+        }
+        if (!Objects.equals(this.lastName, other.lastName)) {
+            return false;
+        }
+        if (!Objects.equals(this.personalId, other.personalId)) {
+            return false;
+        }
+        if (!Objects.equals(this.gender, other.gender)) {
+            return false;
+        }
+        if (!Objects.equals(this.role, other.role)) {
+            return false;
+        }
+        if (!Objects.equals(this.birthday, other.birthday)) {
+            return false;
+        }
+        if (!Objects.equals(this.jobFeatures, other.jobFeatures)) {
+            return false;
+        }
+        return true;
+    }
+
 }
