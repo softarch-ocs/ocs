@@ -1,6 +1,7 @@
 package controllers;
 import data.dao.HibernateUtil;
 import data.entities.Job;
+import data.entities.JobArea;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
@@ -17,6 +18,7 @@ import java.util.List;
 public class HandleJobController {
     private Job entity;
     private Long id;
+    private List<JobArea> areas;
 
     public HandleJobController(){
         super();
@@ -24,10 +26,23 @@ public class HandleJobController {
         entity.setName("name placeholder");
         entity.setSalary(0);
         entity.setDescription("description placeholder");
+        
+        areas = new ArrayList<>();
+        JobArea area = new JobArea();
+        area.setName("Area1");
+        areas.add(area);
+        
+        area = new JobArea();
+        area.setName("Area2");
+        areas.add(area);
     }
 
     public Long getId() {
         return id;
+    }
+    
+    public List<JobArea> getAreas(){
+        return areas;
     }
 
     public void initEdit(Long id){
