@@ -22,8 +22,8 @@ public class UserJobRelationServices {
 
             UsersJobs userJob = new UsersJobs();
 
-            userJob.setUserId( userID );
-            userJob.setJobId( jobID );
+            /*userJob.setUserId( userID );
+            userJob.setJobId( jobID );*/
             userJob.setStartTime( start );
             userJob.setEndTime( end );
 
