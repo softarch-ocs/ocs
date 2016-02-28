@@ -1,124 +1,115 @@
-<?xml version='1.0' encoding='utf-8'?>
-<!DOCTYPE hibernate-mapping PUBLIC
-    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
-    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
-
-    <class name="data.entities.Job" table="Job" schema="OCS">
-        <id name="id">
-            <column name="id" sql-type="int(11)"/>
-            <generator class="native" >
-                <param name="sequence">id_sequence</param>
-            </generator>
-        </id>
-        <property name="name">
-            <column name="name" sql-type="varchar(45)" length="45" not-null="true"/>
-        </property>
-        <property name="description">
-            <column name="description" sql-type="varchar(45)" length="45" not-null="true"/>
-        </property>
-        <property name="salary">
-            <column name="salary" sql-type="int(11)" not-null="true"/>
-        </property>
-        
-        <many-to-one name="jobArea" column="jobArea" 
-                     class="data.entities.JobArea" not-null="true"/>
-
-        <list name="jobFeatures" cascade="all">
-            <key column="jobId"/>
-            <list-index column="idx"/>
-            <many-to-many class="data.entities.JobFeature"/>
-        </list>
-
-    </class>
-    <class name="data.entities.JobFeature" table="JobFeature" schema="OCS">
-        <id name="id">
-            <column name="id" sql-type="int(11)"/>
-            <generator class="native" >
-                <param name="sequence">id_sequence</param>
-            </generator>
-        </id>
-        <property name="name">
-            <column name="name" sql-type="varchar(45)" length="45" not-null="true"/>
-        </property>
-        <property name="description">
-            <column name="description" sql-type="varchar(140)" length="140" not-null="true"/>
-        </property>
-    </class>
-    <class name="data.entities.User" table="User" schema="OCS">
-        <id name="id">
-            <column name="id" sql-type="int(11)"/>
-            <generator class="native" >
-                <param name="sequence">id_sequence</param>
-            </generator>
-        </id>
-        <property name="email">
-            <column name="email" sql-type="varchar(45)" length="45" not-null="true"/>
-        </property>
-        <property name="password">
-            <column name="password" sql-type="varchar(45)" length="45" not-null="true"/>
-        </property>
-        <property name="phoneNumber">
-            <column name="phoneNumber" sql-type="varchar(15)" length="15" not-null="true"/>
-        </property>
-        <property name="address">
-            <column name="address" sql-type="varchar(45)" length="45" not-null="true"/>
-        </property>
-        <property name="firstName">
-            <column name="firstName" sql-type="varchar(45)" length="45" not-null="true"/>
-        </property>
-        <property name="lastName">
-            <column name="lastName" sql-type="varchar(45)" length="45" not-null="true"/>
-        </property>
-        <property name="personalId">
-            <column name="personalID" sql-type="varchar(45)" length="45"/>
-        </property>
-        <property name="role">
-            <column name="role" sql-type="int(11)" not-null="true"/>
-        </property>
-        <property name="gender">
-            <column name="gender" sql-type="int(11)" not-null="true"/>
-        </property>
-        <property name="birthday">
-            <column name="birthday" sql-type="date" not-null="true"/>
-        </property>
-
-        <list name="jobFeatures" cascade="all">
-            <key column="userId"/>
-            <list-index column="idx"/>
-            <one-to-many class="data.entities.JobFeature"/>
-        </list>
-
-    </class>
-    <class name="data.entities.UsersJobs" table="UsersJobs" schema="OCS">
-        <id name="id">
-            <column name="id" sql-type="int(11)"/>
-            <generator class="native" >
-                <param name="sequence">id_sequence</param>
-            </generator>
-        </id>
-        <property name="userId">
-            <column name="userId" sql-type="int(11)" not-null="true"/>
-        </property>
-        <property name="jobId">
-            <column name="jobId" sql-type="int(11)" not-null="true"/>
-        </property>
-        <property name="startTime">
-            <column name="startTime" sql-type="date" not-null="true"/>
-        </property>
-        <property name="endTime">
-            <column name="endTime" sql-type="date" not-null="true"/>
-        </property>
-    </class>
-    <class name="data.entities.JobArea" table="JobArea" schema="OCS">
-        <id name="id">
-            <column name="id" sql-type="int(11)"/>
-            <generator class="native" >
-                <param name="sequence">id_sequence</param>
-            </generator>
-        </id>
-       <property name="name">
-            <column name="name" sql-type="varchar(45)" length="45" not-null="true"/>
-       </property>
-    </class>
+  <class name="data.entities.Job" schema="OCS" table="Job">
+    <id name="id">
+      <column name="id" sql-type="int(11)"/>
+      <generator class="native">
+        <param name="sequence">id_sequence</param>
+      </generator>
+    </id>
+    <property name="name">
+      <column length="45" name="name" not-null="true" sql-type="varchar(45)"/>
+    </property>
+    <property name="description">
+      <column length="45" name="description" not-null="true" sql-type="varchar(45)"/>
+    </property>
+    <property name="salary">
+      <column name="salary" not-null="true" sql-type="int(11)"/>
+    </property>
+    <many-to-one class="data.entities.JobArea" column="jobArea" name="jobArea" not-null="true"/>
+    <list cascade="all" name="jobFeatures">
+      <key column="jobId"/>
+      <list-index column="idx"/>
+      <many-to-many class="data.entities.JobFeature"/>
+    </list>
+  </class>
+  <class name="data.entities.JobFeature" schema="OCS" table="JobFeature">
+    <id name="id">
+      <column name="id" sql-type="int(11)"/>
+      <generator class="native">
+        <param name="sequence">id_sequence</param>
+      </generator>
+    </id>
+    <property name="name">
+      <column length="45" name="name" not-null="true" sql-type="varchar(45)"/>
+    </property>
+    <property name="description">
+      <column length="140" name="description" not-null="true" sql-type="varchar(140)"/>
+    </property>
+  </class>
+  <class name="data.entities.User" schema="OCS" table="User">
+    <id name="id">
+      <column name="id" sql-type="int(11)"/>
+      <generator class="native">
+        <param name="sequence">id_sequence</param>
+      </generator>
+    </id>
+    <property name="email">
+      <column length="45" name="email" not-null="true" sql-type="varchar(45)"/>
+    </property>
+    <property name="password">
+      <column length="45" name="password" not-null="true" sql-type="varchar(45)"/>
+    </property>
+    <property name="phoneNumber">
+      <column length="15" name="phoneNumber" not-null="true" sql-type="varchar(15)"/>
+    </property>
+    <property name="address">
+      <column length="45" name="address" not-null="true" sql-type="varchar(45)"/>
+    </property>
+    <property name="firstName">
+      <column length="45" name="firstName" not-null="true" sql-type="varchar(45)"/>
+    </property>
+    <property name="lastName">
+      <column length="45" name="lastName" not-null="true" sql-type="varchar(45)"/>
+    </property>
+    <property name="personalId">
+      <column length="45" name="personalID" sql-type="varchar(45)"/>
+    </property>
+        <property name="role" column="role" not-null="true">
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">data.entities.User$Role</param>
+            </type>
+    </property>
+        <property name="gender" column="gender" not-null="true">
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">data.entities.User$Gender</param>
+            </type>
+    </property>
+    <property name="birthday">
+      <column name="birthday" not-null="true" sql-type="date"/>
+    </property>
+    <list cascade="all" name="jobFeatures">
+      <key column="userId"/>
+      <list-index column="idx"/>
+      <one-to-many class="data.entities.JobFeature"/>
+    </list>
+  </class>
+  <class name="data.entities.UsersJobs" schema="OCS" table="UsersJobs">
+    <id name="id">
+      <column name="id" sql-type="int(11)"/>
+      <generator class="native">
+        <param name="sequence">id_sequence</param>
+      </generator>
+    </id>
+    <many-to-one class="data.entities.User" column="user" name="user" not-null="true"/>
+    <many-to-one class="data.entities.Job" column="job" name="job" not-null="true"/>
+    <property name="startTime">
+      <column name="startTime" not-null="true" sql-type="date"/>
+    </property>
+    <property name="endTime">
+      <column name="endTime" not-null="true" sql-type="date"/>
+    </property>
+  </class>
+  <class name="data.entities.JobArea" schema="OCS" table="JobArea">
+    <id name="id">
+      <column name="id" sql-type="int(11)"/>
+      <generator class="native">
+        <param name="sequence">id_sequence</param>
+      </generator>
+    </id>
+    <property name="name">
+      <column length="45" name="name" not-null="true" sql-type="varchar(45)"/>
+    </property>
+  </class>
 </hibernate-mapping>
