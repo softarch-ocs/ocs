@@ -5,23 +5,13 @@ import java.util.Objects;
 public class JobRequest {
 
     public static enum Status {
-        ACTIVE(0), ACCEPTED(1), REJECTED(2);
-
-        private final int value;
-
-        Status(int value) {
-            this.value = value;
-        }
-
-        public int value() {
-            return value;
-        }
+        ACTIVE, ACCEPTED, REJECTED;
     }
 
     private int id;
     private User user;
     private Job job;
-    private Integer status;
+    private Status status;
     
     public int getId() {
         return id;
@@ -47,11 +37,11 @@ public class JobRequest {
         this.job = job;
     }
 
-    public Integer getStatus() {
+    public Status getStatus() {
         return status;
     }
 
-    public void setStatus(Integer status) {
+    public void setStatus(Status status) {
         this.status = status;
     }
 

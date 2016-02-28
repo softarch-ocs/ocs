@@ -121,8 +121,10 @@
         <param name="sequence">id_sequence</param>
       </generator>
     </id>
-    <property name="status">
-      <column name="status" not-null="true" sql-type="int(11)"/>
+    <property name="status" column="status" not-null="true">
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">data.entities.JobRequest$Status</param>
+            </type>
     </property>
     <many-to-one class="data.entities.Job" column="job" name="job" not-null="true"/>
     <many-to-one class="data.entities.User" column="user" name="user" not-null="true"/>
