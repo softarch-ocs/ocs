@@ -1,12 +1,14 @@
 package services.jobs;
 
 import data.dao.HibernateUtil;
+import data.dao.TransactionContext;
 import data.entities.UsersJobs;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import org.hibernate.SessionFactory;
+import services.exceptions.OcsPersistenceException;
 
 
 public class UserJobRelationServices {
@@ -22,17 +24,15 @@ public class UserJobRelationServices {
     }
 
     public void createUserJobRelation( UsersJobs userJob ) {
-        Session session = sessionFactory.getCurrentSession();
-        Transaction tx = null;
+        Session session = sessionFactory.getCurrentSession();        
         
-        try{
-            tx = session.beginTransaction();
+        try(TransactionContext ctx = new TransactionContext(session)){
 
             session.save( userJob );
-            tx.commit();
+            ctx.commit();
 
         }catch (HibernateException e) {
-            if (tx!=null) tx.rollback();
+            throw new OcsPersistenceException(e);
 
         }    
     }

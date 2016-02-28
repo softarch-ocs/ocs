@@ -15,11 +15,11 @@ import services.jobs.JobServices;
 @ManagedBean
 @ViewScoped
 public class ShowFeaturesController {
-    
+
     private final UserService userService;
     private final JobServices jobService;
     private final FeatureServices featureService;
-    
+
     private List<JobFeature> userFeatures;
     private List<JobFeature> jobFeatures;
     private List<JobFeature> features;
@@ -27,50 +27,53 @@ public class ShowFeaturesController {
     public List<JobFeature> getUserFeatures() {
         return userFeatures;
     }
-    
+
     public List<JobFeature> getJobFeatures() {
         return jobFeatures;
     }
-    
+
     public List<JobFeature> getFeatures() {
         return features;
     }
 
-    public void setUserFeatures( List<JobFeature> userFeatures ) {
+    public void setUserFeatures(List<JobFeature> userFeatures) {
         this.userFeatures = userFeatures;
     }
-    
-    public void setJobFeatures( List<JobFeature> jobFeatures ) {
+
+    public void setJobFeatures(List<JobFeature> jobFeatures) {
         this.jobFeatures = jobFeatures;
     }
-    
-    public void setFeatures( List<JobFeature> features ) {
+
+    public void setFeatures(List<JobFeature> features) {
         this.features = features;
     }
 
-    public ShowFeaturesController( ){
+    public ShowFeaturesController() {
         userService = new UserService();
         featureService = new FeatureServices();
         jobService = new JobServices();
-        
+
         userFeatures = new ArrayList<>();
         jobFeatures = new ArrayList<>();
         features = featureService.readAllFeatures();
-        
+
         User user = userService.getLoggedInUser();
-        
-        if( user != null ){
-            userFeatures = featureService.readFeatures( user );
+
+        if (user != null) {
+            userFeatures = featureService.readFeatures(user);
         }
- 
+
     }
-    
-    public void initJobFeatures( Long id ){
-         if( id != null ){
-            Job job = jobService.readJob( Integer.parseInt( id + "" ) );
-            if( job != null ){
-                jobFeatures = featureService.readFeatures( job );
-            }
+
+    public void initJobFeatures(Integer id) {
+        if (id == null) {
+            throw new IllegalArgumentException("id");
         }
+
+        Job job = jobService.readJob(id);
+        if (job != null) {
+            jobFeatures = featureService.readFeatures(job);
+        }
+
     }
 }

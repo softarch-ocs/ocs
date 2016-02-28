@@ -13,6 +13,7 @@ import org.hibernate.Transaction;
 
 import java.util.List;
 import org.hibernate.FetchMode;
+import org.hibernate.Hibernate;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -31,15 +32,15 @@ public class JobServices {
     }
     
     public List<JobArea> readAllJobsArea(){
+
         Session session = sessionFactory.getCurrentSession();
-        Transaction tx = null;
         List<JobArea> areas = null;
-        try{
-            tx = session.beginTransaction();
+        
+        try (TransactionContext ctx = new TransactionContext(session)) {
             areas = session.createCriteria( JobArea.class ).list();
-            tx.commit();
-        }catch ( HibernateException e ) {
-            if ( tx != null ) tx.rollback();
+            ctx.commit();
+        } catch (HibernateException ex) {
+            throw new OcsPersistenceException(ex);
         }
 
         return areas;
@@ -47,29 +48,26 @@ public class JobServices {
     
     public void createJob( Job job ){
         Session session = sessionFactory.getCurrentSession();
-        Transaction tx = null;
         
-        try{
-            tx = session.beginTransaction();
+        try( TransactionContext ctx = new TransactionContext( session ) ){
             session.save( job );
-            tx.commit();
+            ctx.commit();
 
         }catch ( HibernateException e ) {
-            if (tx!=null) tx.rollback();
+            throw new OcsPersistenceException(e);
         }
 
     }
 
     public List<Job> readAllJobs(){
         Session session = sessionFactory.getCurrentSession();
-        Transaction tx = null;
         List<Job> jobs = null;
-        try{
-            tx = session.beginTransaction();
+        
+        try(TransactionContext ctx = new TransactionContext(session)){
             jobs = session.createCriteria( Job.class ).list();
-            tx.commit();
+            ctx.commit();
         }catch ( HibernateException e ) {
-            if ( tx != null ) tx.rollback();
+            throw new OcsPersistenceException(e);
         }
 
         return jobs;
@@ -78,14 +76,12 @@ public class JobServices {
     
     public List<Job> readAllJobsWithArea(){
         Session session = sessionFactory.getCurrentSession();
-        Transaction tx = null;
         List<Job> jobs = null;
-        try{
-            tx = session.beginTransaction();
+        try(TransactionContext ctx = new TransactionContext(session)){
             jobs = session.createCriteria( Job.class ).setFetchMode("jobArea", FetchMode.JOIN).list();
-            tx.commit();
+            ctx.commit();
         }catch ( HibernateException e ) {
-            if ( tx != null ) tx.rollback();
+            throw new OcsPersistenceException(e);
         }
 
         return jobs;
@@ -95,17 +91,13 @@ public class JobServices {
     //TODO replace query with criterias
     public List<User> readUsersInAJob( int jobID ){
         Session session = sessionFactory.getCurrentSession();
-        Transaction tx = null;
         List<User> jobs = null;
         
-        try{
-            tx = session.beginTransaction();
-            
+        try(TransactionContext ctx = new TransactionContext(session)){
             jobs = session.createQuery("SELECT User FROM UsersJobs UJ, User U WHERE UJ.jobId = U.jobID").list();
-            tx.commit();
-
+            ctx.commit();
         }catch ( HibernateException e ) {
-            if ( tx != null ) tx.rollback();
+            throw new OcsPersistenceException(e);
         }
 
 
@@ -114,18 +106,18 @@ public class JobServices {
 
     public List<JobFeature> readJobFeatures( int jobID ){
         Session session = sessionFactory.getCurrentSession();
-        Transaction tx = null;
         List<JobFeature> features = null;
-        try{
-            tx = session.beginTransaction();
+        
+        try( TransactionContext ctx = new TransactionContext(session)){
             Job job = (Job) session.get( Job.class, jobID );
-            if( job != null ){
-                features = job.getJobFeatures();
+            if( job == null ){
+                throw new IllegalArgumentException("job");
             }
-            tx.commit();
+            features = job.getJobFeatures();
+            ctx.commit();
 
         }catch ( HibernateException e ) {
-            if ( tx != null ) tx.rollback();
+            throw new OcsPersistenceException(e);
         }
 
         return features;
@@ -133,15 +125,18 @@ public class JobServices {
 
     public Job readJob( int jobID ){
         Session session = sessionFactory.getCurrentSession();
-        Transaction tx = null;
         Job job = null;
-        try{
-            tx = session.beginTransaction();
+        try(TransactionContext ctx = new TransactionContext(session)){
             job = ( Job ) session.get( Job.class, jobID );
-            tx.commit();
-
+            
+            if(job == null){
+                throw new IllegalArgumentException("job");
+            }
+            
+            Hibernate.initialize( job.getJobFeatures() );
+            ctx.commit();
         }catch ( HibernateException e ) {
-            if ( tx != null ) tx.rollback();
+            throw new OcsPersistenceException(e);
         }
 
         return job;
@@ -150,15 +145,14 @@ public class JobServices {
     public void updateJob( Job newJob ){
 
         Session session = sessionFactory.getCurrentSession();
-        Transaction tx = null;
-        try{
-            tx = session.beginTransaction();
+
+        try(TransactionContext ctx = new TransactionContext(session)){
 
             session.update( newJob );
-            tx.commit();
+            ctx.commit();
 
         }catch ( HibernateException e ) {
-            if (tx!=null) tx.rollback();
+            throw new OcsPersistenceException(e);
         }
     }
     
@@ -166,13 +160,11 @@ public class JobServices {
     public void deleteJob( Job job ){
 
         Session session = HibernateUtil.getSessionFactory().openSession();
-        Transaction tx = null;
-        try{
-            tx = session.beginTransaction();
+        try(TransactionContext ctx = new TransactionContext(session)){
             session.delete( job );
-            tx.commit();
+            ctx.commit();
         }catch (HibernateException e) {
-            if (tx!=null) tx.rollback();
+            throw new OcsPersistenceException(e);
         }
         
     }
@@ -192,16 +184,14 @@ public class JobServices {
 
     public Job readJobWithJobArea(int jobID) {
         Session session = sessionFactory.getCurrentSession();
-        Transaction tx = null;
         Job job = null;
-        try{
-            tx = session.beginTransaction();
+        try(TransactionContext ctx = new TransactionContext(session)){
+
             job = ( Job ) session.createCriteria(Job.class).add( Restrictions.eq("id", jobID) ).setFetchMode("jobArea", FetchMode.JOIN).uniqueResult();
-            
-            tx.commit();
+            ctx.commit();
 
         }catch ( HibernateException e ) {
-            if ( tx != null ) tx.rollback();
+            throw new OcsPersistenceException(e);
         }
 
         return job;
