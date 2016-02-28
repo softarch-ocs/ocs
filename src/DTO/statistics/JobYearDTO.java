@@ -5,6 +5,10 @@
  */
 package DTO.statistics;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 /**
  *
  * @author Felipe
@@ -32,6 +36,17 @@ public class JobYearDTO {
     @Override
     public String toString() {
         return "JobYearDTO{" + "year=" + bd + ", count=" + ctr + '}';
+    }
+    
+    public static Map<Integer,Long> listToMap( List<JobYearDTO> list ){
+        Map<Integer,Long> map = new HashMap<>();
+        for( JobYearDTO dto : list ){
+            if( !map.containsKey(dto.bd) )
+                map.put(dto.bd, 0L);
+            
+            map.put(dto.bd, map.get(dto.bd) + dto.ctr);
+        }
+        return map;
     }
     
     

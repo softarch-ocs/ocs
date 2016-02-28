@@ -76,18 +76,16 @@ public class StatisticsService {
        try{
            data = new HashMap<>();
            data.put( male, 
-                            (Long) session.createCriteria(UsersJobs.class).
+                            (Long) session.createCriteria(User.class).
                                    setProjection(Projections.rowCount()).
-                                   createAlias("user", "user").
-                                   add(Restrictions.eq("user.gender", User.Gender.MALE)).
+                                   add(Restrictions.eq("gender", User.Gender.MALE)).
                                    uniqueResult()
                    );
            
            data.put( female, 
-                            (Long) session.createCriteria(UsersJobs.class).
+                            (Long) session.createCriteria(User.class).
                                    setProjection(Projections.rowCount()).
-                                   createAlias("user", "user").
-                                   add(Restrictions.eq("user.gender", User.Gender.FEMALE)).
+                                   add(Restrictions.eq("gender", User.Gender.FEMALE)).
                                    uniqueResult()
                    );
      

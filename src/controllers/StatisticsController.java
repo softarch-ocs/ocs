@@ -6,6 +6,7 @@
 package controllers;
 
 import DTO.statistics.JobYearDTO;
+import com.sun.xml.rpc.processor.generator.nodes.JaxRpcMappingTagNames;
 import java.util.List;
 import java.util.Map;
 import javax.faces.bean.ManagedBean;
@@ -21,8 +22,8 @@ import services.jobs.StatisticsService;
 @ViewScoped
 public class StatisticsController {
     private StatisticsService statisticsService;
-    private Map<String,Long> areaData, genderData;
-    private List<JobYearDTO> yearData;
+    private String areaData, genderData;
+    private String yearData;
     
     public StatisticsController(StatisticsService statisticsService) {
         if( statisticsService == null ){
@@ -34,21 +35,21 @@ public class StatisticsController {
 
     public StatisticsController() {
         this(new StatisticsService());
-        areaData = statisticsService.getAreaData();
-        genderData = statisticsService.getGenderData();
-        yearData = statisticsService.getAgeData();
+        areaData = statisticsService.getAreaData().toString().replaceAll("=", ":");
+        genderData = statisticsService.getGenderData().toString().replaceAll("=", ":");
+        yearData = JobYearDTO.listToMap( statisticsService.getAgeData() ).toString().replaceAll("=", ":");
     }
 
-    public List<JobYearDTO> getYearData() {
+    public String getYearData() {
         return yearData;
     }
 
     
-    public Map<String, Long> getAreaData() {
+    public String getAreaData() {
         return areaData;
     }    
 
-    public Map<String, Long> getGenderData() {
+    public String getGenderData() {
         return genderData;
     }
     
