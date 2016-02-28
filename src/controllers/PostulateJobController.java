@@ -1,6 +1,7 @@
 package controllers;
 
 import data.entities.Job;
+import data.entities.JobFeature;
 import data.entities.JobRequest;
 import data.entities.User;
 import java.util.List;
@@ -11,43 +12,44 @@ import javax.faces.context.FacesContext;
 import presentation.beans.PostulateJobBean;
 import services.UserService;
 import services.exceptions.OcsServiceException;
-import services.jobs.FeatureServices;
 import services.jobs.JobRequestService;
 import services.jobs.JobServices;
 
 @ManagedBean
 @ViewScoped
-public class postulateJobController {
+public class PostulateJobController {
 
     private JobRequestService jobRequestService;
     private JobServices jobServices;
     private JobRequest jobRequest;
+    private UserService userService;
     private User user;
     private List jobs;
 
-    public postulateJobController(JobRequestService jobRequestService, JobServices jobServices) {
-        
+    public PostulateJobController(JobRequestService jobRequestService,
+            JobServices jobServices, UserService userService) {
+
         if (jobRequestService == null) {
             throw new IllegalArgumentException("jobRequest");
-        }else if(jobServices == null){
+        } else if (jobServices == null) {
             throw new IllegalArgumentException("jobService");
+        } else if (userService == null) {
+            throw new IllegalArgumentException("userService");
         }
 
-        
-        UserService userService = new UserService();
-        user = userService.getLoggedInUser();
-        
-        this.jobRequest.setUser(user);
         this.jobs = jobServices.readAllJobs();
         this.jobRequestService = jobRequestService;
+        this.jobServices = jobServices;
     }
 
-    public postulateJobController() {
-        this(new JobRequestService(), new JobServices());
+    public PostulateJobController() {
+        this(new JobRequestService(), new JobServices(), new UserService());
     }
 
     public String requestJob(PostulateJobBean postulateJobBean) {
         try {
+            this.user = userService.getLoggedInUser();
+            this.jobRequest.setUser(user);
             jobRequest.setStatus(JobRequest.Status.ACTIVE);
             jobRequest.setJob(jobServices.readJob(postulateJobBean.getSelectedJob()));
             jobRequestService.createJobRequest(jobRequest);
@@ -58,8 +60,23 @@ public class postulateJobController {
             return "";
         }
     }
-    
+
     public List<Job> getJobs() {
         return jobs;
     }
+
+    public void selectJob(PostulateJobBean postulateJobBean) {
+
+        Job selectedJob = jobServices.readJobWithFeatures(postulateJobBean.getSelectedJob());
+        postulateJobBean.setDescription(selectedJob.getDescription());
+        StringBuilder features = new StringBuilder();
+        for (JobFeature jb : selectedJob.getJobFeatures()) {
+            features.append("- " + jb.getName() + ":" + jb.getDescription() + '\n');
+        }
+
+        postulateJobBean.setFeatures(features.toString());
+
+        System.out.println("Selected job is: " + selectedJob.getName());
+    }
+
 }

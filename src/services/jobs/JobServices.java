@@ -91,6 +91,21 @@ public class JobServices {
 
         return jobs;
     }
+    
+    public Job readJobWithFeatures(int jobID){
+        Session session = sessionFactory.getCurrentSession();
+        Transaction tx = null;
+        Job job = null;
+        try{
+            tx = session.beginTransaction();
+            job = (Job)session.createCriteria( Job.class ).add(Restrictions.eq("id", jobID)).setFetchMode("jobFeatures", FetchMode.JOIN).list().get(0);
+            tx.commit();
+        }catch ( HibernateException e ) {
+            if ( tx != null ) tx.rollback();
+        }
+
+        return job;
+    }
 
     
     //TODO replace query with criterias
