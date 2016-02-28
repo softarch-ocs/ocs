@@ -63,7 +63,7 @@ public class HandleJobFeatureController {
         
     }
 
-    public String joinFeatureJob(JobFeature feature) {
+    public void joinFeatureJob(JobFeature feature) {
         
         if (feature == null) {
             throw new IllegalArgumentException("feature");
@@ -82,7 +82,7 @@ public class HandleJobFeatureController {
 
         jobServices.updateJob(job);
 
-        return "/features/showJobFeatures.xhtml?faces-redirect=true&id=" + id;
+        //return "/features/showJobFeatures.xhtml?faces-redirect=true&id=" + id;
     }
     
     public String deleteFeatureJob(JobFeature feature) {

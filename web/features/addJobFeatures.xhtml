@@ -19,28 +19,37 @@
                             <th>Description</th>
                         </tr>
                     </thead>
-                    <ui:repeat var="feature" value="#{showFeaturesController.getFeatures()}" varStatus="status">
-                        <tr>
-
-                            <td>#{feature.name}</td>
-                            <td>#{feature.description}</td>
-                            <td>
-                                <h:form>
+                    <ui:repeat 
+                        var="feature" 
+                        value="#{showFeaturesController.getFeatures()}" 
+                        varStatus="status" >
+                        <h:form rendered="#{!handleJobFeatureController.isFeatureInJob( feature )}">
+                            <tr>
+                                <td>#{feature.name}</td>
+                                <td>#{feature.description}</td>
+                                <td>
                                     <h:commandLink 
-                                        rendered="#{!handleJobFeatureController.isFeatureInJob( feature )}"
                                         styleClass="btn btn-success" 
                                         action="#{handleJobFeatureController.joinFeatureJob( feature )}"
                                         value="add Feature">
                                     </h:commandLink>
-                                </h:form>
-                            </td>
-                        </tr>
-
+                                </td>
+                            </tr>
+                        </h:form>
                     </ui:repeat>
                 </table>
             </div>
 
         </div><!-- /.container -->
+        
+        <div class="text-center">
+            <a 
+                class="btn btn-success" 
+                href="#{request.contextPath}/features/showJobFeatures.xhtml?id=#{handleJobFeatureController.jobId}"
+                >
+                Accept
+            </a>
+        </div>
     </ui:define>
 
 </ui:composition>

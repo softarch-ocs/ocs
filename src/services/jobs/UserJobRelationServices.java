@@ -5,7 +5,6 @@ import data.dao.TransactionContext;
 import data.entities.UsersJobs;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 
 import org.hibernate.SessionFactory;
 import services.exceptions.OcsPersistenceException;

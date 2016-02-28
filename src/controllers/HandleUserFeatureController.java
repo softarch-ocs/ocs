@@ -63,7 +63,7 @@ public class HandleUserFeatureController {
         
     }
 
-    public String joinFeatureUser(JobFeature feature) {
+    public void joinFeatureUser(JobFeature feature) {
         
         if (feature == null) {
             throw new IllegalArgumentException("feature");
@@ -82,7 +82,7 @@ public class HandleUserFeatureController {
 
         userServices.updateUser(user);
 
-        return "/features/showUserFeatures.xhtml?faces-redirect=true&id=" + id;
+        //return "/features/showUserFeatures.xhtml?faces-redirect=true&id=" + id;
     }
     
     public String deleteFeatureUser(JobFeature feature) {
