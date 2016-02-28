@@ -73,11 +73,15 @@
         <property name="personalId">
             <column name="personalID" sql-type="varchar(45)" length="45"/>
         </property>
-        <property name="role">
-            <column name="role" sql-type="int(11)" not-null="true"/>
+        <property name="role" column="role" not-null="true">
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">data.entities.User$Role</param>
+            </type>
         </property>
-        <property name="gender">
-            <column name="gender" sql-type="int(11)" not-null="true"/>
+        <property name="gender" column="gender" not-null="true">
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">data.entities.User$Gender</param>
+            </type>
         </property>
         <property name="birthday">
             <column name="birthday" sql-type="date" not-null="true"/>

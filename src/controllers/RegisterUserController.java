@@ -22,7 +22,7 @@ public class RegisterUserController {
 
         this.userService = userService;
         user = new User();
-        user.setRole(User.Role.USER.value());
+        user.setRole(User.Role.USER);
     }
 
     public RegisterUserController() {
