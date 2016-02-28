@@ -98,7 +98,7 @@ public class JobServices {
         Job job = null;
         try{
             tx = session.beginTransaction();
-            job = (Job)session.createCriteria( Job.class ).add(Restrictions.eq("id", jobID)).setFetchMode("jobFeatures", FetchMode.JOIN).list().get(0);
+            job = (Job)session.createCriteria( Job.class ).add(Restrictions.eq("id", jobID)).setFetchMode("jobFeatures", FetchMode.JOIN).uniqueResult();
             tx.commit();
         }catch ( HibernateException e ) {
             if ( tx != null ) tx.rollback();

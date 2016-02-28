@@ -1,5 +1,6 @@
 package controllers;
 
+import data.entities.JobRequest;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -12,7 +13,7 @@ public class ShowJobRequestsController {
 
     private UserJobRelationServices userJobRelationServices;
     private JobRequestService jobRequestService;
-    private List jobRequests;
+    private List<JobRequest> jobRequests;
 
     public ShowJobRequestsController(JobRequestService jobRequestService,
             UserJobRelationServices userJobRelationServices) {
@@ -25,7 +26,7 @@ public class ShowJobRequestsController {
 
         this.jobRequestService = jobRequestService;
         this.userJobRelationServices = userJobRelationServices;
-        
+
         this.jobRequests = jobRequestService.readAllJobRequest();
     }
 
@@ -40,7 +41,5 @@ public class ShowJobRequestsController {
     public void setJobRequests(List jobRequests) {
         this.jobRequests = jobRequests;
     }
-    
-    
 
 }

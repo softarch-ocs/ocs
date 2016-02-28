@@ -48,7 +48,7 @@
                                 <th>Description</th>
                             </tr>
                         </thead>
-                        <ui:repeat var="feature" value="#{showUserFeaturesController.features}" varStatus="status">
+                        <ui:repeat var="feature" value="#{postulateJobBean.features}" varStatus="status">
                             <tr>
                                 <td>#{feature.name}</td>
                                 <td>#{feature.description}</td>

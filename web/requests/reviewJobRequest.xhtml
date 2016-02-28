@@ -1,0 +1,38 @@
+<ui:composition
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+    xmlns:jsf="http://xmlns.jcp.org/jsf"
+    template="/WEB-INF/layout.xhtml">
+    <ui:define name="content">
+        <!--   #{ handleJobController.initEdit( id ) } -->
+
+        <h1>Review a job request</h1>
+
+        <div class="alert alert-danger" role="alert" jsf:rendered="#{not empty facesContext.messageList}">
+            <h:messages></h:messages>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title" >Employee name</h3>
+            </div>
+            <div class="panel-body" >
+                <h:outputText value="#{algo.name}"/>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title" >Job name</h3>
+            </div>
+            <div class="panel-body" >
+                <h:outputText value="#{algo.jobnmae}"/>
+            </div>
+        </div>
+
+     
+    </ui:define>
+</ui:composition>

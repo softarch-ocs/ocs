@@ -39,6 +39,9 @@ public class PostulateJobController {
         this.jobs = jobServices.readAllJobs();
         this.jobRequestService = jobRequestService;
         this.jobServices = jobServices;
+        this.userService = userService;
+        this.jobRequest = new JobRequest();
+        this.user = userService.getLoggedInUser();
     }
 
     public PostulateJobController() {
@@ -47,7 +50,7 @@ public class PostulateJobController {
 
     public String requestJob(PostulateJobBean postulateJobBean) {
         try {
-            this.user = userService.getLoggedInUser();
+
             this.jobRequest.setUser(user);
             jobRequest.setStatus(JobRequest.Status.ACTIVE);
             jobRequest.setJob(jobServices.readJob(postulateJobBean.getSelectedJob()));

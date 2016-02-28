@@ -4,6 +4,8 @@ import data.dao.HibernateUtil;
 import data.dao.TransactionContext;
 import data.entities.JobRequest;
 import java.util.List;
+import org.hibernate.FetchMode;
+import org.hibernate.Hibernate;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -39,7 +41,8 @@ public class JobRequestService {
         List<JobRequest> jobRequests = null;
         try {
             tx = session.beginTransaction();
-            jobRequests = session.createCriteria(JobRequest.class).list();
+            jobRequests = session.createCriteria(JobRequest.class).setFetchMode("user", FetchMode.JOIN)
+                    .setFetchMode("job", FetchMode.JOIN).list();
             tx.commit();
         } catch (HibernateException e) {
             if (tx != null) {

@@ -20,11 +20,11 @@
                             <th>Status</th>
                         </tr>
                     </thead>
-                    <ui:repeat var="request" value="#{showJobRequestsController.jobRequests}" varStatus="status">
+                    <ui:repeat var="req" value="#{showJobRequestsController.jobRequests}" varStatus="status">
                         <tr>
-                            <td><a href='reviewJobRequest.xhtml?id=${request.id}'>#{request.user.name}</a> </td>
-                            <td>#{request.job.name}</td>
-                            <td>#{request.status}</td>
+                            <td><a href='reviewJobRequest.xhtml?id=${req.id}'>#{req.user.firstName} #{req.user.lastName} </a> </td>
+                            <td>#{req.job.name}</td> 
+                            <td>#{req.status}</td>
                         </tr>
 
                     </ui:repeat>
