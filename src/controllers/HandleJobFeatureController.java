@@ -2,6 +2,7 @@ package controllers;
 
 import data.entities.Job;
 import data.entities.JobFeature;
+import java.util.List;
 import javax.annotation.PostConstruct;
 
 import javax.faces.bean.ManagedBean;
@@ -34,6 +35,29 @@ public class HandleJobFeatureController {
     public Integer getJobId() {
         return jobId;
     }
+    
+    public boolean isFeatureInJob( JobFeature feature ){
+        
+        if(feature == null){
+            throw new IllegalArgumentException("feature");
+        }
+        if (jobId == null) {
+            throw new IllegalArgumentException("jobId");
+        }
+        
+        Job job = jobServices.readJob(Integer.parseInt(jobId + ""));
+        
+        if (job == null) {
+            throw new IllegalArgumentException("job does not exist");
+        }
+        
+        List<JobFeature> features = featureServices.readFeatures(job);
+        if (features == null) {
+            throw new IllegalArgumentException("features can not be load");
+        }
+        return features.contains(feature);
+        
+    }
 
     public String joinFeatureJob(JobFeature feature) {
         
@@ -51,6 +75,28 @@ public class HandleJobFeatureController {
         }
         
         job.getJobFeatures().add(feature);
+
+        jobServices.updateJob(job);
+
+        return "/features/showJobFeatures.xhtml?faces-redirect=true&id=" + jobId;
+    }
+    
+    public String deleteFeatureJob(JobFeature feature) {
+        
+        if (feature == null) {
+            throw new IllegalArgumentException("feature");
+        }
+        if (jobId == null) {
+            throw new IllegalArgumentException("jobId");
+        }
+
+        Job job = jobServices.readJob(Integer.parseInt(jobId + ""));
+
+        if (job == null) {
+            throw new IllegalArgumentException("job does not exist");
+        }
+        
+        job.getJobFeatures().remove(feature);
 
         jobServices.updateJob(job);
 

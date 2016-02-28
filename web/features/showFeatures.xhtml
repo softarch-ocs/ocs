@@ -26,10 +26,17 @@
                             <td>#{feature.description}</td>
                             <td>
                                 <h:form>
-                                    <h:commandLink
+                                    <h:commandLink 
+                                        rendered="#{!handleJobFeatureController.isFeatureInJob( feature )}"
                                         styleClass="btn btn-success" 
                                         action="#{handleJobFeatureController.joinFeatureJob( feature )}"
-                                        value="#{handleJobFeatureController.jobId}">
+                                        value="add Feature">
+                                    </h:commandLink>
+                                    <h:commandLink 
+                                        rendered="#{handleJobFeatureController.isFeatureInJob( feature )}"
+                                        styleClass="btn btn-danger" 
+                                        action="#{handleJobFeatureController.deleteFeatureJob( feature )}"
+                                        value="delete Feature">
                                     </h:commandLink>
                                 </h:form>
                             </td>
