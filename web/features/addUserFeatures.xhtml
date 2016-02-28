@@ -20,33 +20,33 @@
                         </tr>
                     </thead>
                     <ui:repeat var="feature" value="#{showFeaturesController.getFeatures()}" varStatus="status">
-                        <tr>
-
-                            <td>#{feature.name}</td>
-                            <td>#{feature.description}</td>
-                            <td>
-                                <h:form>
+                        <h:form rendered="#{!handleUserFeatureController.isFeatureInUser( feature )}">
+                            <tr>
+                                <td>#{feature.name}</td>
+                                <td>#{feature.description}</td>
+                                <td>
                                     <h:commandLink 
-                                        rendered="#{!handleUserFeatureController.isFeatureInUser( feature )}"
-                                        styleClass="btn btn-success" 
+                                        styleClass="btn btn-success"
                                         action="#{handleUserFeatureController.joinFeatureUser( feature )}"
                                         value="add Feature">
                                     </h:commandLink>
-                                    <h:commandLink 
-                                        rendered="#{handleUserFeatureController.isFeatureInUser( feature )}"
-                                        styleClass="btn btn-danger" 
-                                        action="#{handleUserFeatureController.deleteFeatureUser( feature )}"
-                                        value="delete Feature">
-                                    </h:commandLink>
-                                </h:form>
-                            </td>
-                        </tr>
+                                </td>
+                            </tr>
+                        </h:form>
 
                     </ui:repeat>
                 </table>
             </div>
-
-        </div><!-- /.container -->
+        </div>
+        <div class="text-center">
+            <a 
+                class="btn btn-success" 
+                href="#{request.contextPath}/features/showUserFeatures.xhtml?id=#{handleUserFeatureController.userId}"
+                >
+                Accept
+            </a>
+        </div>
+        
     </ui:define>
 
 </ui:composition>
