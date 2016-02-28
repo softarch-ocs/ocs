@@ -1,0 +1,38 @@
+<ui:composition
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+    xmlns:jsf="http://xmlns.jcp.org/jsf"
+    template="/WEB-INF/layout.xhtml">
+    <ui:define name="content">
+        <h1>Job Requests</h1>    
+
+        <div class="container">
+            <div class="table-responsive">
+                <h2>Current requests</h2>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Job</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <ui:repeat var="request" value="#{showJobRequestsController.jobRequests}" varStatus="status">
+                        <tr>
+                            <td><a href='reviewJobRequest.xhtml?id=${request.id}'>#{request.user.name}</a> </td>
+                            <td>#{request.job.name}</td>
+                            <td>#{request.status}</td>
+                        </tr>
+
+                    </ui:repeat>
+
+                </table>
+
+            </div>
+        </div>
+
+    </ui:define>
+</ui:composition>

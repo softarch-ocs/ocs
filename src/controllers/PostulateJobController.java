@@ -1,7 +1,6 @@
 package controllers;
 
 import data.entities.Job;
-import data.entities.JobFeature;
 import data.entities.JobRequest;
 import data.entities.User;
 import java.util.List;
@@ -69,12 +68,7 @@ public class PostulateJobController {
 
         Job selectedJob = jobServices.readJobWithFeatures(postulateJobBean.getSelectedJob());
         postulateJobBean.setDescription(selectedJob.getDescription());
-        StringBuilder features = new StringBuilder();
-        for (JobFeature jb : selectedJob.getJobFeatures()) {
-            features.append("- " + jb.getName() + ":" + jb.getDescription() + '\n');
-        }
-
-        postulateJobBean.setFeatures(features.toString());
+        postulateJobBean.setFeatures(selectedJob.getJobFeatures());
 
         System.out.println("Selected job is: " + selectedJob.getName());
     }

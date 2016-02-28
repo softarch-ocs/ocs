@@ -1,6 +1,7 @@
 package presentation.beans;
 
-import controllers.PostulateJobController;
+import data.entities.JobFeature;
+import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
@@ -10,7 +11,7 @@ public class PostulateJobBean {
 
     private Integer selectedJob;
     private String description;
-    private String features;
+    private List<JobFeature> features;
 
     public Integer getSelectedJob() {
         return selectedJob;
@@ -28,11 +29,11 @@ public class PostulateJobBean {
         this.description = description;
     }
 
-    public String getFeatures() {
+    public List getFeatures() {
         return features;
     }
 
-    public void setFeatures(String features) {
+    public void setFeatures(List features) {
         this.features = features;
     }
 

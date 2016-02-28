@@ -40,10 +40,27 @@
                     <h3 class="panel-title">Job features</h3>
                 </div>
                 <div class="panel-body">
-                    <h:outputText value="#{postulateJobBean.features}"/>
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <ui:repeat var="feature" value="#{showUserFeaturesController.features}" varStatus="status">
+                            <tr>
+                                <td>#{feature.name}</td>
+                                <td>#{feature.description}</td>
+                            </tr>
+
+                        </ui:repeat>
+
+                    </table>
                 </div>
             </div>
         </div>
+
         <div class="form-group">
             <h:form>
                 <div class="col-sm-2 col-sm-10">
