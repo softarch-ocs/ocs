@@ -1,6 +1,5 @@
 package controllers;
 
-import data.entities.User;
 import javax.faces.application.FacesMessage;
 import services.UserService;
 
@@ -34,7 +33,16 @@ public class LoginController {
         
         
         if (userService.login(loginBean.getEmail(), loginBean.getPassword())) {
-            return "/index.xhtml";
+            // Consume this redirect
+            String target = (String)FacesContext.getCurrentInstance()
+                    .getExternalContext().getSessionMap()
+                    .remove("POST_LOGIN_REDIRECT");
+            
+            if (target == null) {
+                target = "/index.xhtml";
+            }
+            
+            return target;
         } else {
             FacesContext.getCurrentInstance().addMessage(null, 
                     new FacesMessage("Invalid credentials"));

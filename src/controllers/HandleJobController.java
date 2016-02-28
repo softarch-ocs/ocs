@@ -4,6 +4,7 @@ import data.entities.Job;
 import data.entities.JobArea;
 import java.util.ArrayList;
 import java.util.List;
+import javax.faces.application.FacesMessage;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
@@ -11,6 +12,8 @@ import services.jobs.JobServices;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+import services.exceptions.OcsServiceException;
 
 
 @ManagedBean
@@ -72,10 +75,22 @@ public class HandleJobController {
     }
 
     public void save(){
-        if( isEditing() ){
-            jobServices.updateJob( entity );
-        }else{
-            jobServices.createJob( entity );
+        System.out.println("ola k ase ----> " + entity.getJobArea());
+        if( entity.getJobArea() == null ){
+            FacesContext.getCurrentInstance().addMessage(null, 
+                    new FacesMessage("Oops, we had an error processing your request"));
+            
+            return;
+        }
+        try{
+            if( isEditing() ){
+                jobServices.updateJob( entity );
+            }else{
+                jobServices.createJob( entity );
+            }
+        } catch(OcsServiceException ex) {
+            FacesContext.getCurrentInstance().addMessage(null, 
+                    new FacesMessage("Oops, we had an error processing your request"));
         }
     }
 }
