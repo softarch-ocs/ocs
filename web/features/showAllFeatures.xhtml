@@ -22,34 +22,18 @@
                     <ui:repeat var="feature" value="#{showFeaturesController.getFeatures()}" varStatus="status">
                         <tr>
 
-                            <td>#{feature.name}</td>
+                            <td><a href='editFeature.xhtml?id=${feature.id}'>#{feature.name}</a></td>
                             <td>#{feature.description}</td>
-                            <td>
-                                <h:form>
-                                    <h:commandLink 
-                                        rendered="#{!handleJobFeatureController.isFeatureInJob( feature )}"
-                                        styleClass="btn btn-success" 
-                                        action="#{handleJobFeatureController.joinFeatureJob( feature )}"
-                                        value="add Feature">
-                                    </h:commandLink>
-                                    <h:commandLink 
-                                        rendered="#{handleJobFeatureController.isFeatureInJob( feature )}"
-                                        styleClass="btn btn-danger" 
-                                        action="#{handleJobFeatureController.deleteFeatureJob( feature )}"
-                                        value="delete Feature">
-                                    </h:commandLink>
-                                </h:form>
-                            </td>
+
                         </tr>
 
                     </ui:repeat>
                 </table>
 
-                <!--
                 <div class="text-center">
                        <a class="btn btn-success" href="#{request.contextPath}/features/newFeature.xhtml">Create Feature</a>
                 </div>
-                -->
+                
             </div>
 
         </div><!-- /.container -->

@@ -29,7 +29,11 @@ public class HandleJobFeatureController {
 
     @PostConstruct
     public void initialize() {
-        this.jobId = Integer.parseInt(FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("jobId"));
+        String ret = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("jobId");
+        if (ret == null) {
+            throw new IllegalArgumentException("jobId not initilizated: HandleJobFeatureController: initialize()");
+        }
+        this.jobId = Integer.parseInt( ret );
     }
 
     public Integer getJobId() {

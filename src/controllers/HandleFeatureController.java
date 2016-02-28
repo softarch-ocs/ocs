@@ -37,15 +37,16 @@ public class HandleFeatureController {
         feature.setName("name placeholder");
         feature.setDescription("description placeholder");
 
-        if (id == null) {
-            throw new IllegalArgumentException("id");
-        }
-        JobFeature tmpfeature = featureServices.getFeatureById(Integer.parseInt(id + ""));
-        if (tmpfeature == null) {
-            throw new IllegalArgumentException("jobFeature not found");
+        if (id != null) {
+            JobFeature tmpfeature = featureServices.getFeatureById(Integer.parseInt(id + ""));
+            if (tmpfeature == null) {
+                throw new IllegalArgumentException("jobFeature not found");
+            }
+            feature = tmpfeature;
+
         }
 
-        feature = tmpfeature;
+        
     }
 
     public boolean isEditing() {
@@ -60,7 +61,7 @@ public class HandleFeatureController {
         this.feature = entity;
     }
 
-    public void save() {
+    public String save() {
 
         if (isEditing()) {
             featureServices.updateFeature(feature);
@@ -68,6 +69,7 @@ public class HandleFeatureController {
             featureServices.createFeature(feature);
         }
 
+        return "/features/showAllFeatures.xhtml?faces-redirect=true";
     }
 
 }
