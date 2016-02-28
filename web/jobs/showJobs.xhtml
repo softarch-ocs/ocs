@@ -16,6 +16,8 @@
                             <th>Name</th>
                             <th>Salary</th>
                             <th>Description</th>
+                            <th>Area</th>
+                            
                         </tr>
                     </thead>
                     <ui:repeat var="job" value="#{showJobsController.jobs}" varStatus="status">
@@ -23,6 +25,8 @@
                             <td><a href='editJob.xhtml?id=${job.id}'>#{job.name}</a> </td>
                             <td>#{job.salary}</td>
                             <td>#{job.description}</td>
+                            <td>#{job.jobArea.name}</td>
+                            <td><a href='../features/showJobFeatures.xhtml?id=${job.id}'>Show Features</a> </td>
                         </tr>
 
                     </ui:repeat>
