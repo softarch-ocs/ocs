@@ -1,32 +1,24 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package services.jobs;
 
-import DTO.statistics.JobYearDTO;
+import DTO.statistics.CountJobsByAgeDTO;
+import DTO.statistics.CountJobsByAreaDTO;
+import DTO.statistics.CountJobsByGenderDTO;
 import data.dao.HibernateUtil;
 import data.entities.Job;
-import data.entities.JobArea;
 import data.entities.User;
-import data.entities.UsersJobs;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.criterion.CriteriaSpecification;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.transform.AliasToBeanConstructorResultTransformer;
 import org.hibernate.transform.AliasToBeanResultTransformer;
 import org.hibernate.transform.AliasToEntityMapResultTransformer;
-import org.hibernate.type.StandardBasicTypes;
-import org.hibernate.type.Type;
 
 /**
  *
@@ -43,23 +35,32 @@ public class StatisticsService {
         this(HibernateUtil.getSessionFactory());
     }
 
-    public Map<String,Long> getAreaData(){
+    public List<CountJobsByAreaDTO> getAreaData(){
        Session session = sessionFactory.getCurrentSession();
        Transaction tx = session.beginTransaction();
-       Map<String,Long> data;
+       List<CountJobsByAreaDTO> data;
        try{
-            List<JobArea> areas = session.createCriteria(JobArea.class).list();
-            data = new HashMap<>();
-            for(JobArea area : areas){
-                data.put(
-                        area.getName(), 
-                        (Long) session.createCriteria(Job.class).
-                                createAlias("jobArea", "jobArea").
-                                setProjection(Projections.rowCount()).
-                                add(Restrictions.like("jobArea.name", area.getName())).
-                                uniqueResult()
-               );
-            }
+           
+           data = session.createCriteria(Job.class,"job").
+                   setFetchMode("jobArea", FetchMode.JOIN).
+                   createAlias("jobArea", "jobArea").
+                   setProjection(
+                                Projections.projectionList().
+                                add(Projections.rowCount(),"count").
+                                add((Projections.groupProperty("jobArea.id"))).
+                                add(Projections.property("jobArea.name"),"name")). 
+                                setResultTransformer(new AliasToBeanResultTransformer(CountJobsByAreaDTO.class)).
+                                list();
+           
+           //data = new ArrayList<>();
+           /*for( Object[] o : list ){
+               Long ctr = (Long) o[0];
+               JobArea area = (JobArea) o[1]; 
+               Integer areaId = area.getId();
+               String areaName = area.getName();
+               data.add( new CountJobsByAreaDTO(areaName, areaId, ctr) );
+           }           
+            */
        } finally {
            tx.commit();
        }
@@ -67,15 +68,24 @@ public class StatisticsService {
        return data; 
     }
     
-    public Map<String,Long> getGenderData(){
+    public List<CountJobsByGenderDTO> getGenderData(){
        Session session = sessionFactory.getCurrentSession();
        Transaction tx = session.beginTransaction();
-       Map<String,Long> data;
+      List<CountJobsByGenderDTO> data;
        String male = "male", female = "female";
 
        try{
-           data = new HashMap<>();
-           data.put( male, 
+           
+           data = session.createCriteria(User.class).
+                   setProjection(Projections.projectionList().
+                           add(Projections.rowCount(),"count").
+                           add(Projections.groupProperty("gender"),"gender")
+                    ).
+                   setResultTransformer( new AliasToBeanResultTransformer(CountJobsByGenderDTO.class) )
+                  .list(); 
+
+           int bk = 1;       
+           /*data.put( male, 
                             (Long) session.createCriteria(User.class).
                                    setProjection(Projections.rowCount()).
                                    add(Restrictions.eq("gender", User.Gender.MALE)).
@@ -88,7 +98,7 @@ public class StatisticsService {
                                    add(Restrictions.eq("gender", User.Gender.FEMALE)).
                                    uniqueResult()
                    );
-     
+     */
        } finally {
            tx.commit();
        }
@@ -98,16 +108,16 @@ public class StatisticsService {
     
     
     
-     public List<JobYearDTO> getAgeData(){
+     public List<CountJobsByAgeDTO> getAgeData(){
        Session session = sessionFactory.getCurrentSession();
        Transaction tx = session.beginTransaction();
-       List<JobYearDTO> data;
+       List<CountJobsByAgeDTO> data;
       
 
        try{
            
            data = session.createQuery("select year(birthday) as bd, count(*) as ctr from User group by year(birthday)").
-                   setResultTransformer(new AliasToBeanResultTransformer(JobYearDTO.class))
+                   setResultTransformer(new AliasToBeanResultTransformer(CountJobsByAgeDTO.class))
                   .list(); 
 
        } finally {

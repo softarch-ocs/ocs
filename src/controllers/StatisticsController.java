@@ -1,22 +1,15 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package controllers;
 
-import DTO.statistics.JobYearDTO;
+import DTO.statistics.CountJobsByAgeDTO;
+import DTO.statistics.CountJobsByAreaDTO;
+import DTO.statistics.CountJobsByGenderDTO;
 import com.sun.xml.rpc.processor.generator.nodes.JaxRpcMappingTagNames;
 import java.util.List;
 import java.util.Map;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import services.jobs.StatisticsService;
-
-/**
- *
- * @author Felipe
- */
 
 @ManagedBean
 @ViewScoped
@@ -35,9 +28,9 @@ public class StatisticsController {
 
     public StatisticsController() {
         this(new StatisticsService());
-        areaData = statisticsService.getAreaData().toString().replaceAll("=", ":");
-        genderData = statisticsService.getGenderData().toString().replaceAll("=", ":");
-        yearData = JobYearDTO.listToMap( statisticsService.getAgeData() ).toString().replaceAll("=", ":");
+        areaData =  CountJobsByAreaDTO.dictionaryToString( statisticsService.getAreaData() );
+        genderData = CountJobsByGenderDTO.dictionaryToString( statisticsService.getGenderData() );
+        yearData =  CountJobsByAgeDTO.dictionaryToString( statisticsService.getAgeData() );
     }
 
     public String getYearData() {

@@ -1,19 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package DTO.statistics;
 
+import static DTO.statistics.CountJobsByGenderDTO.listToMap;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- *
- * @author Felipe
- */
-public class JobYearDTO {
+public class CountJobsByAgeDTO {
     private Integer bd;
     private Long ctr;
 
@@ -35,18 +27,22 @@ public class JobYearDTO {
 
     @Override
     public String toString() {
-        return "JobYearDTO{" + "year=" + bd + ", count=" + ctr + '}';
+        return "CountJobsByAgeDTO{" + "year=" + bd + ", count=" + ctr + '}';
     }
     
-    public static Map<Integer,Long> listToMap( List<JobYearDTO> list ){
+    public static Map<Integer,Long> listToMap( List<CountJobsByAgeDTO> list ){
         Map<Integer,Long> map = new HashMap<>();
-        for( JobYearDTO dto : list ){
+        for( CountJobsByAgeDTO dto : list ){
             if( !map.containsKey(dto.bd) )
                 map.put(dto.bd, 0L);
             
             map.put(dto.bd, map.get(dto.bd) + dto.ctr);
         }
         return map;
+    }
+    
+    public static String dictionaryToString( List<CountJobsByAgeDTO> list ){
+        return listToMap(list).toString().replaceAll("=", ":");           
     }
     
     
