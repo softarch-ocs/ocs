@@ -1,10 +1,13 @@
 package controllers;
 
 import data.entities.User;
+import javax.faces.application.FacesMessage;
 import services.UserService;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+import services.exceptions.OcsServiceException;
 
 @ManagedBean
 @ViewScoped
@@ -31,8 +34,14 @@ public class RegisterUserController {
     }
 
     public String register() {
-        userService.registerNewUser(user);
-        userService.login(user);
-        return "/index.xhtml";
+        try {
+            userService.registerNewUser(user);
+            userService.login(user);
+            return "/index.xhtml";
+        } catch(OcsServiceException ex) {
+            FacesContext.getCurrentInstance().addMessage(null, 
+                    new FacesMessage("Oops, we had an error processing your request"));
+            return "";
+        }
     }
 }
