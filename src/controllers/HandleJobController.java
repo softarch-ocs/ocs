@@ -1,15 +1,10 @@
 package controllers;
-import data.dao.HibernateUtil;
+
 import data.entities.Job;
-import org.hibernate.Criteria;
-import org.hibernate.Session;
-import org.hibernate.criterion.Restrictions;
 import services.jobs.JobServices;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import java.util.ArrayList;
-import java.util.List;
 
 
 @ManagedBean
