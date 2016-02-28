@@ -8,28 +8,30 @@
     <ui:define name="content">
 
         <div class="container">
-        <div class="table-responsive">
-            <h2>Your Features</h2>
-            <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <ui:repeat var="feature" value="#{showUserFeaturesController.features}" varStatus="status">
-                        <tr>
-                            <td>#{feature.name}</td>
-                            <td>#{feature.description}</td>
-                        </tr>
+            <div class="table-responsive">
+                <h2>Your Features</h2>
+                <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <ui:repeat var="feature" value="#{showUserFeaturesController.features}" varStatus="status">
+                            <tr>
+                                <td>#{feature.name}</td>
+                                <td>#{feature.description}</td>
+                            </tr>
 
-                    </ui:repeat>
+                        </ui:repeat>
 
-                </table>
-            <div class="text-center">
-                   <a class="btn btn-success" href="#{request.contextPath}/jobs/newJob.xhtml">Create Job</a>
+                    </table>
+                <!--
+                <div class="text-center">
+                       <a class="btn btn-success" href="#{request.contextPath}/features/newFeature.xhtml">Create Feature</a>
+                </div>
+                -->
             </div>
-        </div>
 
         </div><!-- /.container -->
     </ui:define>

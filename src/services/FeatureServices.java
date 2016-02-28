@@ -38,7 +38,23 @@ public class FeatureServices {
 
         }        
     }
-     
+    
+    public JobFeature getFeatureById( int id ){
+        Session session = sessionFactory.getCurrentSession();
+        Transaction tx = null;
+        JobFeature feature = null;
+        try{
+            tx = session.beginTransaction();
+            feature = ( JobFeature ) session.get( JobFeature.class, id );
+            tx.commit();
+
+        }catch ( HibernateException e ) {
+            if ( tx != null ) tx.rollback();
+        }
+
+        return feature;
+    }
+    
     public List<JobFeature> readFeatures( User user ){
         return user.getJobFeatures();
     }
