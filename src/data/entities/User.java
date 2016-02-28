@@ -20,6 +20,20 @@ public class User {
             return value;
         }
     }
+    
+    public static enum Gender {
+        Female(0), Male(1);
+
+        private final int value;
+
+        Gender(int value) {
+            this.value = value;
+        }
+
+        public int value() {
+            return value;
+        }
+    }
 
     private int id;
     private String email;
@@ -31,7 +45,7 @@ public class User {
     private String personalId;
     private Integer role;
     private Date birthday;
-    private String gender;
+    private Integer gender;
     private List<JobFeature> jobFeatures;
 
     public User() {
@@ -126,11 +140,11 @@ public class User {
         this.birthday = birthday;
     }
 
-    public String getGender() {
+    public Integer getGender() {
         return gender;
     }
 
-    public void setGender(String gender) {
+    public void setGender(Integer gender) {
         this.gender = gender;
     }
 
