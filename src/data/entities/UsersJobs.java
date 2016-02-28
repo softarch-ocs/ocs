@@ -6,8 +6,8 @@ public class UsersJobs {
     private int id;
     private Date startTime;
     private Date endTime;
-    private int userId;
-    private int jobId;
+    private User user;
+    private Job job;
 
 
     public int getId() {
@@ -34,20 +34,20 @@ public class UsersJobs {
         this.endTime = endTime;
     }
 
-    public int getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public int getJobId() {
-        return jobId;
+    public Job getJob() {
+        return job;
     }
 
-    public void setJobId(int jobId) {
-        this.jobId = jobId;
+    public void setJob(Job job) {
+        this.job = job;
     }
 
     @Override
@@ -58,8 +58,8 @@ public class UsersJobs {
         UsersJobs usersJobs = (UsersJobs) o;
 
         if (getId() != usersJobs.getId()) return false;
-        if (getUserId() != usersJobs.getUserId()) return false;
-        if (getJobId() != usersJobs.getJobId()) return false;
+        if (getUser() != usersJobs.getUser()) return false;
+        if (getJob() != usersJobs.getJob()) return false;
         if (getStartTime() != null ? !getStartTime().equals(usersJobs.getStartTime()) : usersJobs.getStartTime() != null)
             return false;
         return getEndTime() != null ? getEndTime().equals(usersJobs.getEndTime()) : usersJobs.getEndTime() == null;
@@ -71,8 +71,8 @@ public class UsersJobs {
         int result = getId();
         result = 31 * result + (getStartTime() != null ? getStartTime().hashCode() : 0);
         result = 31 * result + (getEndTime() != null ? getEndTime().hashCode() : 0);
-        result = 31 * result + getUserId();
-        result = 31 * result + getJobId();
+        result = 31 * result + (getUser()!= null ? getUser().hashCode() : 0);
+        result = 31 * result + (getJob()!= null ? getJob().hashCode() : 0);
         return result;
     }
 }

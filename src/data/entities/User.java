@@ -8,31 +8,11 @@ import java.util.Objects;
 public class User {
 
     public static enum Role {
-        USER(0), ADMIN(1);
-
-        private final int value;
-
-        Role(int value) {
-            this.value = value;
-        }
-
-        public int value() {
-            return value;
-        }
+        USER, ADMIN;
     }
     
     public static enum Gender {
-        Female(0), Male(1);
-
-        private final int value;
-
-        Gender(int value) {
-            this.value = value;
-        }
-
-        public int value() {
-            return value;
-        }
+        FEMALE, MALE;
     }
 
     private int id;
@@ -43,9 +23,9 @@ public class User {
     private String firstName;
     private String lastName;
     private String personalId;
-    private Integer role;
+    private Role role;
     private Date birthday;
-    private Integer gender;
+    private Gender gender;
     private List<JobFeature> jobFeatures;
     
     public User() {
@@ -116,11 +96,11 @@ public class User {
         this.personalId = personalId;
     }
 
-    public Integer getRole() {
+    public Role getRole() {
         return role;
     }
 
-    public void setRole(Integer role) {
+    public void setRole(Role role) {
         this.role = role;
     }
 
@@ -140,11 +120,11 @@ public class User {
         this.birthday = birthday;
     }
 
-    public Integer getGender() {
+    public Gender getGender() {
         return gender;
     }
 
-    public void setGender(Integer gender) {
+    public void setGender(Gender gender) {
         this.gender = gender;
     }
     

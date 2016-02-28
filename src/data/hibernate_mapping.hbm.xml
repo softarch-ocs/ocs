@@ -1,5 +1,7 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
   <class name="data.entities.Job" schema="OCS" table="Job">
     <id name="id">
@@ -66,11 +68,15 @@
     <property name="personalId">
       <column length="45" name="personalID" sql-type="varchar(45)"/>
     </property>
-    <property name="role">
-      <column name="role" not-null="true" sql-type="int(11)"/>
+        <property name="role" column="role" not-null="true">
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">data.entities.User$Role</param>
+            </type>
     </property>
-    <property name="gender">
-      <column name="gender" not-null="true" sql-type="int(11)"/>
+        <property name="gender" column="gender" not-null="true">
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">data.entities.User$Gender</param>
+            </type>
     </property>
     <property name="birthday">
       <column name="birthday" not-null="true" sql-type="date"/>
@@ -88,12 +94,8 @@
         <param name="sequence">id_sequence</param>
       </generator>
     </id>
-    <property name="userId">
-      <column name="userId" not-null="true" sql-type="int(11)"/>
-    </property>
-    <property name="jobId">
-      <column name="jobId" not-null="true" sql-type="int(11)"/>
-    </property>
+    <many-to-one class="data.entities.User" column="user" name="user" not-null="true"/>
+    <many-to-one class="data.entities.Job" column="job" name="job" not-null="true"/>
     <property name="startTime">
       <column name="startTime" not-null="true" sql-type="date"/>
     </property>
