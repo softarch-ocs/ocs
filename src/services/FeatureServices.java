@@ -112,12 +112,13 @@ public class FeatureServices {
         }
     }
     
+    //TODO fix update
     public void addFeature( Job job, JobFeature feature ){
         Session session = sessionFactory.getCurrentSession();
         Transaction tx = null;
         try{
             tx = session.beginTransaction();
-            job.getJobFeatures().add( feature );
+            job.getJobFeatures().add(feature);
             session.update( job );
             tx.commit();
 
@@ -144,6 +145,7 @@ public class FeatureServices {
 
         Session session = sessionFactory.getCurrentSession();
         Transaction tx = null;
+        
         try{
             tx = session.beginTransaction();
             job.getJobFeatures().remove( feature );

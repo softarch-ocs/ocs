@@ -22,6 +22,7 @@ public class ShowFeaturesController {
     
     private List<JobFeature> userFeatures;
     private List<JobFeature> jobFeatures;
+    private List<JobFeature> features;
 
     public List<JobFeature> getUserFeatures() {
         return userFeatures;
@@ -29,6 +30,10 @@ public class ShowFeaturesController {
     
     public List<JobFeature> getJobFeatures() {
         return jobFeatures;
+    }
+    
+    public List<JobFeature> getFeatures() {
+        return features;
     }
 
     public void setUserFeatures( List<JobFeature> userFeatures ) {
@@ -38,6 +43,10 @@ public class ShowFeaturesController {
     public void setJobFeatures( List<JobFeature> jobFeatures ) {
         this.jobFeatures = jobFeatures;
     }
+    
+    public void setFeatures( List<JobFeature> features ) {
+        this.features = features;
+    }
 
     public ShowFeaturesController( ){
         userService = new UserService();
@@ -46,6 +55,7 @@ public class ShowFeaturesController {
         
         userFeatures = new ArrayList<>();
         jobFeatures = new ArrayList<>();
+        features = featureService.readAllFeatures();
         
         User user = userService.getLoggedInUser();
         
