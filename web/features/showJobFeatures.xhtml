@@ -22,6 +22,16 @@
                             <tr>
                                 <td>#{feature.name}</td>
                                 <td>#{feature.description}</td>
+                                <td>
+                                    <h:form>
+                                        <h:commandLink 
+                                            rendered="#{handleJobFeatureController.isFeatureInJob( feature )}"
+                                            styleClass="btn btn-danger"
+                                            action="#{handleJobFeatureController.deleteFeatureJob( feature )}"
+                                            value="delete Feature">
+                                        </h:commandLink>
+                                    </h:form>
+                                </td>
                             </tr>
 
                         </ui:repeat>
@@ -29,7 +39,12 @@
                     </table>
                 
                 <div class="text-center">
-                    <a class="btn btn-success" href="#{request.contextPath}/features/addJobFeatures.xhtml?jobId=#{id}">Add/Remove Feature</a>
+                    <a 
+                        class="btn btn-success" 
+                        href="#{request.contextPath}/features/addJobFeatures.xhtml?id=#{id}"
+                        >
+                        Add Feature
+                    </a>
                 </div>
                 
             </div>

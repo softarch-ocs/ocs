@@ -22,6 +22,8 @@ public class ShowFeaturesController {
 
     private List<JobFeature> userFeatures;
     private List<JobFeature> jobFeatures;
+    private List<JobFeature> notUserFeatures;
+    private List<JobFeature> notJobFeatures;
     private List<JobFeature> features;
 
     public List<JobFeature> getUserFeatures() {
@@ -34,6 +36,14 @@ public class ShowFeaturesController {
 
     public List<JobFeature> getFeatures() {
         return features;
+    }
+    
+    public List<JobFeature> getNotUserFeatures() {
+        return notUserFeatures;
+    }
+    
+    public List<JobFeature> getNotJobFeatures() {
+        return notJobFeatures;
     }
 
     public void setUserFeatures(List<JobFeature> userFeatures) {
@@ -55,24 +65,56 @@ public class ShowFeaturesController {
 
         userFeatures = new ArrayList<>();
         jobFeatures = new ArrayList<>();
+        notUserFeatures = new ArrayList<>();
+        notJobFeatures = new ArrayList<>();
         features = featureService.readAllFeatures();
-
-        User user = userService.getLoggedInUser();
-
-        if (user != null) {
-            userFeatures = featureService.readFeatures(user);
-        }
 
     }
 
     public void initJobFeatures(Integer id) {
         if (id == null) {
-            throw new IllegalArgumentException("id");
+            throw new IllegalArgumentException("id ShowFeaturesController:initJobFeatures");
         }
 
         Job job = jobService.readJob(id);
         if (job != null) {
             jobFeatures = featureService.readFeatures(job);
+        }
+
+    }
+    
+    public void initUserFeatures(Integer id) {
+        if (id == null) {
+            throw new IllegalArgumentException("id ShowFeaturesController:initUserFeatures");
+        }
+
+        User user = userService.getUserById(id);
+        if (user != null) {
+            userFeatures = featureService.readFeatures(user);
+        }
+
+    }
+    
+    public void initNotJobFeatures(Integer id) {
+        if (id == null) {
+            throw new IllegalArgumentException("id ShowFeaturesController:initJobFeatures");
+        }
+
+        Job job = jobService.readJob(id);
+        if (job != null) {
+            jobFeatures = featureService.readFeatures(job);
+        }
+
+    }
+    
+    public void initNotUserFeatures(Integer id) {
+        if (id == null) {
+            throw new IllegalArgumentException("id ShowFeaturesController:initUserFeatures");
+        }
+
+        User user = userService.getUserById(id);
+        if (user != null) {
+            userFeatures = featureService.readFeatures(user);
         }
 
     }
