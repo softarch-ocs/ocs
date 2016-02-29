@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
-  <class name="data.entities.Job" schema="OCS" table="Job">
+  <class name="data.entities.Job" table="Job">
     <id name="id">
       <column name="id" sql-type="int(11)"/>
       <generator class="native">
@@ -24,7 +24,7 @@
       <many-to-many class="data.entities.JobFeature"/>
     </list>
   </class>
-  <class name="data.entities.JobFeature" schema="OCS" table="JobFeature">
+  <class name="data.entities.JobFeature" table="JobFeature">
     <id name="id">
       <column name="id" sql-type="int(11)"/>
       <generator class="native">
@@ -38,7 +38,7 @@
       <column length="140" name="description" not-null="true" sql-type="varchar(140)"/>
     </property>
   </class>
-  <class name="data.entities.User" schema="OCS" table="User">
+  <class name="data.entities.User" table="User">
     <id name="id">
       <column name="id" sql-type="int(11)"/>
       <generator class="native">
@@ -85,7 +85,7 @@
       <many-to-many class="data.entities.JobFeature"/>
     </list>
   </class>
-  <class name="data.entities.UsersJobs" schema="OCS" table="UsersJobs">
+  <class name="data.entities.UsersJobs" table="UsersJobs">
     <id name="id">
       <column name="id" sql-type="int(11)"/>
       <generator class="native">
@@ -101,7 +101,7 @@
       <column name="endTime" not-null="false" sql-type="date"/>
     </property>
   </class>
-  <class name="data.entities.JobArea" schema="OCS" table="JobArea">
+  <class name="data.entities.JobArea" table="JobArea">
     <id name="id">
       <column name="id" sql-type="int(11)"/>
       <generator class="native">
@@ -112,7 +112,7 @@
       <column length="45" name="name" not-null="true" sql-type="varchar(45)"/>
     </property>
   </class>
- <class name="data.entities.JobRequest" schema="OCS" table="JobRequest">
+ <class name="data.entities.JobRequest" table="JobRequest">
         <id name="id">
             <column name="id" sql-type="int(11)"/>
             <generator class="native">
