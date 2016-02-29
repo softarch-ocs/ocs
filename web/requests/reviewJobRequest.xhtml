@@ -1,0 +1,54 @@
+<ui:composition
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+    xmlns:jsf="http://xmlns.jcp.org/jsf"
+    template="/WEB-INF/layout.xhtml">
+    <ui:define name="content">
+        #{reviewJobRequestController.setJobRequest(param['id'])}
+
+        <h1>Review a job request</h1>
+
+        <div class="alert alert-danger" role="alert" jsf:rendered="#{not empty facesContext.messageList}">
+            <h:messages></h:messages>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title" >Employee name</h3>
+            </div>
+            <div class="panel-body" >
+                #{reviewJobRequestController.jobRequest.user.firstName} #{reviewJobRequestController.jobRequest.user.lastName}
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title" >Job name</h3>
+            </div>
+            <div class="panel-body" >
+                #{reviewJobRequestController.jobRequest.job.name}
+            </div>
+        </div>
+
+        <h:form>
+            <div class="form-group">
+                <label for="selectStatus" class="col-sm-2 control-label">Select status</label>
+                <h:selectOneMenu id="inputStatus" class="form-control" required="true"
+                                 value="#{reviewJobRequestController.jobRequest.status}">
+                    <f:selectItem id="acceptOption" itemLabel="Accept" itemValue="ACCEPTED" />
+                    <f:selectItem id="rejectOption" itemLabel="Reject" itemValue="REJECTED" />
+                </h:selectOneMenu>
+
+
+                <div class="col-sm-2 col-sm-10">
+                    <h:commandButton action="#{reviewJobRequestController.changeJobRequestStatus()}" value="Update"
+                                     p:class="btn btn-default"></h:commandButton>                    
+                </div>
+
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>
