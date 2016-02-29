@@ -1,0 +1,43 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+        xmlns:jsf="http://xmlns.jcp.org/jsf"
+        template="/WEB-INF/layout.xhtml">
+    <ui:define name="content">
+        <h1>User list</h1>
+
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Last name</th>
+                        <th>First name</th>
+                        <th>Email</th>
+                        <th>Personal id</th>
+                        <th>Gender</th>
+                        <th>Birthday</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <ui:repeat var="user" value="#{userListController.users}" varStatus="status">
+                    <tr>
+                        <td>#{user.lastName}</td>
+                        <td>#{user.firstName}</td>
+                        <td>#{user.email}</td>
+                        <td>#{user.personalId}</td>
+                        <td>#{user.gender}</td>
+                        <td>#{user.birthday}</td>
+                        <td>
+                            
+                        </td>
+                    </tr>
+
+                </ui:repeat>
+
+            </table>
+        </div>
+    </ui:define>
+</ui:composition>

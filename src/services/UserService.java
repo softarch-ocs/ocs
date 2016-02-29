@@ -6,6 +6,7 @@ import data.entities.User;
 import java.util.List;
 import java.util.Map;
 import javax.faces.context.FacesContext;
+import org.hibernate.Hibernate;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -85,6 +86,21 @@ public class UserService {
         return getUserById(id);
     }
     
+    public User getFullUserById(int id) {
+        Session session = sessionFactory.getCurrentSession();
+
+        try (TransactionContext ctx = new TransactionContext(session)) {
+            User result = (User)session.get(User.class, id);
+            Hibernate.initialize( result.getJobFeatures() );
+            ctx.commit();
+            
+            return result;
+        } catch (HibernateException ex) {
+            throw new OcsPersistenceException(ex);
+        }
+    }
+    
+    
     public User getUserById(int id) {
         Session session = sessionFactory.getCurrentSession();
 
@@ -93,6 +109,21 @@ public class UserService {
             ctx.commit();
             
             return result;
+        } catch (HibernateException ex) {
+            throw new OcsPersistenceException(ex);
+        }
+    }
+    
+    public List<User> getAllUsers() {
+        Session session = sessionFactory.getCurrentSession();
+        
+        try (TransactionContext ctx = new TransactionContext(session)) {
+            List<User> results = (List<User>)session.createCriteria(User.class)
+                .list();
+            
+            ctx.commit();
+            
+            return results;
         } catch (HibernateException ex) {
             throw new OcsPersistenceException(ex);
         }
