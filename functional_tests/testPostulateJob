@@ -48,13 +48,8 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>id=j_idt21:selectJob</td>
-	<td>Arquitecto</td>
-</tr>
-<tr>
-	<td>assertText</td>
 	<td>css=div.panel-body</td>
-	<td>Desarrolla la arquitectura del proyecto </td>
+	<td>Desarrolla la arquitectura del proyecto</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -64,7 +59,7 @@
 <tr>
 	<td>assertText</td>
 	<td>css=div.alert.alert-danger &gt; ul &gt; li</td>
-	<td>Sorry, you can't postulate again to this job </td>
+	<td>Sorry, you can't postulate again to this job</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -104,17 +99,12 @@
 <tr>
 	<td>assertText</td>
 	<td>css=div.panel-body</td>
-	<td>Paula Q </td>
+	<td>Paula Q</td>
 </tr>
 <tr>
 	<td>select</td>
 	<td>id=j_idt23:inputStatus</td>
 	<td>label=Reject</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>id=j_idt23:inputStatus</td>
-	<td>Reject</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -160,11 +150,6 @@
 	<td>select</td>
 	<td>id=j_idt21:selectJob</td>
 	<td>label=Arquitecto</td>
-</tr>
-<tr>
-	<td>assertAlert</td>
-	<td>id=j_idt21:selectJob</td>
-	<td>Arquictecto</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
