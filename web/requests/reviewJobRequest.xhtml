@@ -7,9 +7,7 @@
     xmlns:jsf="http://xmlns.jcp.org/jsf"
     template="/WEB-INF/layout.xhtml">
     <ui:define name="content">
-        <ui:param name="id" value="${param['id']}"></ui:param>
-                
-        #{reviewJobRequestController.setJobRequest(id)}
+        #{reviewJobRequestController.setJobRequest(param['id'])}
 
         <h1>Review a job request</h1>
 

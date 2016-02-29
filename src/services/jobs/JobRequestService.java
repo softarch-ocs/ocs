@@ -2,10 +2,14 @@ package services.jobs;
 
 import data.dao.HibernateUtil;
 import data.dao.TransactionContext;
+import data.entities.Job;
 import data.entities.JobRequest;
+import data.entities.User;
+import data.entities.UsersJobs;
+import java.sql.Date;
+import java.util.Calendar;
 import java.util.List;
 import org.hibernate.FetchMode;
-import org.hibernate.Hibernate;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -83,6 +87,17 @@ public class JobRequestService {
         try {
             tx = session.beginTransaction();
             session.update(jobRequest);
+
+            if (jobRequest.getStatus() == JobRequest.Status.ACCEPTED) {
+                UsersJobs userJobs = new UsersJobs();
+                userJobs.setUser(jobRequest.getUser());
+                userJobs.setJob(jobRequest.getJob());
+                Calendar calendar = Calendar.getInstance();
+                userJobs.setStartTime(new Date(calendar.getTime().getTime()));
+                userJobs.setEndTime(null);
+                session.save(userJobs);
+            }
+
             tx.commit();
         } catch (HibernateException e) {
             if (tx != null) {
@@ -91,6 +106,11 @@ public class JobRequestService {
             throw new OcsPersistenceException(e);
         }
 
+    }
+    
+    public void checkJobRequirements(User user, Job job){
+        
+        
     }
 
 }

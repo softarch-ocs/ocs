@@ -16,7 +16,6 @@ public class ReviewJobRequestController {
     private UserJobRelationServices userJobRelationServices;
     private JobRequestService jobRequestService;
     private JobRequest jobRequest;
-    private Long id;
 
     public ReviewJobRequestController(JobRequestService jobRequestService,
             UserJobRelationServices userJobRelationServices) {
@@ -41,20 +40,8 @@ public class ReviewJobRequestController {
         return jobRequest;
     }
 
-    public void setJobRequest(JobRequest jobRequest) {
-        this.jobRequest = jobRequest;
-    }
-
     public void setJobRequest(int jobRequestID) {
         this.jobRequest = jobRequestService.readJobRequest(jobRequestID);
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String changeJobRequestStatus() {

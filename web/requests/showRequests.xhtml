@@ -20,17 +20,36 @@
                             <th>Status</th>
                         </tr>
                     </thead>
-                    <ui:repeat var="req" value="#{showJobRequestsController.jobRequests}" varStatus="status">
+                    <ui:repeat var="req" value="#{showJobRequestsController.showActiveJobRequest()}" varStatus="status">
                         <tr>
                             <td><a href='reviewJobRequest.xhtml?id=${req.id}'>#{req.user.firstName} #{req.user.lastName} </a> </td>
                             <td>#{req.job.name}</td> 
                             <td>#{req.status}</td>
                         </tr>
-
                     </ui:repeat>
-
                 </table>
-
+            </div>
+        </div>
+        
+        <div class="container">
+            <div class="table-responsive">
+                <h2>Resolved requests</h2>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Job</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <ui:repeat var="req" value="#{showJobRequestsController.showResolvedJobRequest()}" varStatus="status">
+                        <tr>
+                            <td>#{req.user.firstName} #{req.user.lastName}</td>
+                            <td>#{req.job.name}</td> 
+                            <td>#{req.status}</td>
+                        </tr>
+                    </ui:repeat>
+                </table>
             </div>
         </div>
 

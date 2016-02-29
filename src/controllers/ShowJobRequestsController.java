@@ -1,6 +1,7 @@
 package controllers;
 
 import data.entities.JobRequest;
+import java.util.ArrayList;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -33,6 +34,26 @@ public class ShowJobRequestsController {
 
     public void setJobRequests(List jobRequests) {
         this.jobRequests = jobRequests;
+    }
+    
+    public List<JobRequest> showActiveJobRequest(){
+        List<JobRequest> active = new ArrayList<>();
+        
+        for(JobRequest jb : jobRequests){
+            if(jb.getStatus() == JobRequest.Status.ACTIVE) active.add(jb);
+        }
+        
+        return active;
+    }
+    
+    public List<JobRequest> showResolvedJobRequest(){
+        List<JobRequest> resolved = new ArrayList<>();
+        
+        for(JobRequest jb : jobRequests){
+            if(jb.getStatus() != JobRequest.Status.ACTIVE) resolved.add(jb);
+        }
+        
+        return resolved;
     }
 
 }
