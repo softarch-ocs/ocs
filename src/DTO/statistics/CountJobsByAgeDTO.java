@@ -7,12 +7,12 @@ public class CountJobsByAgeDTO {
     private Integer birthday;
     private Long count;
 
-    public Integer getBd() {
+    public Integer getBirthday() {
         return birthday;
     }
 
-    public void setBd(Integer bd) {
-        this.birthday = bd;
+    public void setBirthday(Integer birthday) {
+        this.birthday = birthday;
     }
 
     public Long getCount() {
@@ -22,7 +22,10 @@ public class CountJobsByAgeDTO {
     public void setCount(Long count) {
         this.count = count;
     }
+    
+    
 
+    
     @Override
     public String toString() {
         return "CountJobsByAgeDTO{" + "year=" + birthday + ", count=" + count + '}';
