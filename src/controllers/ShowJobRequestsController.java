@@ -1,20 +1,26 @@
 package controllers;
 
 import data.entities.JobRequest;
+import data.entities.User;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import services.UserService;
 import services.jobs.JobRequestService;
 
 @ManagedBean
 @ViewScoped
-public class ShowJobRequestsController {
+public class ShowJobRequestsController extends BaseController{
 
     private JobRequestService jobRequestService;
     private List<JobRequest> jobRequests;
 
-    public ShowJobRequestsController(JobRequestService jobRequestService) {
+    public ShowJobRequestsController(JobRequestService jobRequestService,
+            UserService userService) {
+        
+        super(userService);
 
         if (jobRequestService == null) {
             throw new IllegalArgumentException("jobRequest");
@@ -25,7 +31,12 @@ public class ShowJobRequestsController {
     }
 
     public ShowJobRequestsController() {
-        this(new JobRequestService());
+        this(new JobRequestService(), new UserService());
+    }
+    
+    @PostConstruct
+    public void initialize(){
+        requireRole(User.Role.ADMIN);
     }
 
     public List getJobRequests() {

@@ -34,15 +34,16 @@
                 </div>
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
-                        <li><a href="#{request.contextPath}/index.xhtml">Home</a></li>
                         <c:if test="#{userController.hasRole('USER')}">
                             <li><a href="#{request.contextPath}/usersJobs/myJobHistory.xhtml">My job history</a></li>
+                            <li><a href="#{request.contextPath}/requests/postulateJob.xhtml">Postulate</a></li>
                         </c:if>
                         <c:if test="#{userController.hasRole('ADMIN')}">
                             <li><a href="#{request.contextPath}/jobs/showJobs.xhtml">Jobs</a></li>
                             <li><a href="#{request.contextPath}/features/showAllFeatures.xhtml">Features</a></li>
                             <li><a href="#{request.contextPath}/users/showUsers.xhtml">Users</a></li>
                             <li><a href="#{request.contextPath}/statistics/statistics.xhtml">Statistics</a></li>
+                            <li><a href="#{request.contextPath}/requests/showRequests.xhtml">Requests</a></li>
                         </c:if>
                     </ul>
                     

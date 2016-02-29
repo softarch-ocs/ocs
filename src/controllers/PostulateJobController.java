@@ -4,6 +4,7 @@ import data.entities.Job;
 import data.entities.JobRequest;
 import data.entities.User;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -18,18 +19,18 @@ import services.jobs.JobServices;
 
 @ManagedBean
 @ViewScoped
-public class PostulateJobController {
+public class PostulateJobController extends BaseController{
 
     private JobRequestService jobRequestService;
     private JobServices jobServices;
     private JobRequest jobRequest;
-    private UserService userService;
     private User user;
     private List jobs;
 
     public PostulateJobController(JobRequestService jobRequestService,
             JobServices jobServices, UserService userService) {
-
+        
+        super(userService);
         if (jobRequestService == null) {
             throw new IllegalArgumentException("jobRequest");
         } else if (jobServices == null) {
@@ -41,13 +42,17 @@ public class PostulateJobController {
         this.jobs = jobServices.readAllJobs();
         this.jobRequestService = jobRequestService;
         this.jobServices = jobServices;
-        this.userService = userService;
         this.jobRequest = new JobRequest();
         this.user = userService.getLoggedInUser();
     }
 
     public PostulateJobController() {
         this(new JobRequestService(), new JobServices(), new UserService());
+    }
+    
+    @PostConstruct
+    public void initialize(){
+        requireRole(User.Role.USER);
     }
 
     public String requestJob(PostulateJobBean postulateJobBean) {
