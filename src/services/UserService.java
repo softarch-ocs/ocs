@@ -11,19 +11,22 @@ import org.hibernate.Hibernate;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import services.exceptions.OcsPersistenceException;
 
 public class UserService {
+
     private SessionFactory sessionFactory;
+
     public UserService(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
-    
+
     public UserService() {
         this(HibernateUtil.getSessionFactory());
     }
-    
+
     public void registerNewUser(User user) {
         Session session = sessionFactory.getCurrentSession();
 
@@ -34,113 +37,111 @@ public class UserService {
             throw new OcsPersistenceException(ex);
         }
     }
-    
+
     public boolean login(String email, String password) {
         if (email == null) {
             throw new IllegalArgumentException("email");
         }
-        
+
         if (password == null) {
             throw new IllegalArgumentException("password");
         }
-        
+
         User user = getUserByEmailAndPassword(email, password);
-        
+
         if (user == null) {
             return false;
         }
-        
+
         login(user);
-        
+
         return true;
     }
-    
+
     public void login(User user) {
         if (user == null) {
             throw new IllegalArgumentException("user");
         }
-        
-        Map<String, Object> sessionMap = 
-                FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
-        
+
+        Map<String, Object> sessionMap
+                = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
+
         sessionMap.put("USER_ID", user.getId());
     }
-    
-    public void logout(){
-        Map<String, Object> sessionMap = 
-                FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
-        
-        
+
+    public void logout() {
+        Map<String, Object> sessionMap
+                = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
+
         sessionMap.remove("USER_ID");
     }
-    
+
     public User getLoggedInUser() {
-        Map<String, Object> sessionMap = 
-                FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
-        
-        Integer id = (Integer)sessionMap.get("USER_ID");
-        
+        Map<String, Object> sessionMap
+                = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
+
+        Integer id = (Integer) sessionMap.get("USER_ID");
+
         if (id == null) {
             return null;
         }
-        
+
         return getUserById(id);
     }
-    
+
     public User getFullUserById(int id) {
         Session session = sessionFactory.getCurrentSession();
 
         try (TransactionContext ctx = new TransactionContext(session)) {
-            User result = (User)session.get(User.class, id);
-            Hibernate.initialize( result.getJobFeatures() );
+            User result = (User) session.get(User.class, id);
+            Hibernate.initialize(result.getJobFeatures());
             ctx.commit();
-            
+
             return result;
         } catch (HibernateException ex) {
             throw new OcsPersistenceException(ex);
         }
     }
-    
-    
+
     public User getUserById(int id) {
         Session session = sessionFactory.getCurrentSession();
 
         try (TransactionContext ctx = new TransactionContext(session)) {
-            User result = (User)session.get(User.class, id);
+            User result = (User) session.get(User.class, id);
             ctx.commit();
-            
+
             return result;
         } catch (HibernateException ex) {
             throw new OcsPersistenceException(ex);
         }
     }
-    
+
     public List<User> getAllUsers() {
         Session session = sessionFactory.getCurrentSession();
-        
+
         try (TransactionContext ctx = new TransactionContext(session)) {
-            List<User> results = (List<User>)session.createCriteria(User.class)
-                .list();
-            
+            List<User> results = (List<User>) session.createCriteria(User.class)
+                    .list();
+
             ctx.commit();
-            
+
             return results;
         } catch (HibernateException ex) {
             throw new OcsPersistenceException(ex);
         }
     }
-    
+
     private User getUserByEmailAndPassword(String email, String password) {
         Session session = sessionFactory.getCurrentSession();
-        
+
         try (TransactionContext ctx = new TransactionContext(session)) {
-            List<User> results = (List<User>)session.createCriteria(User.class)
-                .add(Restrictions.eq("email", email))
-                .add(Restrictions.eq("password", password))
-                .list();
-            
+            List<User> results = (List<User>) session.createCriteria(User.class)
+                    .add(Restrictions.eq("email", email))
+                    .add(Restrictions.eq("password", password))
+                    .list();
+
             ctx.commit();
-            
+
             return results.isEmpty() ? null : results.get(0);
         } catch (HibernateException ex) {
             throw new OcsPersistenceException(ex);
