@@ -2,6 +2,8 @@ package controllers;
 
 import data.entities.Job;
 import data.entities.User;
+import java.util.Collections;
+import java.util.Comparator;
 
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -20,7 +22,15 @@ public class ShowJobsController extends BaseController {
         super(userService);
         this.jobServices = jobServices;
         
-        jobs = jobServices.readAllJobsWithArea();
+        jobs = this.jobServices.readAllJobsWithArea();
+        Collections.sort(jobs, new Comparator<Job>(){
+
+            @Override
+            public int compare(Job o1, Job o2) {
+                return o1.getName().compareTo(o2.getName());
+            }
+        });
+        
     }
     
 
