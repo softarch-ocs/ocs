@@ -159,7 +159,15 @@ public class JobRequestService {
                     "Sorry, you can't postulate again to this job"));
         }
         
-        //TODO check job in user
+        UserJobRelationServices userJobRelationServices = new UserJobRelationServices(sessionFactory);
+        List<UsersJobs> jobs = userJobRelationServices.getUsersJobsByUserId(jobRequest.getUser().getId());
+        
+        for(UsersJobs job: jobs){
+            if(job.getJob().getId() == jobRequest.getJob().getId()){
+                  throw new OcsValidationException(new OcsValidationException.ValidationItem(
+                    "Sorry, you are currently working in this job."));
+            }
+        }
 
     }
 

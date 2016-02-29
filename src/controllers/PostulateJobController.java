@@ -11,7 +11,6 @@ import javax.faces.context.FacesContext;
 import presentation.beans.PostulateJobBean;
 import services.UserService;
 import services.exceptions.OcsPersistenceException;
-import services.exceptions.OcsServiceException;
 import services.exceptions.OcsValidationException.ValidationItem;
 import services.exceptions.OcsValidationException;
 import services.jobs.JobRequestService;
