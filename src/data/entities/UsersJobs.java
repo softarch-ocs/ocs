@@ -1,6 +1,6 @@
 package data.entities;
 
-import java.sql.Date;
+import java.util.Date;
 
 public class UsersJobs {
     private int id;
