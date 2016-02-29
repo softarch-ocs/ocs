@@ -35,9 +35,9 @@ public class HandleJobController {
     public HandleJobController(){
         this( new JobServices() );
         entity = new Job();
-        entity.setName("name placeholder");
+        entity.setName("");
         entity.setSalary(0);
-        entity.setDescription("description placeholder");
+        entity.setDescription("");
         
         areas = jobServices.readAllJobsArea();               
     }
@@ -54,9 +54,9 @@ public class HandleJobController {
         System.out.println("Init edit");
         this.id = id;
         entity = new Job();
-        entity.setName("name placeholder");
+        entity.setName("");
         entity.setSalary(0);
-        entity.setDescription("description placeholder");
+        entity.setDescription("");
         if(id!=null)
             this.entity = jobServices.readJobWithJobArea(Integer.parseInt(""+id));
         

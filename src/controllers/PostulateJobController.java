@@ -10,7 +10,10 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import presentation.beans.PostulateJobBean;
 import services.UserService;
+import services.exceptions.OcsPersistenceException;
 import services.exceptions.OcsServiceException;
+import services.exceptions.OcsValidationException.ValidationItem;
+import services.exceptions.OcsValidationException;
 import services.jobs.JobRequestService;
 import services.jobs.JobServices;
 
@@ -54,11 +57,21 @@ public class PostulateJobController {
             this.jobRequest.setUser(user);
             jobRequest.setStatus(JobRequest.Status.ACTIVE);
             jobRequest.setJob(jobServices.readJob(postulateJobBean.getSelectedJob()));
+
+            jobRequestService.checkAvailability(jobRequest);
+            jobRequestService.checkJobRequirements(user, jobRequest.getJob());
+            
             jobRequestService.createJobRequest(jobRequest);
             return "/index.xhtml";
-        } catch (OcsServiceException ex) {
+        } catch (OcsPersistenceException ex) {
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage("Oops, we had an error processing your request"));
+            return "";
+        } catch (OcsValidationException ex) {
+            for (ValidationItem val : ex.getValidationItems()) {
+                FacesContext.getCurrentInstance().addMessage(null,
+                        new FacesMessage(val.getMessage()));
+            }
             return "";
         }
     }

@@ -5,7 +5,6 @@ import services.UserService;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import presentation.beans.LoginBean;
 
 @ManagedBean
 @ViewScoped

@@ -6,13 +6,19 @@
         xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 
     <ui:define name="content">
-        #{ statisticsController.areaData }
+        <legend>Statistics</legend>
+       <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+       
+        <h:outputScript>
+           var genderData = #{ statisticsController.genderData };
+           var areaData = #{ statisticsController.areaData };
+           var yearData = #{ statisticsController.yearData };
+        </h:outputScript>
+        <h:outputScript library="js" name="statistics.js"></h:outputScript>
+        
         <div class="container">
-
-            <div class="starter-template">
-                
-                
-            </div>
+            <div id="chartsDiv" ></div>
+            
         </div><!-- /.container -->
     </ui:define>
 

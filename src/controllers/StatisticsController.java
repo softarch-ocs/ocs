@@ -1,27 +1,28 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package controllers;
 
+import DTO.statistics.CountJobsByAgeDTO;
+import DTO.statistics.CountJobsByAreaDTO;
+import DTO.statistics.CountJobsByGenderDTO;
+import com.sun.xml.rpc.processor.generator.nodes.JaxRpcMappingTagNames;
+import data.entities.User;
+import java.util.List;
 import java.util.Map;
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import services.jobs.StatisticsService;
-
-/**
- *
- * @author Felipe
- */
+import services.UserService;
+import services.statistics.StatisticsService;
 
 @ManagedBean
 @ViewScoped
-public class StatisticsController {
+public class StatisticsController extends BaseController {
     private StatisticsService statisticsService;
-    private Map<String,Integer> areaData;
+    private String areaData, genderData;
+    private String yearData;
     
-    public StatisticsController(StatisticsService statisticsService) {
+    public StatisticsController(StatisticsService statisticsService, UserService userService) {
+        super(userService);
         if( statisticsService == null ){
             throw new IllegalArgumentException("statisticsServices");
         }
@@ -30,12 +31,30 @@ public class StatisticsController {
     }
 
     public StatisticsController() {
-        this(new StatisticsService());
-        areaData = statisticsService.getAreaData();
+        this(new StatisticsService(),new UserService());
+        areaData =  CountJobsByAreaDTO.dictionaryToString( statisticsService.getAreaData() );
+        genderData = CountJobsByGenderDTO.dictionaryToString( statisticsService.getGenderData() );
+        yearData =  CountJobsByAgeDTO.dictionaryToString( statisticsService.getAgeData() );
+    }
+    
+    @PostConstruct
+    public void initialize() {
+        requireRole(User.Role.ADMIN);
     }
 
-    public Map<String, Integer> getAreaData() {
+    public String getYearData() {
+        return yearData;
+    }
+
+    
+    public String getAreaData() {
         return areaData;
     }    
+
+    public String getGenderData() {
+        return genderData;
+    }
+    
+    
     
 }

@@ -1,0 +1,52 @@
+<ui:composition
+    template="../WEB-INF/layout.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+    >
+
+    <ui:define name="content">
+
+        <div class="container">
+            <div class="table-responsive">
+                <h2>Features</h2>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <ui:repeat var="feature" value="#{showFeaturesController.getFeatures()}" varStatus="status">
+                        <h:form rendered="#{!handleUserFeatureController.isFeatureInUser( feature )}">
+                            <tr>
+                                <td>#{feature.name}</td>
+                                <td>#{feature.description}</td>
+                                <td>
+                                    <h:commandLink 
+                                        styleClass="btn btn-success"
+                                        action="#{handleUserFeatureController.joinFeatureUser( feature )}"
+                                        value="add Feature">
+                                    </h:commandLink>
+                                </td>
+                            </tr>
+                        </h:form>
+
+                    </ui:repeat>
+                </table>
+            </div>
+        </div>
+        <div class="text-center">
+            <a 
+                class="btn btn-success" 
+                href="#{request.contextPath}/features/showUserFeatures.xhtml?id=#{handleUserFeatureController.userId}"
+                >
+                Accept
+            </a>
+        </div>
+        
+    </ui:define>
+
+</ui:composition>

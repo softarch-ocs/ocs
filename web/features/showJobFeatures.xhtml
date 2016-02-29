@@ -4,13 +4,13 @@
         xmlns:f="http://xmlns.jcp.org/jsf/core"
         xmlns:h="http://xmlns.jcp.org/jsf/html"
         xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
-
+    
     <ui:param name="id" value="#{param['id']}"></ui:param>
     <ui:define name="content">
-        #{ showFeaturesController.initUserFeatures( id ) }
+        #{ showFeaturesController.initJobFeatures( id ) }
         <div class="container">
             <div class="table-responsive">
-                <h2>User Features</h2>
+                <h2>Job Features</h2>
                 <table class="table">
                         <thead>
                             <tr>
@@ -18,16 +18,16 @@
                                 <th>Description</th>
                             </tr>
                         </thead>
-                        <ui:repeat var="feature" value="#{showFeaturesController.getUserFeatures()}" varStatus="status">
+                        <ui:repeat var="feature" value="#{showFeaturesController.getJobFeatures()}" varStatus="status">
                             <tr>
                                 <td>#{feature.name}</td>
                                 <td>#{feature.description}</td>
                                 <td>
                                     <h:form>
                                         <h:commandLink 
-                                            rendered="#{handleUserFeatureController.isFeatureInUser( feature )}"
+                                            rendered="#{handleJobFeatureController.isFeatureInJob( feature )}"
                                             styleClass="btn btn-danger"
-                                            action="#{handleUserFeatureController.deleteFeatureUser( feature )}"
+                                            action="#{handleJobFeatureController.deleteFeatureJob( feature )}"
                                             value="delete Feature">
                                         </h:commandLink>
                                     </h:form>
@@ -41,7 +41,7 @@
                 <div class="text-center">
                     <a 
                         class="btn btn-success" 
-                        href="#{request.contextPath}/features/addUserFeatures.xhtml?id=#{id}"
+                        href="#{request.contextPath}/features/addJobFeatures.xhtml?id=#{id}"
                         >
                         Add Feature
                     </a>

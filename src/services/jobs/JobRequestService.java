@@ -3,19 +3,24 @@ package services.jobs;
 import data.dao.HibernateUtil;
 import data.dao.TransactionContext;
 import data.entities.Job;
+import data.entities.JobFeature;
 import data.entities.JobRequest;
+import data.entities.JobRequest.Status;
 import data.entities.User;
 import data.entities.UsersJobs;
 import java.sql.Date;
 import java.util.Calendar;
 import java.util.List;
 import org.hibernate.FetchMode;
+import org.hibernate.Hibernate;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
+import services.FeatureServices;
 import services.exceptions.OcsPersistenceException;
+import services.exceptions.OcsValidationException;
 
 public class JobRequestService {
 
@@ -79,6 +84,29 @@ public class JobRequestService {
 
         return jobRequest;
     }
+    
+    public JobRequest readJobRequest(User user, Job job, Status status) {
+        Session session = sessionFactory.getCurrentSession();
+        Transaction tx = null;
+        JobRequest jobRequest = null;
+        try {
+            tx = session.beginTransaction();
+            jobRequest = (JobRequest) session.createCriteria(JobRequest.class)
+                    .add(Restrictions.eq("user", user))
+                    .add(Restrictions.eq("job", job))
+                    .add(Restrictions.eq("status", status))
+                    .setFetchMode("user", FetchMode.JOIN)
+                    .setFetchMode("job", FetchMode.JOIN).uniqueResult();
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            throw new OcsPersistenceException(e);
+        }
+
+        return jobRequest;
+    }
 
     public void changeStatusJobRequest(JobRequest jobRequest) {
         Session session = sessionFactory.getCurrentSession();
@@ -107,10 +135,32 @@ public class JobRequestService {
         }
 
     }
-    
-    public void checkJobRequirements(User user, Job job){
+
+    public boolean checkJobRequirements(User user, Job job) {
+
+        FeatureServices featureServices = new FeatureServices(sessionFactory);
+
+        List userFeatures = featureServices.readFeatures(user);
+        List jobFeatures = featureServices.readFeatures(job);
+
+        if (userFeatures.containsAll(jobFeatures)) {
+            return true;
+        } else {
+            throw new OcsValidationException(new OcsValidationException.ValidationItem(
+                    "Sorry, you don't fulfill the necessary requirements to postulate to this job"));
+        }
+
+    }
+
+    public void checkAvailability(JobRequest jobRequest) {
+                
+        if (readJobRequest(jobRequest.getUser(), jobRequest.getJob(), jobRequest.getStatus()) != null) {
+            throw new OcsValidationException(new OcsValidationException.ValidationItem(
+                    "Sorry, you can't postulate again to this job"));
+        }
         
-        
+        //TODO check job in user
+
     }
 
 }
