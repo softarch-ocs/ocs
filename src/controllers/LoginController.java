@@ -39,10 +39,10 @@ public class LoginController {
                     .remove("POST_LOGIN_REDIRECT");
             
             if (target == null) {
-                target = "/index.xhtml";
+                target = "/index.xhtml?";
             }
             
-            return target;
+            return target + "&faces-redirect=true";
         } else {
             FacesContext.getCurrentInstance().addMessage(null, 
                     new FacesMessage("Invalid credentials"));

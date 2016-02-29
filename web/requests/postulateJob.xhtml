@@ -1,0 +1,74 @@
+<ui:composition
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+    xmlns:jsf="http://xmlns.jcp.org/jsf"
+    template="/WEB-INF/layout.xhtml">
+    <ui:define name="content">
+        <h1>Postulate to job</h1>
+
+        <div class="alert alert-danger" role="alert" jsf:rendered="#{not empty facesContext.messageList}">
+            <h:messages></h:messages>
+        </div>
+
+        <h:form>
+            <div class="form-group">
+                <label for="selectJob" class="col-sm-2 control-label">Select job</label>
+                <h:selectOneMenu id="selectJob" class="form-control" value="#{postulateJobBean.selectedJob}">
+                    <f:selectItem itemValue="#{null}" itemLabel="-- select one job --" />
+                    <f:selectItems value="#{postulateJobController.jobs}" var="job" 
+                                   itemValue="#{job.id}" itemLabel="#{job.name}"  />
+                    <f:ajax listener="#{postulateJobController.selectJob(postulateJobBean)}" render="description" />
+                </h:selectOneMenu>
+            </div>
+        </h:form>
+
+        <div jsf:id="description">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title" >Job description</h3>
+                </div>
+                <div class="panel-body" >
+                    <h:outputText value="#{postulateJobBean.description}"/>
+                </div>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Job features</h3>
+                </div>
+                <div class="panel-body">
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <ui:repeat var="feature" value="#{postulateJobBean.features}" varStatus="status">
+                            <tr>
+                                <td>#{feature.name}</td>
+                                <td>#{feature.description}</td>
+                            </tr>
+
+                        </ui:repeat>
+
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <h:form>
+                <div class="col-sm-2 col-sm-10">
+                    <h:commandButton action="#{postulateJobController.requestJob(postulateJobBean)}" value="Postulate"
+                                     p:class="btn btn-default"></h:commandButton>                    
+                </div>
+            </h:form>
+        </div>
+
+    </ui:define>
+</ui:composition>

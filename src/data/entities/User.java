@@ -27,7 +27,7 @@ public class User {
     private Date birthday;
     private Gender gender;
     private List<JobFeature> jobFeatures;
-
+    
     public User() {
         this.jobFeatures = new ArrayList<>();
     }
@@ -127,7 +127,7 @@ public class User {
     public void setGender(Gender gender) {
         this.gender = gender;
     }
-
+    
     @Override
     public int hashCode() {
         int hash = 7;
