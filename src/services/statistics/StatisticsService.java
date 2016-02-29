@@ -1,5 +1,5 @@
 
-package services.jobs;
+package services.statistics;
 
 import DTO.statistics.CountJobsByAgeDTO;
 import DTO.statistics.CountJobsByAreaDTO;
@@ -7,18 +7,13 @@ import DTO.statistics.CountJobsByGenderDTO;
 import data.dao.HibernateUtil;
 import data.entities.Job;
 import data.entities.User;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import org.hibernate.FetchMode;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Projections;
-import org.hibernate.criterion.Restrictions;
-import org.hibernate.transform.AliasToBeanConstructorResultTransformer;
 import org.hibernate.transform.AliasToBeanResultTransformer;
-import org.hibernate.transform.AliasToEntityMapResultTransformer;
 
 /**
  *
@@ -51,16 +46,7 @@ public class StatisticsService {
                                 add(Projections.property("jobArea.name"),"name")). 
                                 setResultTransformer(new AliasToBeanResultTransformer(CountJobsByAreaDTO.class)).
                                 list();
-           
-           //data = new ArrayList<>();
-           /*for( Object[] o : list ){
-               Long ctr = (Long) o[0];
-               JobArea area = (JobArea) o[1]; 
-               Integer areaId = area.getId();
-               String areaName = area.getName();
-               data.add( new CountJobsByAreaDTO(areaName, areaId, ctr) );
-           }           
-            */
+
        } finally {
            tx.commit();
        }
@@ -72,8 +58,6 @@ public class StatisticsService {
        Session session = sessionFactory.getCurrentSession();
        Transaction tx = session.beginTransaction();
       List<CountJobsByGenderDTO> data;
-       String male = "male", female = "female";
-
        try{
            
            data = session.createCriteria(User.class).
@@ -83,22 +67,6 @@ public class StatisticsService {
                     ).
                    setResultTransformer( new AliasToBeanResultTransformer(CountJobsByGenderDTO.class) )
                   .list(); 
-
-           int bk = 1;       
-           /*data.put( male, 
-                            (Long) session.createCriteria(User.class).
-                                   setProjection(Projections.rowCount()).
-                                   add(Restrictions.eq("gender", User.Gender.MALE)).
-                                   uniqueResult()
-                   );
-           
-           data.put( female, 
-                            (Long) session.createCriteria(User.class).
-                                   setProjection(Projections.rowCount()).
-                                   add(Restrictions.eq("gender", User.Gender.FEMALE)).
-                                   uniqueResult()
-                   );
-     */
        } finally {
            tx.commit();
        }
@@ -116,7 +84,7 @@ public class StatisticsService {
 
        try{
            
-           data = session.createQuery("select year(birthday) as bd, count(*) as ctr from User group by year(birthday)").
+           data = session.createQuery("select year(birthday) as birthday, count(*) as count from User group by year(birthday)").
                    setResultTransformer(new AliasToBeanResultTransformer(CountJobsByAgeDTO.class))
                   .list(); 
 

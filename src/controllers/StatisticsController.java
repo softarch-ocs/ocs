@@ -12,7 +12,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import services.UserService;
-import services.jobs.StatisticsService;
+import services.statistics.StatisticsService;
 
 @ManagedBean
 @ViewScoped

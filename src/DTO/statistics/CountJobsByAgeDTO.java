@@ -1,42 +1,40 @@
 package DTO.statistics;
-
-import static DTO.statistics.CountJobsByGenderDTO.listToMap;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class CountJobsByAgeDTO {
-    private Integer bd;
-    private Long ctr;
+    private Integer birthday;
+    private Long count;
 
     public Integer getBd() {
-        return bd;
+        return birthday;
     }
 
     public void setBd(Integer bd) {
-        this.bd = bd;
+        this.birthday = bd;
     }
 
     public Long getCount() {
-        return ctr;
+        return count;
     }
 
     public void setCount(Long count) {
-        this.ctr = count;
+        this.count = count;
     }
 
     @Override
     public String toString() {
-        return "CountJobsByAgeDTO{" + "year=" + bd + ", count=" + ctr + '}';
+        return "CountJobsByAgeDTO{" + "year=" + birthday + ", count=" + count + '}';
     }
     
     public static Map<Integer,Long> listToMap( List<CountJobsByAgeDTO> list ){
         Map<Integer,Long> map = new HashMap<>();
         for( CountJobsByAgeDTO dto : list ){
-            if( !map.containsKey(dto.bd) )
-                map.put(dto.bd, 0L);
+            if( !map.containsKey(dto.birthday) )
+                map.put(dto.birthday, 0L);
             
-            map.put(dto.bd, map.get(dto.bd) + dto.ctr);
+            map.put(dto.birthday, map.get(dto.birthday) + dto.count);
         }
         return map;
     }
