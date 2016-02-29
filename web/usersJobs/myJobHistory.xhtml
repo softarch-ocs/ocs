@@ -1,0 +1,35 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+        xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+        xmlns:jsf="http://xmlns.jcp.org/jsf"
+        template="/WEB-INF/layout.xhtml">
+    <ui:define name="content">
+        <h1>My job history</h1>
+
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Job name</th>
+                        <th>Start date</th>
+                        <th>End date</th>
+                    </tr>
+                </thead>
+                <ui:repeat var="jobEntry" 
+                           value="#{myJobHistoryController.jobEntries}" 
+                           varStatus="status">
+                    <tr>
+                        <td>#{jobEntry.job.name}</td>
+                        <td>#{jobEntry.startTime}</td>
+                        <td>#{jobEntry.endTime}</td>
+                    </tr>
+
+                </ui:repeat>
+
+            </table>
+        </div>
+    </ui:define>
+</ui:composition>
