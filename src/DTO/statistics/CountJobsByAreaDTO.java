@@ -36,8 +36,4 @@ public class CountJobsByAreaDTO {
         }
         return map;
     }
-    
-    public static String dictionaryToString( List<CountJobsByAreaDTO> list ){
-        return listToMap(list).toString().replaceAll("=", ":");           
-    }
 }

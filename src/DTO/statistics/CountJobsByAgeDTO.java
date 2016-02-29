@@ -40,11 +40,5 @@ public class CountJobsByAgeDTO {
             map.put(dto.birthday, map.get(dto.birthday) + dto.count);
         }
         return map;
-    }
-    
-    public static String dictionaryToString( List<CountJobsByAgeDTO> list ){
-        return listToMap(list).toString().replaceAll("=", ":");           
-    }
-    
-    
+    }    
 }

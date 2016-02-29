@@ -6,13 +6,20 @@ import DTO.statistics.CountJobsByAreaDTO;
 import DTO.statistics.CountJobsByGenderDTO;
 import com.sun.xml.rpc.processor.generator.nodes.JaxRpcMappingTagNames;
 import data.entities.User;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+import org.codehaus.jackson.map.ObjectMapper;
 import services.UserService;
 import services.statistics.StatisticsService;
+
 
 @ManagedBean
 @ViewScoped
@@ -32,9 +39,15 @@ public class StatisticsController extends BaseController {
 
     public StatisticsController() {
         this(new StatisticsService(),new UserService());
-        areaData =  CountJobsByAreaDTO.dictionaryToString( statisticsService.getAreaData() );
-        genderData = CountJobsByGenderDTO.dictionaryToString( statisticsService.getGenderData() );
-        yearData =  CountJobsByAgeDTO.dictionaryToString( statisticsService.getAgeData() );
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            areaData =  mapper.writeValueAsString( CountJobsByAreaDTO.listToMap( statisticsService.getAreaData() ) );
+            genderData = mapper.writeValueAsString( CountJobsByGenderDTO.listToMap( statisticsService.getGenderData() ) );        
+            yearData = mapper.writeValueAsString( CountJobsByAgeDTO.listToMap( statisticsService.getAgeData() ) );
+        } catch (IOException ex) {
+             FacesContext.getCurrentInstance().addMessage(null, 
+                    new FacesMessage("Oops, we had an error processing your request"));
+        }
     }
     
     @PostConstruct
