@@ -23,8 +23,12 @@ public class UserController {
         this(new UserService());
     }
     
-
     public User getCurrentUser() {
         return userService.getLoggedInUser();
+    }
+    
+    public boolean hasRole(User.Role role) {
+        User user = getCurrentUser();
+        return user != null && user.getRole().compareTo(role) >= 0;
     }
 }

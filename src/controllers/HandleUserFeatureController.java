@@ -14,21 +14,21 @@ import services.UserService;
 
 @ManagedBean
 @ViewScoped
-public class HandleUserFeatureController {
-
+public class HandleUserFeatureController extends BaseController {
     private final FeatureServices featureServices;
     private final UserService userServices;
 
     private Integer id;
 
     public HandleUserFeatureController() {
-        super();
+        super(new UserService());
         featureServices = new FeatureServices();
         userServices = new UserService();
     }
 
     @PostConstruct
     public void initialize() {
+        requireRole(User.Role.ADMIN);
         String ret = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("id");
         if (ret == null) {
             throw new IllegalArgumentException("id not initilizated: HandleUserFeatureController: initialize()");

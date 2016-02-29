@@ -2,8 +2,10 @@ package controllers;
 
 import data.entities.Job;
 import data.entities.JobArea;
+import data.entities.User;
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -13,18 +15,20 @@ import services.jobs.JobServices;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import services.UserService;
 import services.exceptions.OcsServiceException;
 
 
 @ManagedBean
 @ViewScoped
-public class HandleJobController {
+public class HandleJobController extends BaseController {
     private Job entity;
     private Long id;
     private List<JobArea> areas;
     private JobServices jobServices;
     
-    public HandleJobController(JobServices jobServices){
+    public HandleJobController(JobServices jobServices, UserService userService) {
+        super(userService);
         if(jobServices == null){
             throw new IllegalArgumentException("jobServices");
         }
@@ -33,13 +37,18 @@ public class HandleJobController {
     }
 
     public HandleJobController(){
-        this( new JobServices() );
+        this(new JobServices(), new UserService());
         entity = new Job();
         entity.setName("");
         entity.setSalary(0);
         entity.setDescription("");
         
         areas = jobServices.readAllJobsArea();               
+    }
+    
+    @PostConstruct
+    public void initialize() {
+        requireRole(User.Role.ADMIN);
     }
 
     public Long getId() {

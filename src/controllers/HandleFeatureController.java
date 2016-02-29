@@ -1,15 +1,18 @@
 package controllers;
 
 import data.entities.JobFeature;
+import data.entities.User;
+import javax.annotation.PostConstruct;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
 import services.FeatureServices;
+import services.UserService;
 
 @ManagedBean
 @ViewScoped
-public class HandleFeatureController {
+public class HandleFeatureController extends BaseController {
 
     private final FeatureServices featureServices;
 
@@ -18,12 +21,17 @@ public class HandleFeatureController {
     private Long id;
 
     public HandleFeatureController() {
-        super();
+        super(new UserService());
         feature = new JobFeature();
         featureServices = new FeatureServices();
 
         feature.setName("name placeholder");
         feature.setDescription("description placeholder");
+    }
+    
+    @PostConstruct
+    public void initialize() {
+        requireRole(User.Role.ADMIN);
     }
 
     public Long getId() {

@@ -4,16 +4,15 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:jsf="http://xmlns.jcp.org/jsf">
     <h:head>
         <title>OCS</title>
         <!-- Bootstrap core CSS -->
         <h:outputStylesheet library="css" name="bootstrap.min.css"></h:outputStylesheet>
 
-
         <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
         <h:outputStylesheet library="css" name="ie10-viewport-bug-workaround.css"></h:outputStylesheet>
-
 
         <!-- Custom styles for this template -->
         <h:outputStylesheet library="css" name="starter-template.css"></h:outputStylesheet>
@@ -35,12 +34,17 @@
                 </div>
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
-                        <li><a href="#{request.contextPath}/index.xhtml">Home</a></li>
-                        <li><a href="#{request.contextPath}/usersJobs/myJobHistory.xhtml">My job history</a></li>
-                        <li><a href="#{request.contextPath}/jobs/showJobs.xhtml">Jobs</a></li>
-                        <li><a href="#{request.contextPath}/features/showAllFeatures.xhtml">Features</a></li>
-                        <li><a href="#{request.contextPath}/users/showUsers.xhtml">Users</a></li>
-                        <li><a href="#{request.contextPath}/statistics/statistics.xhtml">Statistics</a></li>
+                        <c:if test="#{userController.hasRole('USER')}">
+                            <li><a href="#{request.contextPath}/usersJobs/myJobHistory.xhtml">My job history</a></li>
+                            <li><a href="#{request.contextPath}/requests/postulateJob.xhtml">Postulate</a></li>
+                        </c:if>
+                        <c:if test="#{userController.hasRole('ADMIN')}">
+                            <li><a href="#{request.contextPath}/jobs/showJobs.xhtml">Jobs</a></li>
+                            <li><a href="#{request.contextPath}/features/showAllFeatures.xhtml">Features</a></li>
+                            <li><a href="#{request.contextPath}/users/showUsers.xhtml">Users</a></li>
+                            <li><a href="#{request.contextPath}/statistics/statistics.xhtml">Statistics</a></li>
+                            <li><a href="#{request.contextPath}/requests/showRequests.xhtml">Requests</a></li>
+                        </c:if>
                     </ul>
                     
                     <c:if test="#{userController.getCurrentUser() != null}">

@@ -98,7 +98,7 @@
       <column name="startTime" not-null="true" sql-type="date"/>
     </property>
     <property name="endTime">
-      <column name="endTime" not-null="true" sql-type="date"/>
+      <column name="endTime" not-null="false" sql-type="date"/>
     </property>
   </class>
   <class name="data.entities.JobArea" schema="OCS" table="JobArea">
@@ -112,4 +112,19 @@
       <column length="45" name="name" not-null="true" sql-type="varchar(45)"/>
     </property>
   </class>
+ <class name="data.entities.JobRequest" schema="OCS" table="JobRequest">
+        <id name="id">
+            <column name="id" sql-type="int(11)"/>
+            <generator class="native">
+                <param name="sequence">id_sequence</param>
+            </generator>
+        </id>
+        <property name="status" column="status" not-null="true">
+            <type name="org.hibernate.type.EnumType">
+                <param name="enumClass">data.entities.JobRequest$Status</param>
+            </type>
+        </property>
+        <many-to-one class="data.entities.Job" column="job" name="job" not-null="true"/>
+        <many-to-one class="data.entities.User" column="user" name="user" not-null="true"/>
+    </class>
 </hibernate-mapping>

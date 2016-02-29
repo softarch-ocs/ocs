@@ -77,7 +77,8 @@ public class HandleUsersJobsController extends BaseController {
     }
     
     @PostConstruct
-    public void initialize() {       
+    public void initialize() {
+        requireRole(User.Role.ADMIN);
         Integer userId = Integer.parseInt(FacesContext.getCurrentInstance()
                 .getExternalContext().getRequestParameterMap().get("userId"));
         
