@@ -31,7 +31,10 @@
                         <td>#{user.gender}</td>
                         <td>#{user.birthday}</td>
                         <td>
-                            
+                            <a class="btn btn-default" 
+                               href="#{request.contextPath}/usersJobs/userJobHistory.xhtml?userId=#{user.id}">
+                                View job history
+                            </a>
                         </td>
                     </tr>
 
