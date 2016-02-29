@@ -38,6 +38,6 @@ public class ShowJobsController extends BaseController {
     
     @PostConstruct
     public void initialize() {
-        requireRole(User.Role.USER);
+        requireRole(User.Role.ADMIN);
     }
 }

@@ -6,6 +6,7 @@ import data.entities.User;
 import java.util.ArrayList;
 
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import services.FeatureServices;
@@ -14,9 +15,7 @@ import services.jobs.JobServices;
 
 @ManagedBean
 @ViewScoped
-public class ShowFeaturesController {
-
-    private final UserService userService;
+public class ShowFeaturesController extends BaseController {
     private final JobServices jobService;
     private final FeatureServices featureService;
 
@@ -59,7 +58,7 @@ public class ShowFeaturesController {
     }
 
     public ShowFeaturesController() {
-        userService = new UserService();
+        super(new UserService());
         featureService = new FeatureServices();
         jobService = new JobServices();
 
@@ -69,6 +68,11 @@ public class ShowFeaturesController {
         notJobFeatures = new ArrayList<>();
         features = featureService.readAllFeatures();
 
+    }
+    
+    @PostConstruct
+    public void initialize() {
+        requireRole(User.Role.ADMIN);
     }
 
     public void initJobFeatures(Integer id) {

@@ -2,6 +2,7 @@ package controllers;
 
 import data.entities.Job;
 import data.entities.JobFeature;
+import data.entities.User;
 import java.util.List;
 import javax.annotation.PostConstruct;
 
@@ -10,11 +11,12 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import services.FeatureServices;
+import services.UserService;
 import services.jobs.JobServices;
 
 @ManagedBean
 @ViewScoped
-public class HandleJobFeatureController {
+public class HandleJobFeatureController extends BaseController {
 
     private final FeatureServices featureServices;
     private final JobServices jobServices;
@@ -22,13 +24,15 @@ public class HandleJobFeatureController {
     private Integer id;
 
     public HandleJobFeatureController() {
-        super();
+        super(new UserService());
         featureServices = new FeatureServices();
         jobServices = new JobServices();
     }
 
     @PostConstruct
     public void initialize() {
+        requireRole(User.Role.ADMIN);
+        
         String ret = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("id");
         if (ret == null) {
             throw new IllegalArgumentException("id not initilizated: HandleJobFeatureController: initialize()");
