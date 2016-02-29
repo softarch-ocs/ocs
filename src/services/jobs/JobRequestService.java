@@ -63,6 +63,29 @@ public class JobRequestService {
 
         return jobRequests;
     }
+    
+    
+    public List readAllJobRequestByUser(User user) {
+        Session session = sessionFactory.getCurrentSession();
+        Transaction tx = null;
+        List<JobRequest> jobRequests = null;
+        try {
+            tx = session.beginTransaction();
+            jobRequests = session.createCriteria(JobRequest.class)
+                    .add(Restrictions.eq("user", user))
+                    .setFetchMode("user", FetchMode.JOIN)
+                    .setFetchMode("job", FetchMode.JOIN).list();
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            throw new OcsPersistenceException(e);
+        }
+
+        return jobRequests;
+    }
+
 
     public JobRequest readJobRequest(int jobRequestId) {
         Session session = sessionFactory.getCurrentSession();

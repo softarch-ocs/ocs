@@ -61,7 +61,7 @@ public class PostulateJobController {
             jobRequestService.checkJobRequirements(user, jobRequest.getJob());
             
             jobRequestService.createJobRequest(jobRequest);
-            return "/index.xhtml";
+            return "/index.xhtml?faces-redirect=true";
         } catch (OcsPersistenceException ex) {
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage("Oops, we had an error processing your request"));
