@@ -7,9 +7,9 @@ google.charts.setOnLoadCallback(drawCharts);
 // instantiates the pie chart, passes in the data and
 // draws it.
 function drawCharts(){
-    genericDraw( areaData, 'Area', 'Number of Employees', 'Jobs by Area', 'areaDiv' );
-    genericDraw( yearData, 'Age', 'Number of Employees', 'Employees by age', 'ageDiv' );
-    genericDraw( genderData, 'Gender', 'Number of Employees', 'Employees by Gender', 'genderDiv' );
+    genericDraw( areaData, 'Area', 'Number of Employees', 'Jobs by area (with at least one employee)', 'areaDiv' );
+    genericDraw( yearData, 'Age', 'Number of Employees', 'Active employees by age', 'ageDiv' );
+    genericDraw( genderData, 'Gender', 'Number of Employees', 'Employees by gender', 'genderDiv' );
 }
 
 function genericDraw( rawData, colName1, colName2, title, divId ) {

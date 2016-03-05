@@ -1,18 +1,24 @@
 package DTO.statistics;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class CountJobsByAgeDTO {
-    private Integer birthday;
+    private Date birthday;
     private Long count;
+    private static final Calendar calendar = Calendar.getInstance();
+    private Integer year;
 
-    public Integer getBirthday() {
+    public Date getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(Integer birthday) {
+    public void setBirthday(Date birthday) {
         this.birthday = birthday;
+        calendar.setTime(birthday);
+        this.year = calendar.get(Calendar.YEAR);
     }
 
     public Long getCount() {
@@ -34,10 +40,10 @@ public class CountJobsByAgeDTO {
     public static Map<Integer,Long> listToMap( List<CountJobsByAgeDTO> list ){
         Map<Integer,Long> map = new HashMap<>();
         for( CountJobsByAgeDTO dto : list ){
-            if( !map.containsKey(dto.birthday) )
-                map.put(dto.birthday, 0L);
+            if( !map.containsKey(dto.year) )
+                map.put(dto.year, 0L);
             
-            map.put(dto.birthday, map.get(dto.birthday) + dto.count);
+            map.put(dto.year, map.get(dto.year) + dto.count);
         }
         return map;
     }    
