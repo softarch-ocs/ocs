@@ -88,8 +88,6 @@ public class StatisticsService {
             
             data = session.createCriteria(UsersJobs.class, "usersJobs").
                     createAlias("usersJobs.user", "user").
-//                    createAlias("usersJobs.job", "job").
-//                    createAlias("job.jobArea", "jobArea").
                     add(Restrictions.or(Restrictions.isNull("usersJobs.endTime"), Restrictions.ge("usersJobs.endTime", new Date()))).
                     setProjection(
                             Projections.projectionList().
