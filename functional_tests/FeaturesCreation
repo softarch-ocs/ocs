@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://localhost:8080/" />
+<title>FeaturesCreation</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">FeaturesCreation</td></tr>
+</thead><tbody>
+<!--Inicio de Sesion-->
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Login</td>
+	<td></td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=j_idt18:inputEmail</td>
+	<td>admin@ocs.com</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=j_idt18:inputPassword</td>
+	<td>admin@ocs.com</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=j_idt18:j_idt22</td>
+	<td></td>
+</tr>
+<!--Ir a la vista de características-->
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Features</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=h2</td>
+	<td>Features</td>
+</tr>
+<!--Crear una nueva característica-->
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Create Feature</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=legend</td>
+	<td>Create New Feature</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=j_idt23:nameInput</td>
+	<td>.NET</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>id=j_idt23:descriptionInput</td>
+	<td>Web Services Framework</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>name=j_idt23:j_idt29</td>
+	<td></td>
+</tr>
+<!--Verificación-->
+<tr>
+	<td>assertText</td>
+	<td>link=.NET</td>
+	<td>.NET</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>//tr[11]/td[2]</td>
+	<td>Web Services Framework</td>
+</tr>
+
+</tbody></table>
+</body>
+</html>

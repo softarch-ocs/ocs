@@ -5,4 +5,5 @@ RENAME TABLE `jobfeature` TO `JobFeature`;
 RENAME TABLE `user` TO `User`;
 RENAME TABLE `user_jobfeatures` TO `User_jobFeatures`;
 RENAME TABLE `usersjobs` TO `UsersJobs`;
+RENAME TABLE `jobrequest` TO `JobRequest`
 
