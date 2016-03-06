@@ -11,27 +11,6 @@
 <thead>
 <tr><td rowspan="1" colspan="3">FeaturesCreation</td></tr>
 </thead><tbody>
-<!--Inicio de Sesion-->
-<tr>
-	<td>clickAndWait</td>
-	<td>link=Login</td>
-	<td></td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>id=j_idt18:inputEmail</td>
-	<td>admin@ocs.com</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>id=j_idt18:inputPassword</td>
-	<td>admin@ocs.com</td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>name=j_idt18:j_idt22</td>
-	<td></td>
-</tr>
 <!--Ir a la vista de características-->
 <tr>
 	<td>clickAndWait</td>
@@ -56,17 +35,17 @@
 </tr>
 <tr>
 	<td>type</td>
-	<td>id=j_idt23:nameInput</td>
+	<td>id=j_idt22:nameInput</td>
 	<td>.NET</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>id=j_idt23:descriptionInput</td>
-	<td>Web Services Framework</td>
+	<td>id=j_idt22:descriptionInput</td>
+	<td>Web Service Framework.</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>name=j_idt23:j_idt29</td>
+	<td>name=j_idt22:j_idt28</td>
 	<td></td>
 </tr>
 <!--Verificación-->
@@ -78,9 +57,8 @@
 <tr>
 	<td>assertText</td>
 	<td>//tr[11]/td[2]</td>
-	<td>Web Services Framework</td>
+	<td>Web Service Framework.</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

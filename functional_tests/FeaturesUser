@@ -36,13 +36,13 @@
 <!--Eliminar algunas características-->
 <tr>
 	<td>clickAndWait</td>
-	<td>xpath=(//a[contains(text(),'delete Feature')])[5]</td>
+	<td>xpath=(//a[contains(text(),'delete Feature')])[4]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>assertNotText</td>
-	<td>//tr[5]/td</td>
-	<td>Manejo de recursos</td>
+	<td>//tr[4]/td</td>
+	<td>Trabajo en equipo</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
@@ -106,7 +106,6 @@
 	<td>//tr[6]/td</td>
 	<td>Selenium.</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

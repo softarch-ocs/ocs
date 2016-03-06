@@ -11,6 +11,17 @@
 <thead>
 <tr><td rowspan="1" colspan="3">FeaturesEdit</td></tr>
 </thead><tbody>
+<!--Ir a la vista de características-->
+<tr>
+	<td>clickAndWait</td>
+	<td>link=Features</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>css=h2</td>
+	<td>Features</td>
+</tr>
 <!--Editar una característica-->
 <tr>
 	<td>clickAndWait</td>
@@ -24,17 +35,17 @@
 </tr>
 <tr>
 	<td>type</td>
-	<td>id=j_idt23:nameInput</td>
+	<td>id=j_idt22:nameInput</td>
 	<td>Relaciones Interpersonales</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>id=j_idt23:descriptionInput</td>
+	<td>id=j_idt22:descriptionInput</td>
 	<td>Experiencia y habilidad en las relaciones interpersonales.</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>name=j_idt23:j_idt29</td>
+	<td>name=j_idt22:j_idt28</td>
 	<td></td>
 </tr>
 <!--Verificación-->
@@ -48,7 +59,6 @@
 	<td>//tr[8]/td[2]</td>
 	<td>Experiencia y habilidad en las relaciones interpersonales.</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>
