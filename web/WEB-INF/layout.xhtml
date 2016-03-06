@@ -61,11 +61,17 @@
                     
                     <c:if test="#{userController.getCurrentUser() != null}">
                         <ul class="nav navbar-right">
-                            <li><p class="navbar-text">Signed in as #{userController.getCurrentUser().firstName} 
-                                #{userController.getCurrentUser().lastName}</p>
-                            <h:form class="navbar-right" >
-                                <h:commandButton  class="btn btn-default navbar-btn" value="Logout" action="#{loginController.logout()}" ></h:commandButton>
-                            </h:form></li>
+                            <li>
+                                <p class="navbar-text" id="loginText">
+                                    Signed in as #{userController.getCurrentUser().firstName} 
+                                    #{userController.getCurrentUser().lastName}
+                                </p>
+                                <h:form class="navbar-right" >
+                                    <h:commandButton id="logoutButton"
+                                                     class="btn btn-default navbar-btn" 
+                                                     value="Logout" action="#{loginController.logout()}" ></h:commandButton>
+                                </h:form>
+                            </li>
                         </ul>
                         
                     </c:if>
