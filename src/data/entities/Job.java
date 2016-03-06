@@ -1,7 +1,6 @@
 package data.entities;
 
 import java.util.List;
-import data.entities.JobFeature;
 import java.util.ArrayList;
 
 public class Job {

@@ -17,6 +17,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import services.UserService;
 import services.exceptions.OcsServiceException;
+import services.exceptions.OcsValidationException;
 
 
 @ManagedBean
@@ -92,12 +93,19 @@ public class HandleJobController extends BaseController {
             return;
         }
         try{
+            int kha = 1;
             if( isEditing() ){
                 jobServices.updateJob( entity );
             }else{
                 jobServices.createJob( entity );
             }
-        } catch(OcsServiceException ex) {
+        }catch( OcsValidationException ex ){
+            
+            for( OcsValidationException.ValidationItem item : ex.getValidationItems() ){
+                FacesContext.getCurrentInstance().addMessage(null, 
+                        new FacesMessage( item.getMessage() ) );    
+            }
+        }catch(OcsServiceException ex) {
             FacesContext.getCurrentInstance().addMessage(null, 
                     new FacesMessage("Oops, we had an error processing your request"));
         }

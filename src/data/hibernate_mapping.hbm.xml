@@ -9,7 +9,7 @@
       </generator>
     </id>
     <property name="name">
-      <column length="45" name="name" not-null="true" sql-type="varchar(45)"/>
+      <column length="45" name="name" not-null="true" sql-type="varchar(45)" unique="true" />
     </property>
     <property name="description">
       <column length="45" name="description" not-null="true" sql-type="varchar(45)"/>

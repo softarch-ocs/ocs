@@ -6,6 +6,7 @@ import data.entities.Job;
 import data.entities.JobArea;
 import data.entities.JobFeature;
 import data.entities.User;
+import java.util.HashMap;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -16,8 +17,12 @@ import org.hibernate.FetchMode;
 import org.hibernate.Hibernate;
 
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.exception.ConstraintViolationException;
 import services.exceptions.OcsPersistenceException;
+import services.exceptions.OcsValidationException;
 
 public class JobServices {
 
@@ -52,7 +57,12 @@ public class JobServices {
         try( TransactionContext ctx = new TransactionContext( session ) ){
             session.save( job );
             ctx.commit();
-
+        } catch( ConstraintViolationException e ){
+            
+            if(  e.getSQLException().getErrorCode() == 1062 )
+                throw new OcsValidationException( new OcsValidationException.ValidationItem("There is a already a job called " + job.getName()) );
+            else
+                throw new OcsPersistenceException(e);
         }catch ( HibernateException e ) {
             throw new OcsPersistenceException(e);
         }
@@ -210,6 +220,19 @@ public class JobServices {
         }
 
         return job;
+    }
+    
+    public boolean existsJobWithName(String name){
+        Session session = sessionFactory.getCurrentSession();
+        try(TransactionContext ctx = new TransactionContext(session)){
+            return ( (Long) session.createCriteria(Job.class).
+                    add(Restrictions.like("name", name)).
+                    setProjection(Projections.count("name")).
+                    uniqueResult() ) == 0L;
+            
+        }catch ( HibernateException e ) {
+            throw new OcsPersistenceException(e);
+        }
     }
     
     
