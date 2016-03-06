@@ -24,7 +24,8 @@
         <nav class="navbar navbar-inverse navbar-static-top">
             <div class="container">
                 <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                            data-target="#navbar" aria-expanded="false" aria-controls="navbar">
                         <span class="sr-only">Toggle navigation</span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
@@ -32,7 +33,7 @@
                     </button>
                     <a class="navbar-brand" href="#{request.contextPath}/index.xhtml">Organizational Coverage System</a>
                 </div>
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <div id="navbar" class="collapse navbar-collapse">
                     <ul class="nav navbar-nav">
                         <c:if test="#{userController.hasRole('USER')}">
                             <li class="dropdown">
@@ -59,13 +60,13 @@
                     </ul>
                     
                     <c:if test="#{userController.getCurrentUser() != null}">
-                        <h:form class="navbar-form navbar-right" >
-                            <h:commandButton  class="btn btn-default" value="Logout" action="#{loginController.logout()}" ></h:commandButton>
-                        </h:form>
-                        <p class="navbar-text navbar-right">
-                            Signed in as #{userController.getCurrentUser().firstName} 
-                            #{userController.getCurrentUser().lastName}
-                        </p>
+                        <ul class="nav navbar-right">
+                            <li><p class="navbar-text">Signed in as #{userController.getCurrentUser().firstName} 
+                                #{userController.getCurrentUser().lastName}</p>
+                            <h:form class="navbar-right" >
+                                <h:commandButton  class="btn btn-default navbar-btn" value="Logout" action="#{loginController.logout()}" ></h:commandButton>
+                            </h:form></li>
+                        </ul>
                         
                     </c:if>
                     
