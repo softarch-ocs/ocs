@@ -29,9 +29,10 @@ CREATE TABLE `job` (
   `salary` int(11) NOT NULL,
   `jobArea` int(11) NOT NULL,
   PRIMARY KEY (`id`),
+  UNIQUE KEY `UK_kbxm4s8j62fg5khtwj3ljmiwb` (`name`),
   KEY `FK_pnxbh7bmjptpstqyg7f3uo9yv` (`jobArea`),
   CONSTRAINT `FK_pnxbh7bmjptpstqyg7f3uo9yv` FOREIGN KEY (`jobArea`) REFERENCES `jobarea` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -251,5 +252,3 @@ UNLOCK TABLES;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
-
--- Dump completed on 2016-02-29  1:41:25

@@ -3,49 +3,50 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head profile="http://selenium-ide.openqa.org/profiles/test-case">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<link rel="selenium.base" href="http://localhost:8080/ocs/statistics/statistics.xhtml" />
-<title>InitialLogin</title>
+<link rel="selenium.base" href="http://localhost:8080/ocs/" />
+<title>SameNameValidation</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">InitialLogin</td></tr>
+<tr><td rowspan="1" colspan="3">SameNameValidation</td></tr>
 </thead><tbody>
 <tr>
 	<td>open</td>
-	<td>/ocs/</td>
+	<td>/ocs/jobs/showJobs.xhtml</td>
 	<td></td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>link=Login</td>
+	<td>link=Create Job</td>
 	<td></td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>id=j_idt18:inputEmail</td>
-	<td>admin@ocs.com</td>
+	<td>id=j_idt23:nameInput</td>
+	<td>Secretaria</td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>id=j_idt18:inputPassword</td>
-	<td>admin@ocs.com</td>
+	<td>id=j_idt23:descriptionInput</td>
+	<td>sec</td>
+</tr>
+<tr>
+	<td>select</td>
+	<td>name=j_idt23:j_idt33</td>
+	<td>label=Administracion</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>name=j_idt18:j_idt22</td>
+	<td>name=j_idt23:j_idt36</td>
 	<td></td>
 </tr>
 <tr>
-	<td>clickAndWait</td>
-	<td>link=Statistics</td>
-	<td></td>
+	<td>assertText</td>
+	<td>css=div.alert.alert-danger &gt; ul &gt; li</td>
+	<td>There is a already a job called Secretaria</td>
 </tr>
-<tr>
-	<td>waitForPageToLoad</td>
-	<td></td>
-	<td></td>
-</tr>
+
 </tbody></table>
 </body>
 </html>
