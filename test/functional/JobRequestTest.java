@@ -26,7 +26,6 @@ public class JobRequestTest extends FunctionalTestBase {
         assertEquals("Postulate to job", driver.findElement(By.cssSelector("h1")).getText());
         new Select(driver.findElement(By.id("j_idt22:selectJob"))).selectByVisibleText("Administrador de empresas");
         driver.findElement(By.name("j_idt39:j_idt41")).click();
-        driver.findElement(By.name("j_idt39:j_idt41")).click();
         assertEquals("Sorry, you are currently working in this job.", driver.findElement(By.cssSelector("div.alert.alert-danger > ul > li")).getText());
     }
 
@@ -62,6 +61,36 @@ public class JobRequestTest extends FunctionalTestBase {
         // ERROR: Caught exception [ERROR: Unsupported command [getSelectedLabel | id=j_idt22:selectJob | ]]
         driver.findElement(By.name("j_idt39:j_idt41")).click();
         assertEquals("Organizational Coverage System", driver.findElement(By.cssSelector("h1")).getText());
+    }
+
+    @Test
+    public void test_acceptJobRequest() throws Exception {
+        driver.get(baseUrl + "index.xhtml");
+        loginAsSampleAdmin();
+        driver.findElement(By.linkText("Jobs")).click();
+        driver.findElement(By.linkText("Requests")).click();
+        driver.findElement(By.linkText("Paula Q")).click();
+        // ERROR: Caught exception [ERROR: Unsupported command [getSelectedLabel | id=j_idt25:inputStatus | ]]
+        assertEquals("Review a job request", driver.findElement(By.cssSelector("h1")).getText());
+        // ERROR: Caught exception [ERROR: Unsupported command [selectWindow | null | ]]
+        driver.findElement(By.name("j_idt25:j_idt28")).click();
+        assertEquals("ACCEPTED", driver.findElement(By.xpath("//div[2]/div/table/tbody/tr[2]/td[3]")).getText());
+    }
+
+    @Test
+    public void test_rejectJobRequest() throws Exception {
+        driver.get(baseUrl + "index.xhtml");
+        loginAsSampleAdmin();
+        driver.findElement(By.linkText("Jobs")).click();
+        driver.findElement(By.linkText("Requests")).click();
+        driver.findElement(By.linkText("Hernan Wess")).click();
+        new Select(driver.findElement(By.id("j_idt25:inputStatus"))).selectByVisibleText("Reject");
+        assertEquals("Review a job request", driver.findElement(By.cssSelector("h1")).getText());
+        // ERROR: Caught exception [ERROR: Unsupported command [getSelectedLabel | id=j_idt25:inputStatus | ]]
+        driver.findElement(By.name("j_idt25:j_idt28")).click();
+        assertEquals("Hernan Wess", driver.findElement(By.xpath("//tr[6]/td")).getText());
+        assertEquals("Administrador de empresas", driver.findElement(By.xpath("//tr[6]/td[2]")).getText());
+        assertEquals("REJECTED", driver.findElement(By.xpath("//tr[6]/td[3]")).getText());
     }
 
 }
