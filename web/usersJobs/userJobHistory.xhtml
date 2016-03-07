@@ -13,7 +13,7 @@
         </h1>
 
         <div class="table-responsive">
-            <table class="table">
+            <table class="table" id="jobHistoryTable">
                 <thead>
                     <tr>
                         <th>Job name</th>
@@ -22,28 +22,27 @@
                         <th>Actions</th>
                     </tr>
                 </thead>
-                <ui:repeat var="jobEntry" 
+                <tbody>
+                    <ui:repeat var="jobEntry" 
                            value="#{userHistoryController.jobEntries}" 
                            varStatus="status">
-                    <tr>
-                        <td>#{jobEntry.job.name}</td>
-                        <td>#{jobEntry.startTime}</td>
-                        <td>#{jobEntry.endTime}</td>
-                        <td>
-
-                            <h:form>
-                                <a class="btn btn-default" 
-                                   href="#{request.contextPath}/usersJobs/editUsersJobs.xhtml?userId=#{userHistoryController.user.id}&amp;id=#{jobEntry.id}">
-                                    Edit
-                                </a>
-                                <h:commandButton class="btn btn-danger" value="Delete" 
-                                                 action="#{userHistoryController.deleteJobEntry(jobEntry.id)}"></h:commandButton>
-                            </h:form>
-                        </td>
-                    </tr>
-
-                </ui:repeat>
-
+                        <tr>
+                            <td>#{jobEntry.job.name}</td>
+                            <td>#{jobEntry.startTime}</td>
+                            <td>#{jobEntry.endTime}</td>
+                            <td>
+                                <h:form>
+                                    <a class="btn btn-default" 
+                                       href="#{request.contextPath}/usersJobs/editUsersJobs.xhtml?userId=#{userHistoryController.user.id}&amp;id=#{jobEntry.id}">
+                                        Edit
+                                    </a>
+                                    <h:commandButton class="btn btn-danger" value="Delete" 
+                                                     action="#{userHistoryController.deleteJobEntry(jobEntry.id)}"></h:commandButton>
+                                </h:form>
+                            </td>
+                        </tr>
+                    </ui:repeat>
+                </tbody>
             </table>
 
             <div class="text-center">
