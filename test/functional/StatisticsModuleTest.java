@@ -19,14 +19,12 @@ import org.openqa.selenium.support.ui.WebDriverWait;
  * @author Felipe
  */
 public class StatisticsModuleTest extends FunctionalTestBase {
-  static int timeOut = 30;
-  
+ 
   @Before
   public void before(){
     driver.get(baseUrl + "index.xhtml");
     loginAs("admin@ocs.com", "admin@ocs.com");
-    driver.findElement(By.linkText("Statistics")).click();
-    
+    driver.findElement(By.linkText("Statistics")).click(); 
   }
   
   @Test

@@ -2,6 +2,7 @@ package functional;
 
 import java.util.concurrent.TimeUnit;
 import org.junit.After;
+import static org.junit.Assert.fail;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
@@ -17,6 +18,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 public class FunctionalTestBase {
     protected WebDriver driver;
     protected String baseUrl;
+    protected StringBuffer verificationErrors = new StringBuffer();
     
     @Rule
     public KnownDatabaseState state = new KnownDatabaseState();
@@ -31,6 +33,10 @@ public class FunctionalTestBase {
     @After
     public void tearDown() throws Exception {
         driver.quit();
+        String verificationErrorString = verificationErrors.toString();
+        if (!"".equals(verificationErrorString)) {
+          fail(verificationErrorString);
+        }
     }
     
     protected String getInnerHtml(WebElement element) {
