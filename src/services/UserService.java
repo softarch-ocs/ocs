@@ -121,6 +121,9 @@ public class UserService {
 
         try (TransactionContext ctx = new TransactionContext(session)) {
             List<User> results = (List<User>) session.createCriteria(User.class)
+                    .addOrder(Order.asc("lastName"))
+                    .addOrder(Order.asc("firstName"))
+                    .addOrder(Order.asc("email"))
                     .list();
 
             ctx.commit();

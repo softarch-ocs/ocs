@@ -47,7 +47,7 @@ public class UserModuleTest extends FunctionalTestBase {
         assertEquals("Signed in as First Last", driver.findElement(By.id("loginText")).getText());
 
         // Test login with the previous password
-        driver.findElement(By.id("j_idt25:logoutButton")).click();
+        driver.findElement(By.id("j_idt18:logoutButton")).click();
         loginAs("a@a.com", "password");
         
         assertEquals("Signed in as First Last", driver.findElement(By.id("loginText")).getText());
@@ -61,5 +61,14 @@ public class UserModuleTest extends FunctionalTestBase {
         assertThat(
                 driver.findElement(By.cssSelector("div.alert.alert-danger")).getText(),
                 containsString("Invalid credentials"));
+    }
+    
+    @Test
+    public void testLoggedInUser_CanLogout() throws Exception {
+        driver.get(baseUrl + "index.xhtml");
+        loginAs("ah@ah.com", "ah@ah.com");
+        
+        driver.findElement(By.id("j_idt18:logoutButton")).click();
+        assertTrue(isElementPresent(By.linkText("Login")));
     }
 }
