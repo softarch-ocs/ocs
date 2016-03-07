@@ -16,10 +16,11 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 
 @RunWith(JUnit4.class)
 public class FunctionalTestBase {
+
     protected WebDriver driver;
     protected String baseUrl;
     protected StringBuffer verificationErrors = new StringBuffer();
-    
+
     @Rule
     public KnownDatabaseState state = new KnownDatabaseState();
 
@@ -27,7 +28,7 @@ public class FunctionalTestBase {
     public void setUp() throws Exception {
         driver = new FirefoxDriver();
         baseUrl = "http://localhost:8080/ocs/";
-        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
     }
 
     @After
@@ -35,15 +36,15 @@ public class FunctionalTestBase {
         driver.quit();
         String verificationErrorString = verificationErrors.toString();
         if (!"".equals(verificationErrorString)) {
-          fail(verificationErrorString);
+            fail(verificationErrorString);
         }
     }
-    
+
     protected String getInnerHtml(WebElement element) {
-        return ((JavascriptExecutor)driver).executeScript(
+        return ((JavascriptExecutor) driver).executeScript(
                 "return arguments[0].innerHTML", element).toString();
     }
-    
+
     protected void loginAs(String userName, String password) {
         driver.findElement(By.linkText("Login")).click();
         driver.findElement(By.id("j_idt18:inputEmail")).clear();
@@ -52,11 +53,11 @@ public class FunctionalTestBase {
         driver.findElement(By.id("j_idt18:inputPassword")).sendKeys(password);
         driver.findElement(By.name("j_idt18:j_idt22")).click();
     }
-    
+
     protected void loginAsSampleUser() {
         loginAs("ah@ah.com", "ah@ah.com");
     }
-    
+
     protected void loginAsSampleAdmin() {
         loginAs("admin@ocs.com", "admin@ocs.com");
     }
