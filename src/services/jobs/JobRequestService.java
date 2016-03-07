@@ -19,6 +19,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import services.FeatureServices;
 import services.exceptions.OcsPersistenceException;
@@ -54,7 +55,7 @@ public class JobRequestService {
         try {
             tx = session.beginTransaction();
             jobRequests = session.createCriteria(JobRequest.class).setFetchMode("user", FetchMode.JOIN)
-                    .setFetchMode("job", FetchMode.JOIN).list();
+                    .setFetchMode("job", FetchMode.JOIN).addOrder(Order.asc("id")).list();
             tx.commit();
         } catch (HibernateException e) {
             if (tx != null) {
@@ -75,6 +76,7 @@ public class JobRequestService {
             tx = session.beginTransaction();
             jobRequests = session.createCriteria(JobRequest.class)
                     .add(Restrictions.eq("user", user))
+                    .addOrder(Order.asc("id"))
                     .setFetchMode("user", FetchMode.JOIN)
                     .setFetchMode("job", FetchMode.JOIN).list();
             tx.commit();
