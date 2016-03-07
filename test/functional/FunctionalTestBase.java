@@ -7,8 +7,10 @@ import org.junit.Rule;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 @RunWith(JUnit4.class)
@@ -29,6 +31,11 @@ public class FunctionalTestBase {
     @After
     public void tearDown() throws Exception {
         driver.quit();
+    }
+    
+    protected String getInnerHtml(WebElement element) {
+        return ((JavascriptExecutor)driver).executeScript(
+                "return arguments[0].innerHTML", element).toString();
     }
     
     protected void loginAs(String userName, String password) {
