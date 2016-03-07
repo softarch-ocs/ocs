@@ -2,6 +2,7 @@ package presentation.beans;
 
 import data.entities.JobFeature;
 import java.util.List;
+import java.util.Map;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
@@ -11,7 +12,7 @@ public class PostulateJobBean {
 
     private Integer selectedJob;
     private String description;
-    private List<JobFeature> features;
+    private Map<JobFeature, Boolean> features;
 
     public Integer getSelectedJob() {
         return selectedJob;
@@ -29,11 +30,11 @@ public class PostulateJobBean {
         this.description = description;
     }
 
-    public List getFeatures() {
+    public Map<JobFeature, Boolean> getFeatures() {
         return features;
     }
 
-    public void setFeatures(List features) {
+    public void setFeatures(Map features) {
         this.features = features;
     }
 

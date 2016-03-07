@@ -5,7 +5,8 @@
     xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
     xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
     xmlns:jsf="http://xmlns.jcp.org/jsf"
-    template="/WEB-INF/layout.xhtml">
+    template="/WEB-INF/layout.xhtml"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <ui:define name="content">
         <h1>Postulate to job</h1>
 
@@ -46,14 +47,22 @@
                             <tr>
                                 <th>Name</th>
                                 <th>Description</th>
+                                <th>Fulfills</th>
                             </tr>
                         </thead>
-                        <ui:repeat var="feature" value="#{postulateJobBean.features}" varStatus="status">
+                        <ui:repeat value="#{postulateJobBean.features.entrySet().toArray()}" var="entry">
                             <tr>
-                                <td>#{feature.name}</td>
-                                <td>#{feature.description}</td>
+                                <td>#{entry.key.name}</td>
+                                <td>#{entry.key.description}</td>
+                                <td>
+                                    <ui:fragment rendered="#{entry.value}">
+                                        <span class="glyphicon glyphicon-ok" ></span>
+                                    </ui:fragment>
+                                    <ui:fragment rendered="#{!entry.value}">
+                                        <span class="glyphicon glyphicon-remove" ></span>
+                                    </ui:fragment>
+                                </td>
                             </tr>
-
                         </ui:repeat>
 
                     </table>

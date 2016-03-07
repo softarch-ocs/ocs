@@ -62,9 +62,8 @@ public class PostulateJobController extends BaseController{
             jobRequest.setStatus(JobRequest.Status.ACTIVE);
             jobRequest.setJob(jobServices.readJob(postulateJobBean.getSelectedJob()));
 
-            jobRequestService.checkAvailability(jobRequest);
-            jobRequestService.checkJobRequirements(user, jobRequest.getJob());
-            
+            jobRequestService.checkAvailability(jobRequest, postulateJobBean.getFeatures());
+                        
             jobRequestService.createJobRequest(jobRequest);
             return "/index.xhtml?faces-redirect=true";
         } catch (OcsPersistenceException ex) {
@@ -88,8 +87,8 @@ public class PostulateJobController extends BaseController{
 
         Job selectedJob = jobServices.readJobWithFeatures(postulateJobBean.getSelectedJob());
         postulateJobBean.setDescription(selectedJob.getDescription());
-        postulateJobBean.setFeatures(selectedJob.getJobFeatures());
-
+        postulateJobBean.setFeatures(jobRequestService.checkJobRequirements(user, selectedJob));
+        
         System.out.println("Selected job is: " + selectedJob.getName());
     }
 

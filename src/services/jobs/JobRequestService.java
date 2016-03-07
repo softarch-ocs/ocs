@@ -9,10 +9,12 @@ import data.entities.JobRequest.Status;
 import data.entities.User;
 import data.entities.UsersJobs;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.hibernate.FetchMode;
-import org.hibernate.Hibernate;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -159,23 +161,26 @@ public class JobRequestService {
 
     }
 
-    public boolean checkJobRequirements(User user, Job job) {
+    public Map checkJobRequirements(User user, Job job) {
 
         FeatureServices featureServices = new FeatureServices(sessionFactory);
 
         List userFeatures = featureServices.readFeatures(user);
-        List jobFeatures = featureServices.readFeatures(job);
-
-        if (userFeatures.containsAll(jobFeatures)) {
-            return true;
-        } else {
-            throw new OcsValidationException(new OcsValidationException.ValidationItem(
-                    "Sorry, you don't fulfill the necessary requirements to postulate to this job"));
+        List<JobFeature> jobFeatures = featureServices.readFeatures(job);
+        Map<JobFeature, Boolean> features = new HashMap<>();
+        
+        for(JobFeature jf: jobFeatures){
+            if(!userFeatures.contains(jf)){
+                features.put(jf, Boolean.FALSE);
+            }else{
+                features.put(jf, Boolean.TRUE);
+            }
         }
-
+        
+        return features;
     }
 
-    public void checkAvailability(JobRequest jobRequest) {
+    public void checkAvailability(JobRequest jobRequest, Map features) {
                 
         if (readJobRequest(jobRequest.getUser(), jobRequest.getJob(), jobRequest.getStatus()) != null) {
             throw new OcsValidationException(new OcsValidationException.ValidationItem(
@@ -191,7 +196,11 @@ public class JobRequestService {
                     "Sorry, you are currently working in this job."));
             }
         }
-
+        
+        if(features.containsValue(Boolean.FALSE)){
+            throw new OcsValidationException(new OcsValidationException.ValidationItem(
+                    "Sorry, you don't fulfill the necessary requirements to postulate to this job"));
+        }
     }
 
 }
