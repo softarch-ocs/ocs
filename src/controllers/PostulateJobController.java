@@ -19,7 +19,7 @@ import services.jobs.JobServices;
 
 @ManagedBean
 @ViewScoped
-public class PostulateJobController extends BaseController{
+public class PostulateJobController extends BaseController {
 
     private JobRequestService jobRequestService;
     private JobServices jobServices;
@@ -29,7 +29,7 @@ public class PostulateJobController extends BaseController{
 
     public PostulateJobController(JobRequestService jobRequestService,
             JobServices jobServices, UserService userService) {
-        
+
         super(userService);
         if (jobRequestService == null) {
             throw new IllegalArgumentException("jobRequest");
@@ -49,9 +49,9 @@ public class PostulateJobController extends BaseController{
     public PostulateJobController() {
         this(new JobRequestService(), new JobServices(), new UserService());
     }
-    
+
     @PostConstruct
-    public void initialize(){
+    public void initialize() {
         requireRole(User.Role.USER);
     }
 
@@ -63,7 +63,7 @@ public class PostulateJobController extends BaseController{
             jobRequest.setJob(jobServices.readJob(postulateJobBean.getSelectedJob()));
 
             jobRequestService.checkAvailability(jobRequest, postulateJobBean.getFeatures());
-                        
+
             jobRequestService.createJobRequest(jobRequest);
             return "/index.xhtml?faces-redirect=true";
         } catch (OcsPersistenceException ex) {
@@ -76,6 +76,10 @@ public class PostulateJobController extends BaseController{
                         new FacesMessage(val.getMessage()));
             }
             return "";
+        } catch (NullPointerException ex) {
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage("First select a job"));
+            return "";
         }
     }
 
@@ -84,12 +88,10 @@ public class PostulateJobController extends BaseController{
     }
 
     public void selectJob(PostulateJobBean postulateJobBean) {
-
+        
         Job selectedJob = jobServices.readJobWithFeatures(postulateJobBean.getSelectedJob());
         postulateJobBean.setDescription(selectedJob.getDescription());
         postulateJobBean.setFeatures(jobRequestService.checkJobRequirements(user, selectedJob));
-        
-        System.out.println("Selected job is: " + selectedJob.getName());
     }
 
 }
