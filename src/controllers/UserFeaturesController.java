@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
@@ -114,7 +115,10 @@ public class UserFeaturesController extends BaseController {
         }
         
         if(isFeatureInUser(feature)){
-            throw new IllegalArgumentException("Feauture already in user");
+            FacesContext.getCurrentInstance().addMessage(null, 
+                    new FacesMessage("The feature is already in the user"));
+            
+            return;
         }
         
         user.getJobFeatures().add(feature);
@@ -138,7 +142,7 @@ public class UserFeaturesController extends BaseController {
             throw new IllegalArgumentException("user does not exist");
         }
         
-        
+
         user.getJobFeatures().remove(feature);
 
         userService.updateUser(user);

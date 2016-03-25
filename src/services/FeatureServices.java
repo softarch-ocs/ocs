@@ -13,7 +13,9 @@ import java.util.List;
 import org.hibernate.FetchMode;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.exception.ConstraintViolationException;
 import services.exceptions.OcsPersistenceException;
+import services.exceptions.OcsValidationException;
 
 public class FeatureServices {
     
@@ -34,7 +36,13 @@ public class FeatureServices {
         try(TransactionContext ctx = new TransactionContext(session)){
             session.save( feature );
             ctx.commit();
-        }catch (HibernateException e) {
+        }catch( ConstraintViolationException e ){
+            
+            if(  e.getSQLException().getErrorCode() == 1062 )
+                throw new OcsValidationException( new OcsValidationException.ValidationItem("There is a already a job called " + feature.getName()) );
+            else
+                throw new OcsPersistenceException(e);
+        }catch ( HibernateException e ) {
             throw new OcsPersistenceException(e);
         }        
     }
@@ -44,6 +52,11 @@ public class FeatureServices {
         JobFeature feature = null;
         try(TransactionContext ctx = new TransactionContext(session)){
             feature = ( JobFeature ) session.get( JobFeature.class, id );
+            
+            if(feature == null){
+                throw new IllegalArgumentException("feature");
+            }
+            
             ctx.commit();
         }catch ( HibernateException e ) {
             throw new OcsPersistenceException(e);

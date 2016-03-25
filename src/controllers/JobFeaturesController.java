@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
@@ -116,7 +117,10 @@ public class JobFeaturesController extends BaseController {
         }
         
         if(isFeatureInJob(feature)){
-            throw new IllegalArgumentException("Feauture already in job");
+            FacesContext.getCurrentInstance().addMessage(null, 
+                    new FacesMessage("The feature is already in the job"));
+            
+            return;
         }
         
         job.getJobFeatures().add(feature);
