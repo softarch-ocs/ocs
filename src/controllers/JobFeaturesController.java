@@ -3,42 +3,75 @@ package controllers;
 import data.entities.Job;
 import data.entities.JobFeature;
 import data.entities.User;
+import java.util.ArrayList;
+
 import java.util.List;
 import javax.annotation.PostConstruct;
-
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
-
 import services.FeatureServices;
 import services.UserService;
 import services.jobs.JobServices;
 
 @ManagedBean
 @ViewScoped
-public class HandleJobFeatureController extends BaseController {
+public class JobFeaturesController extends BaseController {
+    
+    private final FeatureServices featureService;
+    private final JobServices jobService;
 
-    private final FeatureServices featureServices;
-    private final JobServices jobServices;
-
+    private List<JobFeature> jobFeatures;
+    
     private Integer id;
 
-    public HandleJobFeatureController() {
-        super(new UserService());
-        featureServices = new FeatureServices();
-        jobServices = new JobServices();
+    public List<JobFeature> getJobFeatures() {
+        return jobFeatures;
     }
 
+    public void setJobFeatures(List<JobFeature> jobFeatures) {
+        this.jobFeatures = jobFeatures;
+    }
+
+    public JobFeaturesController() {
+        super(new UserService());
+        featureService = new FeatureServices();
+        jobFeatures = new ArrayList<>();
+        jobService = new JobServices();
+    }
+    
     @PostConstruct
     public void initialize() {
         requireRole(User.Role.ADMIN);
-        
         String ret = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("id");
-        if (ret == null) {
-            throw new IllegalArgumentException("id not initilizated: HandleJobFeatureController: initialize()");
+        if(ret == null){
+            throw new IllegalArgumentException("id ShowFeaturesController:initUserFeatures");
         }
-        this.id = Integer.parseInt( ret );
+        id = Integer.parseInt(ret);
+        if (id == null) {
+            throw new IllegalArgumentException("id ShowFeaturesController:initUserFeatures");
+        }
+
+        initJobFeatures(id);
     }
+    
+    public void initJobFeatures(Integer id) {
+        
+        Job job = jobService.readJob(id);
+        if(job == null){
+            throw new IllegalArgumentException("user");
+        }
+        
+        jobFeatures = featureService.readFeatures(job);
+
+    }
+    
+    
+    
+    
+    
+    
+    
 
     public Integer getJobId() {
         return id;
@@ -53,17 +86,17 @@ public class HandleJobFeatureController extends BaseController {
             throw new IllegalArgumentException("id");
         }
         
-        Job job = jobServices.readJob(Integer.parseInt(id + ""));
+        Job job = jobService.readJob(id);
         
         if (job == null) {
             throw new IllegalArgumentException("job does not exist");
         }
         
-        List<JobFeature> features = featureServices.readFeatures(job);
-        if (features == null) {
+        jobFeatures = featureService.readFeatures(job);
+        if (jobFeatures == null) {
             throw new IllegalArgumentException("features can not be load");
         }
-        return features.contains(feature);
+        return jobFeatures.contains(feature);
         
     }
 
@@ -76,17 +109,20 @@ public class HandleJobFeatureController extends BaseController {
             throw new IllegalArgumentException("id");
         }
 
-        Job job = jobServices.readJob(Integer.parseInt(id + ""));
+        Job job = jobService.readJob(id);
 
         if (job == null) {
             throw new IllegalArgumentException("job does not exist");
         }
         
+        if(isFeatureInJob(feature)){
+            throw new IllegalArgumentException("Feauture already in job");
+        }
+        
         job.getJobFeatures().add(feature);
-
-        jobServices.updateJob(job);
-
-        //return "/features/showJobFeatures.xhtml?faces-redirect=true&id=" + id;
+        
+        jobService.updateJob(job);
+        initJobFeatures(id);
     }
     
     public String deleteFeatureJob(JobFeature feature) {
@@ -98,17 +134,20 @@ public class HandleJobFeatureController extends BaseController {
             throw new IllegalArgumentException("id");
         }
 
-        Job job = jobServices.readJob(Integer.parseInt(id + ""));
+        Job job = jobService.readJob(id);
 
         if (job == null) {
             throw new IllegalArgumentException("job does not exist");
         }
         
+        
         job.getJobFeatures().remove(feature);
 
-        jobServices.updateJob(job);
+        jobService.updateJob(job);
 
+        initJobFeatures(id);
+        
         return "/features/showJobFeatures.xhtml?faces-redirect=true&id=" + id;
     }
-
+    
 }

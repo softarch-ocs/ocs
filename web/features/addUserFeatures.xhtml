@@ -20,14 +20,14 @@
                         </tr>
                     </thead>
                     <ui:repeat var="feature" value="#{showFeaturesController.getFeatures()}" varStatus="status">
-                        <h:form rendered="#{!handleUserFeatureController.isFeatureInUser( feature )}">
+                        <h:form rendered="#{!userFeaturesController.isFeatureInUser( feature )}">
                             <tr>
                                 <td>#{feature.name}</td>
                                 <td>#{feature.description}</td>
                                 <td>
                                     <h:commandLink 
                                         styleClass="btn btn-success"
-                                        action="#{handleUserFeatureController.joinFeatureUser( feature )}"
+                                        action="#{userFeaturesController.joinFeatureUser( feature )}"
                                         value="add Feature">
                                     </h:commandLink>
                                 </td>
@@ -41,7 +41,7 @@
         <div class="text-center">
             <a 
                 class="btn btn-success" 
-                href="#{request.contextPath}/features/showUserFeatures.xhtml?id=#{handleUserFeatureController.userId}"
+                href="#{request.contextPath}/features/showUserFeatures.xhtml?id=#{userFeaturesController.userId}"
                 >
                 Accept
             </a>

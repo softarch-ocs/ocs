@@ -4,10 +4,9 @@
         xmlns:f="http://xmlns.jcp.org/jsf/core"
         xmlns:h="http://xmlns.jcp.org/jsf/html"
         xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
-
+    
     <ui:param name="id" value="#{param['id']}"></ui:param>
     <ui:define name="content">
-        #{ showFeaturesController.initUserFeatures( id ) }
         <div class="container">
             <div class="table-responsive">
                 <h2>User Features</h2>
@@ -18,16 +17,16 @@
                                 <th>Description</th>
                             </tr>
                         </thead>
-                        <ui:repeat var="feature" value="#{showFeaturesController.getUserFeatures()}" varStatus="status">
+                        <ui:repeat var="feature" value="#{userFeaturesController.getUserFeatures()}" varStatus="status">
                             <tr>
                                 <td>#{feature.name}</td>
                                 <td>#{feature.description}</td>
                                 <td>
                                     <h:form>
                                         <h:commandLink 
-                                            rendered="#{handleUserFeatureController.isFeatureInUser( feature )}"
+                                            rendered="#{userFeaturesController.isFeatureInUser( feature )}"
                                             styleClass="btn btn-danger"
-                                            action="#{handleUserFeatureController.deleteFeatureUser( feature )}"
+                                            action="#{userFeaturesController.deleteFeatureUser( feature )}"
                                             value="delete Feature">
                                         </h:commandLink>
                                     </h:form>

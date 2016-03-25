@@ -7,7 +7,6 @@
     
     <ui:param name="id" value="#{param['id']}"></ui:param>
     <ui:define name="content">
-        #{ showFeaturesController.initJobFeatures( id ) }
         <div class="container">
             <div class="table-responsive">
                 <h2>Job Features</h2>
@@ -18,16 +17,16 @@
                                 <th>Description</th>
                             </tr>
                         </thead>
-                        <ui:repeat var="feature" value="#{showFeaturesController.getJobFeatures()}" varStatus="status">
+                        <ui:repeat var="feature" value="#{jobFeaturesController.getJobFeatures()}" varStatus="status">
                             <tr>
                                 <td>#{feature.name}</td>
                                 <td>#{feature.description}</td>
                                 <td>
                                     <h:form>
                                         <h:commandLink 
-                                            rendered="#{handleJobFeatureController.isFeatureInJob( feature )}"
+                                            rendered="#{jobFeaturesController.isFeatureInJob( feature )}"
                                             styleClass="btn btn-danger"
-                                            action="#{handleJobFeatureController.deleteFeatureJob( feature )}"
+                                            action="#{jobFeaturesController.deleteFeatureJob( feature )}"
                                             value="delete Feature">
                                         </h:commandLink>
                                     </h:form>

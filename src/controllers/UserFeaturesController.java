@@ -2,39 +2,74 @@ package controllers;
 
 import data.entities.JobFeature;
 import data.entities.User;
+import java.util.ArrayList;
+
 import java.util.List;
 import javax.annotation.PostConstruct;
-
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
-
 import services.FeatureServices;
 import services.UserService;
 
 @ManagedBean
 @ViewScoped
-public class HandleUserFeatureController extends BaseController {
-    private final FeatureServices featureServices;
-    private final UserService userServices;
+public class UserFeaturesController extends BaseController {
+    
+    private final FeatureServices featureService;
 
+    private List<JobFeature> userFeatures;
+    
     private Integer id;
 
-    public HandleUserFeatureController() {
-        super(new UserService());
-        featureServices = new FeatureServices();
-        userServices = new UserService();
+    public List<JobFeature> getUserFeatures() {
+        return userFeatures;
     }
 
+    public void setUserFeatures(List<JobFeature> userFeatures) {
+        this.userFeatures = userFeatures;
+    }
+
+    public UserFeaturesController() {
+        super(new UserService());
+        featureService = new FeatureServices();
+
+        userFeatures = new ArrayList<>();
+
+    }
+    
     @PostConstruct
     public void initialize() {
         requireRole(User.Role.ADMIN);
         String ret = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("id");
-        if (ret == null) {
-            throw new IllegalArgumentException("id not initilizated: HandleUserFeatureController: initialize()");
+        if(ret == null){
+            throw new IllegalArgumentException("id ShowFeaturesController:initUserFeatures");
         }
-        this.id = Integer.parseInt( ret );
+        id = Integer.parseInt(ret);
+        if (id == null) {
+            throw new IllegalArgumentException("id ShowFeaturesController:initUserFeatures");
+        }
+
+        initUserFeatures(id);
     }
+    
+    public void initUserFeatures(Integer id) {
+        
+        User user = userService.getUserById(id);
+        if(user == null){
+            throw new IllegalArgumentException("user");
+        }
+        
+        userFeatures = featureService.readFeatures(user);
+
+    }
+    
+    
+    
+    
+    
+    
+    
 
     public Integer getUserId() {
         return id;
@@ -49,17 +84,17 @@ public class HandleUserFeatureController extends BaseController {
             throw new IllegalArgumentException("id");
         }
         
-        User user = userServices.getUserById(Integer.parseInt(id + ""));
+        User user = userService.getUserById(id);
         
         if (user == null) {
             throw new IllegalArgumentException("user does not exist");
         }
         
-        List<JobFeature> features = featureServices.readFeatures(user);
-        if (features == null) {
+        userFeatures = featureService.readFeatures(user);
+        if (userFeatures == null) {
             throw new IllegalArgumentException("features can not be load");
         }
-        return features.contains(feature);
+        return userFeatures.contains(feature);
         
     }
 
@@ -72,17 +107,20 @@ public class HandleUserFeatureController extends BaseController {
             throw new IllegalArgumentException("id");
         }
 
-        User user = userServices.getFullUserById(Integer.parseInt(id + ""));
+        User user = userService.getFullUserById(id);
 
         if (user == null) {
             throw new IllegalArgumentException("user does not exist");
         }
         
+        if(isFeatureInUser(feature)){
+            throw new IllegalArgumentException("Feauture already in user");
+        }
+        
         user.getJobFeatures().add(feature);
-
-        userServices.updateUser(user);
-
-        //return "/features/showUserFeatures.xhtml?faces-redirect=true&id=" + id;
+        
+        userService.updateUser(user);
+        initUserFeatures(id);
     }
     
     public String deleteFeatureUser(JobFeature feature) {
@@ -94,17 +132,20 @@ public class HandleUserFeatureController extends BaseController {
             throw new IllegalArgumentException("id");
         }
 
-        User user = userServices.getFullUserById(Integer.parseInt(id + ""));
+        User user = userService.getFullUserById(id);
 
         if (user == null) {
             throw new IllegalArgumentException("user does not exist");
         }
         
+        
         user.getJobFeatures().remove(feature);
 
-        userServices.updateUser(user);
+        userService.updateUser(user);
 
+        initUserFeatures(id);
+        
         return "/features/showUserFeatures.xhtml?faces-redirect=true&id=" + id;
     }
-
+    
 }
