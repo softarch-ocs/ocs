@@ -40,10 +40,12 @@ public class UserHistoryController extends BaseController {
     public void initialize() {
         requireRole(User.Role.ADMIN);
         
-        Integer userId = Integer.parseInt(FacesContext.getCurrentInstance()
+        if (bean.getUser() == null) {
+            Integer userId = Integer.parseInt(FacesContext.getCurrentInstance()
                 .getExternalContext().getRequestParameterMap().get("userId"));
         
-        bean.setUser(userService.getFullUserById(userId));
+            bean.setUser(userService.getFullUserById(userId));
+        }
         
         if (bean.getJobEntries() == null) {
             updateJobEntries();
