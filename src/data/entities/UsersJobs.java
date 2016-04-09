@@ -1,8 +1,9 @@
 package data.entities;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class UsersJobs {
+public class UsersJobs implements Serializable {
     private int id;
     private Date startTime;
     private Date endTime;

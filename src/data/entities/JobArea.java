@@ -1,8 +1,9 @@
 package data.entities;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class JobArea {
+public class JobArea implements Serializable {
     
     private int id;
     private String name;

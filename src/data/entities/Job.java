@@ -1,9 +1,10 @@
 package data.entities;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.ArrayList;
 
-public class Job {
+public class Job implements Serializable {
 
     private int id;
     private String name;

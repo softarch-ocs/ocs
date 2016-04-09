@@ -6,18 +6,21 @@ import java.util.Collections;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
+import presentation.beans.UserHistoryBean;
 import services.UserService;
 import services.jobs.UserJobRelationServices;
 
 @ManagedBean
-@ViewScoped
+@RequestScoped
 public class UserHistoryController extends BaseController {
-    private List<UsersJobs> jobEntries;
     private UserJobRelationServices userJobService;
-    private User user;
     
+    @ManagedProperty("#{userHistoryBean}")
+    private UserHistoryBean bean;
+
     public UserHistoryController(UserService userService, 
             UserJobRelationServices userJobService) {
         super(userService);
@@ -40,16 +43,27 @@ public class UserHistoryController extends BaseController {
         Integer userId = Integer.parseInt(FacesContext.getCurrentInstance()
                 .getExternalContext().getRequestParameterMap().get("userId"));
         
-        user = userService.getFullUserById(userId);
-        updateJobEntries();
+        bean.setUser(userService.getFullUserById(userId));
+        
+        if (bean.getJobEntries() == null) {
+            updateJobEntries();
+        }
+    }
+    
+    public UserHistoryBean getBean() {
+        return bean;
+    }
+
+    public void setBean(UserHistoryBean bean) {
+        this.bean = bean;
     }
     
     public List<UsersJobs> getJobEntries() {
-        return jobEntries;
+        return bean.getJobEntries();
     }
     
     public User getUser() {
-        return user;
+        return bean.getUser();
     }
     
     public String deleteJobEntry(int id) {
@@ -60,7 +74,7 @@ public class UserHistoryController extends BaseController {
     }
     
     private void updateJobEntries() {
-        jobEntries = Collections.unmodifiableList(
-                userJobService.getUsersJobsByUserId(user.getId()));
+        bean.setJobEntries(Collections.unmodifiableList(
+                userJobService.getUsersJobsByUserId(getUser().getId())));
     }
 }
