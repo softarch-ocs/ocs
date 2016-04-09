@@ -140,7 +140,7 @@ public class AdminUserModule extends FunctionalTestBase {
                 .click();
 
         // Delete the first entry
-        driver.findElement(By.name("j_idt22:0:j_idt24:j_idt26")).click();
+        driver.findElement(By.xpath("(//input[@value='Delete'])[1]")).click();
 
         assertThat(getInnerHtml(driver.findElement(
                 By.cssSelector("#jobHistoryTable tbody"))), not(containsString("Publicista")));
