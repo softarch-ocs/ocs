@@ -5,18 +5,16 @@ import java.util.Collections;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.RequestScoped;
 import services.UserService;
 
 @ManagedBean
-@ViewScoped
+@RequestScoped
 public class UserListController extends BaseController {
     private List<User> users;
     
     public UserListController(UserService userService) {
         super(userService);
-        
-        users = Collections.unmodifiableList(userService.getAllUsers());
     }
     
     public UserListController() {
@@ -26,6 +24,8 @@ public class UserListController extends BaseController {
     @PostConstruct
     public void initialize() {
         requireRole(User.Role.ADMIN);
+        
+        users = Collections.unmodifiableList(userService.getAllUsers());
     }
     
     public List<User> getUsers() {
