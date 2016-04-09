@@ -92,8 +92,8 @@
         <param name="sequence">id_sequence</param>
       </generator>
     </id>
-    <many-to-one class="data.entities.User" column="user" name="user" not-null="true"/>
-    <many-to-one class="data.entities.Job" column="job" name="job" not-null="true"/>
+    <many-to-one class="data.entities.User" column="user" name="user" not-null="true" cascade="none"/>
+    <many-to-one class="data.entities.Job" column="job" name="job" not-null="true"  cascade="none"/>
     <property name="startTime">
       <column name="startTime" not-null="true" sql-type="date"/>
     </property>
