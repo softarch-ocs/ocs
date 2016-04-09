@@ -1,6 +1,8 @@
 package data.entities;
 
-public class JobFeature {
+import java.io.Serializable;
+
+public class JobFeature implements Serializable {
     private int id;
     private String name;
     private String description;

@@ -1,19 +1,32 @@
 package controllers;
 
 import data.entities.User;
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import services.UserService;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
+import presentation.beans.RegisterUserBean;
 import services.exceptions.OcsServiceException;
 
 @ManagedBean
-@ViewScoped
+@RequestScoped
 public class RegisterUserController {
     private UserService userService;
-    private User user;
+    
+    @ManagedProperty("#{registerUserBean}")
+    private RegisterUserBean bean;
+
+    public RegisterUserBean getBean() {
+        return bean;
+    }
+
+    public void setBean(RegisterUserBean bean) {
+        this.bean = bean;
+    }
 
     public RegisterUserController(UserService userService) {
         if (userService == null) {
@@ -21,8 +34,6 @@ public class RegisterUserController {
         }
 
         this.userService = userService;
-        user = new User();
-        user.setRole(User.Role.USER);
     }
 
     public RegisterUserController() {
@@ -30,10 +41,11 @@ public class RegisterUserController {
     }
 
     public User getUser() {
-        return user;
+        return bean.getUser();
     }
 
     public String register() {
+        User user = bean.getUser();
         try {
             userService.registerNewUser(user);
             userService.login(user);

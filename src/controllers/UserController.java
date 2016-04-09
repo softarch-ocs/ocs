@@ -4,10 +4,10 @@ import data.entities.User;
 import services.UserService;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.RequestScoped;
 
 @ManagedBean
-@ViewScoped
+@RequestScoped
 public class UserController {
     private UserService userService;
 

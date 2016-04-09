@@ -4,12 +4,13 @@ import javax.faces.application.FacesMessage;
 import services.UserService;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import presentation.beans.LoginBean;
 
 @ManagedBean
-@ViewScoped
+@RequestScoped
 public class LoginController {
     private UserService userService;
 

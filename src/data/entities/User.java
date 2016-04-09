@@ -1,11 +1,12 @@
 package data.entities;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
-public class User {
+public class User implements Serializable {
 
     public static enum Role {
         USER, ADMIN;
