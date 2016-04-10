@@ -91,6 +91,12 @@
         <div class="container padding">
             <ui:insert name="content"></ui:insert>
         </div>
+        
+        <div class="alert alert-info text-center">
+            SESSION INFO:<br/>
+            #{sessionInformationBean.nodeName} <br/>
+            #{sessionInformationBean.sessionId} (times: #{sessionInformationBean.counter})
+        </div>
 
         <!-- Bootstrap core JavaScript
         ================================================== -->
