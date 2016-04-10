@@ -27,7 +27,7 @@ public class FunctionalTestBase {
     @Before
     public void setUp() throws Exception {
         driver = new FirefoxDriver();
-        baseUrl = "http://192.168.0.30/ocs/";
+        baseUrl = "http://localhost:8080/ocs/";
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
     }
 

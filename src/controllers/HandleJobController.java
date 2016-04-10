@@ -13,20 +13,27 @@ import org.hibernate.criterion.Restrictions;
 import services.jobs.JobServices;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.RequestScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import presentation.beans.HandleJobBean;
 import services.UserService;
 import services.exceptions.OcsServiceException;
 import services.exceptions.OcsValidationException;
 
 
 @ManagedBean
-@ViewScoped
+@RequestScoped
 public class HandleJobController extends BaseController {
-    private Job entity;
-    private Long id;
-    private List<JobArea> areas;
+    
+    
     private JobServices jobServices;
+    
+    @ManagedProperty("#{handleJobBean}")
+    private HandleJobBean bean;
+    
+    
     
     public HandleJobController(JobServices jobServices, UserService userService) {
         super(userService);
@@ -37,67 +44,71 @@ public class HandleJobController extends BaseController {
         this.jobServices = jobServices;
     }
 
+    public JobServices getJobServices() {
+        return jobServices;
+    }
+
+    public void setJobServices(JobServices jobServices) {
+        this.jobServices = jobServices;
+    }
+
+    public HandleJobBean getBean() {
+        return bean;
+    }
+
+    public void setBean(HandleJobBean bean) {
+        this.bean = bean;
+    }
+    
+    
+
     public HandleJobController(){
         this(new JobServices(), new UserService());
-        entity = new Job();
-        entity.setName("");
-        entity.setSalary(0);
-        entity.setDescription("");
-        
-        areas = jobServices.readAllJobsArea();               
+                      
     }
     
     @PostConstruct
     public void initialize() {
         requireRole(User.Role.ADMIN);
-    }
-
-    public Long getId() {
-        return id;
-    }
-    
-    public List<JobArea> getAreas(){
-        return areas;
+        if( !bean.isEditing() ){
+            bean.setEntity( new Job() );
+            bean.getEntity().setName("");
+            bean.getEntity().setSalary(0);
+            bean.getEntity().setDescription("");
+        }
+        
+        bean.setAreas(jobServices.readAllJobsArea());
     }
 
     public void initEdit(Long id){
-        System.out.println("Init edit");
-        this.id = id;
-        entity = new Job();
-        entity.setName("");
-        entity.setSalary(0);
-        entity.setDescription("");
+        System.out.println("Init edit " + id);
+        
+        bean.setId(id);
+        bean.setEntity(new Job());
+        bean.getEntity().setName("");
+        bean.getEntity().setSalary(0);
+        bean.getEntity().setDescription("");
         if(id!=null)
-            this.entity = jobServices.readJobWithJobArea(Integer.parseInt(""+id));
+            bean.setEntity( jobServices.readJobWithJobArea( id.intValue() ) );
         
     }
 
-    public boolean isEditing(){
-        return id != null;
-    }
-
-    public Job getEntity() {
-        return entity;
-    }
-
-    public void setEntity(Job entity){
-        this.entity = entity;
-    }
-
     public void save(){
-        System.out.println("ola k ase ----> " + entity.getJobArea());
-        if( entity.getJobArea() == null ){
+      //  bean.getEntity().setId( bean.getId().intValue() );
+        System.out.println("ola k ase ----> " + bean.getEntity().getJobArea());
+        if( bean.getEntity().getJobArea() == null ){
             FacesContext.getCurrentInstance().addMessage(null, 
                     new FacesMessage("Oops, we had an error processing your request"));
+                    
             
             return;
         }
         try{
-            int kha = 1;
-            if( isEditing() ){
-                jobServices.updateJob( entity );
+               
+            if( bean.isEditing() ){
+                jobServices.updateJob( bean.getEntity() );
             }else{
-                jobServices.createJob( entity );
+                jobServices.createJob( bean.getEntity() );
             }
         }catch( OcsValidationException ex ){
             
@@ -107,7 +118,7 @@ public class HandleJobController extends BaseController {
             }
         }catch(OcsServiceException ex) {
             FacesContext.getCurrentInstance().addMessage(null, 
-                    new FacesMessage("Oops, we had an error processing your request"));
+                    new FacesMessage(ex.toString() + " " + bean.getEntity().getName() ) );
         }
     }
 }
