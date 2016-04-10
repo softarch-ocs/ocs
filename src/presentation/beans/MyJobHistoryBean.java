@@ -3,13 +3,14 @@ package presentation.beans;
 
 import data.entities.JobRequest;
 import data.entities.UsersJobs;
+import java.io.Serializable;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
 @ManagedBean
 @ViewScoped
-public class MyJobHistoryBean {
+public class MyJobHistoryBean implements Serializable{
     
     private List<UsersJobs> jobEntries;
     private List<JobRequest> jobRequests;

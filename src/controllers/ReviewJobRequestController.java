@@ -15,16 +15,15 @@ import services.jobs.JobRequestService;
 
 @ManagedBean
 @RequestScoped
-public class ReviewJobRequestController extends BaseController{
+public class ReviewJobRequestController extends BaseController {
 
     private JobRequestService jobRequestService;
-    
+
     @ManagedProperty("#{reviewJobRequestBean}")
     private ReviewJobRequestBean bean;
-    
-    
+
     public ReviewJobRequestController(JobRequestService jobRequestService,
-             UserService userService) {
+            UserService userService) {
 
         super(userService);
         if (jobRequestService == null) {
@@ -37,11 +36,14 @@ public class ReviewJobRequestController extends BaseController{
     public ReviewJobRequestController() {
         this(new JobRequestService(), new UserService());
     }
-    
+
     @PostConstruct
-    public void initialize(){
+    public void initialize() {
         requireRole(User.Role.ADMIN);
-        bean.setJobRequest(new JobRequest());
+
+        if (bean.getJobRequest() == null) {
+            bean.setJobRequest(new JobRequest());
+        }
     }
 
     public ReviewJobRequestBean getBean() {
