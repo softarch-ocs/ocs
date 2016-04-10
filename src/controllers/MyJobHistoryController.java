@@ -8,14 +8,14 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.RequestScoped;
 import presentation.beans.MyJobHistoryBean;
 import services.UserService;
 import services.jobs.JobRequestService;
 import services.jobs.UserJobRelationServices;
 
 @ManagedBean
-@ViewScoped
+@RequestScoped
 public class MyJobHistoryController extends BaseController {
 
     private UserJobRelationServices userJobService;

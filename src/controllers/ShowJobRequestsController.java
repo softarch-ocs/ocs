@@ -44,6 +44,15 @@ public class ShowJobRequestsController extends BaseController{
         bean.setJobRequests(jobRequestService.readAllJobRequest());
     }
 
+    public ShowJobRequestsBean getBean() {
+        return bean;
+    }
+
+    public void setBean(ShowJobRequestsBean bean) {
+        this.bean = bean;
+    }
+
+    
     public List getJobRequests() {
         return bean.getJobRequests();
     }

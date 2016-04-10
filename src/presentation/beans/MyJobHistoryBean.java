@@ -30,6 +30,4 @@ public class MyJobHistoryBean {
         this.jobRequests = jobRequests;
     }
     
-    
-    
 }
