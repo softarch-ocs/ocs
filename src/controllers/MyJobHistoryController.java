@@ -7,7 +7,9 @@ import java.util.Collections;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import presentation.beans.MyJobHistoryBean;
 import services.UserService;
 import services.jobs.JobRequestService;
 import services.jobs.UserJobRelationServices;
@@ -16,10 +18,11 @@ import services.jobs.UserJobRelationServices;
 @ViewScoped
 public class MyJobHistoryController extends BaseController {
 
-    private List<UsersJobs> jobEntries;
-    private List<JobRequest> jobRequests;
     private UserJobRelationServices userJobService;
     private JobRequestService jobRequestService;
+    
+    @ManagedProperty("#{myJobHistoryBean}")
+    private MyJobHistoryBean bean;
 
     public MyJobHistoryController(UserService userService,
             UserJobRelationServices userJobService, JobRequestService jobRequestService) {
@@ -46,18 +49,26 @@ public class MyJobHistoryController extends BaseController {
         User user = userService.getLoggedInUser();
 
         if (user != null) {
-            jobEntries = Collections.unmodifiableList(
-                    userJobService.getUsersJobsByUserId(user.getId()));
-            jobRequests = Collections.unmodifiableList(
-                    jobRequestService.readAllJobRequestByUser(user));
+            bean.setJobEntries(Collections.unmodifiableList(
+                    userJobService.getUsersJobsByUserId(user.getId())));
+            bean.setJobRequests(Collections.unmodifiableList(
+                    jobRequestService.readAllJobRequestByUser(user)));
         }
     }
 
+    public MyJobHistoryBean getBean() {
+        return bean;
+    }
+
+    public void setBean(MyJobHistoryBean bean) {
+        this.bean = bean;
+    }
+
     public List<UsersJobs> getJobEntries() {
-        return jobEntries;
+        return bean.getJobEntries();
     }
 
     public List<JobRequest> getJobRequests() {
-        return jobRequests;
+        return bean.getJobRequests();
     }
 }

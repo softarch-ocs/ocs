@@ -5,57 +5,64 @@ import data.entities.User;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
+import presentation.beans.ReviewJobRequestBean;
 import services.UserService;
 import services.exceptions.OcsServiceException;
 import services.jobs.JobRequestService;
-import services.jobs.UserJobRelationServices;
 
 @ManagedBean
-@ViewScoped
+@RequestScoped
 public class ReviewJobRequestController extends BaseController{
 
-    private UserJobRelationServices userJobRelationServices;
     private JobRequestService jobRequestService;
-    private JobRequest jobRequest;
-
+    
+    @ManagedProperty("#{reviewJobRequestBean}")
+    private ReviewJobRequestBean bean;
+    
+    
     public ReviewJobRequestController(JobRequestService jobRequestService,
-            UserJobRelationServices userJobRelationServices, UserService userService) {
+             UserService userService) {
 
         super(userService);
         if (jobRequestService == null) {
             throw new IllegalArgumentException("jobRequest");
-        } else if (userJobRelationServices == null) {
-            throw new IllegalArgumentException("userJobs");
         }
 
         this.jobRequestService = jobRequestService;
-        this.userJobRelationServices = userJobRelationServices;
-
-        this.jobRequest = new JobRequest();
     }
 
     public ReviewJobRequestController() {
-        this(new JobRequestService(), new UserJobRelationServices(), new UserService());
+        this(new JobRequestService(), new UserService());
     }
     
     @PostConstruct
     public void initialize(){
         requireRole(User.Role.ADMIN);
+        bean.setJobRequest(new JobRequest());
+    }
+
+    public ReviewJobRequestBean getBean() {
+        return bean;
+    }
+
+    public void setBean(ReviewJobRequestBean bean) {
+        this.bean = bean;
     }
 
     public JobRequest getJobRequest() {
-        return jobRequest;
+        return bean.getJobRequest();
     }
 
     public void setJobRequest(int jobRequestID) {
-        this.jobRequest = jobRequestService.readJobRequest(jobRequestID);
+        bean.setJobRequest(jobRequestService.readJobRequest(jobRequestID));
     }
 
     public String changeJobRequestStatus() {
         try {
-            jobRequestService.changeStatusJobRequest(jobRequest);
+            jobRequestService.changeStatusJobRequest(bean.getJobRequest());
             return "/requests/showRequests.xhtml";
         } catch (OcsServiceException ex) {
             FacesContext.getCurrentInstance().addMessage(null,
