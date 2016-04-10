@@ -36,7 +36,7 @@ public class StatisticsModuleTest extends FunctionalTestBase {
     assertEquals("Administracion", getInnerHtml(driver.findElement(By.cssSelector("#areaDiv table tbody tr:nth-of-type(3) td:nth-of-type(1)"))));
     assertEquals("1", getInnerHtml(driver.findElement(By.cssSelector("#areaDiv table tbody tr:nth-of-type(3) td:nth-of-type(2)"))));
     assertEquals("Testing", getInnerHtml(driver.findElement(By.cssSelector("#areaDiv table tbody tr:nth-of-type(4) td:nth-of-type(1)"))));
-    assertEquals("3", getInnerHtml(driver.findElement(By.cssSelector("#areaDiv table tbody tr:nth-of-type(4) td:nth-of-type(2)"))));
+    assertEquals("2", getInnerHtml(driver.findElement(By.cssSelector("#areaDiv table tbody tr:nth-of-type(4) td:nth-of-type(2)"))));
     assertEquals("Ingenieria", getInnerHtml(driver.findElement(By.cssSelector("#areaDiv table tbody tr:nth-of-type(5) td:nth-of-type(1)"))));
     assertEquals("2", getInnerHtml(driver.findElement(By.cssSelector("#areaDiv table tbody tr:nth-of-type(5) td:nth-of-type(2)"))));
     assertEquals("Mercadeo", getInnerHtml(driver.findElement(By.cssSelector("#areaDiv table tbody tr:nth-of-type(6) td:nth-of-type(1)"))));
@@ -58,6 +58,6 @@ public class StatisticsModuleTest extends FunctionalTestBase {
     assertEquals("21 - 30", getInnerHtml(driver.findElement(By.cssSelector("#ageDiv table tbody tr:nth-of-type(2) td:nth-of-type(1)"))));
     assertEquals("2", getInnerHtml(driver.findElement(By.cssSelector("#ageDiv table tbody tr:nth-of-type(1) td:nth-of-type(2)"))));
     assertEquals("31 - 40", getInnerHtml(driver.findElement(By.cssSelector("#ageDiv table tbody tr:nth-of-type(3) td:nth-of-type(1)"))));
-    assertEquals("5", getInnerHtml(driver.findElement(By.cssSelector("#ageDiv table tbody tr:nth-of-type(3) td:nth-of-type(2)"))));
+    assertEquals("4", getInnerHtml(driver.findElement(By.cssSelector("#ageDiv table tbody tr:nth-of-type(3) td:nth-of-type(2)"))));
   }
 }   
