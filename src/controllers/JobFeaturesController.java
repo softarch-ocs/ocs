@@ -67,12 +67,6 @@ public class JobFeaturesController extends BaseController {
 
     }
     
-    
-    
-    
-    
-    
-    
 
     public Integer getJobId() {
         return id;
