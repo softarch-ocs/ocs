@@ -8,14 +8,14 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import presentation.beans.UserFeaturesBean;
 import services.FeatureServices;
 import services.UserService;
 
 @ManagedBean
-@ViewScoped
+@RequestScoped
 public class UserFeaturesController extends BaseController {
     
     private final FeatureServices featureService;
