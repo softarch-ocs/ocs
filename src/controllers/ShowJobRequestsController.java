@@ -6,17 +6,22 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.RequestScoped;
+import presentation.beans.ShowJobRequestsBean;
 import services.UserService;
 import services.jobs.JobRequestService;
 
 @ManagedBean
-@ViewScoped
+@RequestScoped
 public class ShowJobRequestsController extends BaseController{
 
     private JobRequestService jobRequestService;
-    private List<JobRequest> jobRequests;
-
+    
+    @ManagedProperty("#{showJobRequestsBean}")
+    private ShowJobRequestsBean bean;
+    
+    
     public ShowJobRequestsController(JobRequestService jobRequestService,
             UserService userService) {
         
@@ -27,7 +32,6 @@ public class ShowJobRequestsController extends BaseController{
         }
 
         this.jobRequestService = jobRequestService;
-        this.jobRequests = jobRequestService.readAllJobRequest();
     }
 
     public ShowJobRequestsController() {
@@ -37,20 +41,21 @@ public class ShowJobRequestsController extends BaseController{
     @PostConstruct
     public void initialize(){
         requireRole(User.Role.ADMIN);
+        bean.setJobRequests(jobRequestService.readAllJobRequest());
     }
 
     public List getJobRequests() {
-        return jobRequests;
+        return bean.getJobRequests();
     }
 
     public void setJobRequests(List jobRequests) {
-        this.jobRequests = jobRequests;
+        bean.setJobRequests(jobRequests);
     }
     
     public List<JobRequest> showActiveJobRequest(){
         List<JobRequest> active = new ArrayList<>();
         
-        for(JobRequest jb : jobRequests){
+        for(JobRequest jb : bean.getJobRequests()){
             if(jb.getStatus() == JobRequest.Status.ACTIVE) active.add(jb);
         }
         
@@ -60,7 +65,7 @@ public class ShowJobRequestsController extends BaseController{
     public List<JobRequest> showResolvedJobRequest(){
         List<JobRequest> resolved = new ArrayList<>();
         
-        for(JobRequest jb : jobRequests){
+        for(JobRequest jb : bean.getJobRequests()){
             if(jb.getStatus() != JobRequest.Status.ACTIVE) resolved.add(jb);
         }
         

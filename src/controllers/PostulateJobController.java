@@ -7,7 +7,8 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import presentation.beans.PostulateJobBean;
 import services.UserService;
@@ -18,14 +19,15 @@ import services.jobs.JobRequestService;
 import services.jobs.JobServices;
 
 @ManagedBean
-@ViewScoped
+@RequestScoped
 public class PostulateJobController extends BaseController {
 
     private JobRequestService jobRequestService;
     private JobServices jobServices;
-    private JobRequest jobRequest;
-    private User user;
-    private List jobs;
+        
+    @ManagedProperty("#{postulateJobBean}")
+    private PostulateJobBean bean;
+    
 
     public PostulateJobController(JobRequestService jobRequestService,
             JobServices jobServices, UserService userService) {
@@ -39,11 +41,8 @@ public class PostulateJobController extends BaseController {
             throw new IllegalArgumentException("userService");
         }
 
-        this.jobs = jobServices.readAllJobs();
         this.jobRequestService = jobRequestService;
         this.jobServices = jobServices;
-        this.jobRequest = new JobRequest();
-        this.user = userService.getLoggedInUser();
     }
 
     public PostulateJobController() {
@@ -53,12 +52,26 @@ public class PostulateJobController extends BaseController {
     @PostConstruct
     public void initialize() {
         requireRole(User.Role.USER);
+        bean.setJobs(jobServices.readAllJobs());
+        bean.setJobRequest(new JobRequest());
+        bean.setUser(userService.getLoggedInUser());
+    }
+
+    public PostulateJobBean getBean() {
+        return bean;
+    }
+
+    public void setBean(PostulateJobBean bean) {
+        this.bean = bean;
     }
 
     public String requestJob(PostulateJobBean postulateJobBean) {
+        JobRequest jobRequest = bean.getJobRequest();
+        User user = bean.getUser();
+        
         try {
 
-            this.jobRequest.setUser(user);
+            jobRequest.setUser(user);
             jobRequest.setStatus(JobRequest.Status.ACTIVE);
             jobRequest.setJob(jobServices.readJob(postulateJobBean.getSelectedJob()));
 
@@ -84,14 +97,14 @@ public class PostulateJobController extends BaseController {
     }
 
     public List<Job> getJobs() {
-        return jobs;
+        return bean.getJobs();
     }
 
     public void selectJob(PostulateJobBean postulateJobBean) {
         
         Job selectedJob = jobServices.readJobWithFeatures(postulateJobBean.getSelectedJob());
         postulateJobBean.setDescription(selectedJob.getDescription());
-        postulateJobBean.setFeatures(jobRequestService.checkJobRequirements(user, selectedJob));
+        postulateJobBean.setFeatures(jobRequestService.checkJobRequirements(bean.getUser(), selectedJob));
     }
 
 }
