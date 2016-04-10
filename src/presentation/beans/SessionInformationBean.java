@@ -24,7 +24,8 @@ public class SessionInformationBean {
     }
     
     public int getCounter() {
-        return (Integer) sessionMap.getOrDefault("accessCount", 0);
+        Integer result = (Integer) sessionMap.get("accessCount");
+        return result == null ? 0 : result;
     }
     
     public String getNodeName() {
