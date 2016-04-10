@@ -2,56 +2,63 @@ package controllers;
 
 import data.entities.JobFeature;
 import data.entities.User;
-import java.util.ArrayList;
 
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
+import presentation.beans.UserFeaturesBean;
 import services.FeatureServices;
 import services.UserService;
 
 @ManagedBean
-@ViewScoped
+@RequestScoped
 public class UserFeaturesController extends BaseController {
     
     private final FeatureServices featureService;
 
-    private List<JobFeature> userFeatures;
+    @ManagedProperty("#{userFeaturesBean}")
+    private UserFeaturesBean bean;
     
-    private Integer id;
-
+    public UserFeaturesBean getBean() {
+        return bean;
+    }
+    
+    public void setBean( UserFeaturesBean bean ){
+        this.bean = bean;
+    }
+    
     public List<JobFeature> getUserFeatures() {
-        return userFeatures;
+        return bean.getUserFeatures();
     }
 
     public void setUserFeatures(List<JobFeature> userFeatures) {
-        this.userFeatures = userFeatures;
+        bean.setUserFeatures(userFeatures);
     }
 
     public UserFeaturesController() {
         super(new UserService());
         featureService = new FeatureServices();
-
-        userFeatures = new ArrayList<>();
-
     }
     
     @PostConstruct
     public void initialize() {
         requireRole(User.Role.ADMIN);
         String ret = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("id");
-        if(ret == null){
+        if(bean.getId() == null && ret == null){
             throw new IllegalArgumentException("id ShowFeaturesController:initUserFeatures");
         }
-        id = Integer.parseInt(ret);
-        if (id == null) {
+        if(bean.getId() == null) {
+            bean.setId(Integer.parseInt(ret));
+        }
+        if (bean.getId() == null) {
             throw new IllegalArgumentException("id ShowFeaturesController:initUserFeatures");
         }
 
-        initUserFeatures(id);
+        initUserFeatures(bean.getId());
     }
     
     public void initUserFeatures(Integer id) {
@@ -61,19 +68,11 @@ public class UserFeaturesController extends BaseController {
             throw new IllegalArgumentException("user");
         }
         
-        userFeatures = featureService.readFeatures(user);
-
+        bean.setUserFeatures(featureService.readFeatures(user));
     }
     
-    
-    
-    
-    
-    
-    
-
     public Integer getUserId() {
-        return id;
+        return bean.getId();
     }
     
     public boolean isFeatureInUser( JobFeature feature ){
@@ -81,21 +80,22 @@ public class UserFeaturesController extends BaseController {
         if(feature == null){
             throw new IllegalArgumentException("feature");
         }
-        if (id == null) {
+        if (bean.getId() == null) {
             throw new IllegalArgumentException("id");
         }
         
-        User user = userService.getUserById(id);
+        User user = userService.getUserById(bean.getId());
         
         if (user == null) {
             throw new IllegalArgumentException("user does not exist");
         }
         
-        userFeatures = featureService.readFeatures(user);
-        if (userFeatures == null) {
+        bean.setUserFeatures(featureService.readFeatures(user));
+        
+        if (bean.getUserFeatures() == null) {
             throw new IllegalArgumentException("features can not be load");
         }
-        return userFeatures.contains(feature);
+        return bean.getUserFeatures().contains(feature);
         
     }
 
@@ -104,11 +104,11 @@ public class UserFeaturesController extends BaseController {
         if (feature == null) {
             throw new IllegalArgumentException("feature");
         }
-        if (id == null) {
+        if (bean.getId() == null) {
             throw new IllegalArgumentException("id");
         }
 
-        User user = userService.getFullUserById(id);
+        User user = userService.getFullUserById(bean.getId());
 
         if (user == null) {
             throw new IllegalArgumentException("user does not exist");
@@ -124,7 +124,7 @@ public class UserFeaturesController extends BaseController {
         user.getJobFeatures().add(feature);
         
         userService.updateUser(user);
-        initUserFeatures(id);
+        initUserFeatures(bean.getId());
     }
     
     public String deleteFeatureUser(JobFeature feature) {
@@ -132,11 +132,11 @@ public class UserFeaturesController extends BaseController {
         if (feature == null) {
             throw new IllegalArgumentException("feature");
         }
-        if (id == null) {
+        if (bean.getId() == null) {
             throw new IllegalArgumentException("id");
         }
 
-        User user = userService.getFullUserById(id);
+        User user = userService.getFullUserById(bean.getId());
 
         if (user == null) {
             throw new IllegalArgumentException("user does not exist");
@@ -147,9 +147,9 @@ public class UserFeaturesController extends BaseController {
 
         userService.updateUser(user);
 
-        initUserFeatures(id);
+        initUserFeatures(bean.getId());
         
-        return "/features/showUserFeatures.xhtml?faces-redirect=true&id=" + id;
+        return "/features/showUserFeatures.xhtml?faces-redirect=true&id=" + bean.getId();
     }
     
 }
