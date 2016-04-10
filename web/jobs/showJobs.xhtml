@@ -20,7 +20,7 @@
                             
                         </tr>
                     </thead>
-                    <ui:repeat var="job" value="#{showJobsController.jobs}" varStatus="status">
+                    <ui:repeat var="job" value="#{showJobsController.bean.jobs}" varStatus="status">
                         <tr>
                             <td><a href='editJob.xhtml?id=${job.id}'>#{job.name}</a> </td>
                             <td>#{job.salary}</td>
