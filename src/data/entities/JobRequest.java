@@ -1,8 +1,9 @@
 package data.entities;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class JobRequest {
+public class JobRequest implements Serializable {
 
     public static enum Status {
         ACTIVE, ACCEPTED, REJECTED;

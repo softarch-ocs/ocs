@@ -3,6 +3,7 @@ package presentation.beans;
 import data.entities.JobFeature;
 import data.entities.JobRequest;
 import data.entities.User;
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 import javax.faces.bean.ManagedBean;
@@ -10,7 +11,7 @@ import javax.faces.bean.ViewScoped;
 
 @ManagedBean
 @ViewScoped
-public class PostulateJobBean {
+public class PostulateJobBean implements Serializable{
 
     private Integer selectedJob;
     private String description;

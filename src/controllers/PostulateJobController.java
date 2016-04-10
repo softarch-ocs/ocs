@@ -24,10 +24,9 @@ public class PostulateJobController extends BaseController {
 
     private JobRequestService jobRequestService;
     private JobServices jobServices;
-        
+
     @ManagedProperty("#{postulateJobBean}")
     private PostulateJobBean bean;
-    
 
     public PostulateJobController(JobRequestService jobRequestService,
             JobServices jobServices, UserService userService) {
@@ -52,8 +51,14 @@ public class PostulateJobController extends BaseController {
     @PostConstruct
     public void initialize() {
         requireRole(User.Role.USER);
-        bean.setJobs(jobServices.readAllJobs());
-        bean.setJobRequest(new JobRequest());
+
+        if (bean.getJobs() == null) {
+            bean.setJobs(jobServices.readAllJobs());
+        }
+
+        if (bean.getJobRequest() == null) {
+            bean.setJobRequest(new JobRequest());
+        }
         bean.setUser(userService.getLoggedInUser());
     }
 
@@ -68,7 +73,7 @@ public class PostulateJobController extends BaseController {
     public String requestJob(PostulateJobBean postulateJobBean) {
         JobRequest jobRequest = bean.getJobRequest();
         User user = bean.getUser();
-        
+
         try {
 
             jobRequest.setUser(user);
@@ -101,7 +106,7 @@ public class PostulateJobController extends BaseController {
     }
 
     public void selectJob(PostulateJobBean postulateJobBean) {
-        
+
         Job selectedJob = jobServices.readJobWithFeatures(postulateJobBean.getSelectedJob());
         postulateJobBean.setDescription(selectedJob.getDescription());
         postulateJobBean.setFeatures(jobRequestService.checkJobRequirements(bean.getUser(), selectedJob));
