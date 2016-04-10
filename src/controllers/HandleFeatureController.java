@@ -5,28 +5,25 @@ import data.entities.User;
 import javax.annotation.PostConstruct;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.RequestScoped;
+import presentation.beans.HandleFeatureBean;
 
 import services.FeatureServices;
 import services.UserService;
 
 @ManagedBean
-@ViewScoped
+@RequestScoped
 public class HandleFeatureController extends BaseController {
 
     private final FeatureServices featureServices;
 
-    private JobFeature feature;
-
-    private Long id;
-
+    @ManagedProperty("#{handleFeatureBean}")
+    private HandleFeatureBean bean;
+    
     public HandleFeatureController() {
         super(new UserService());
-        feature = new JobFeature();
         featureServices = new FeatureServices();
-
-        feature.setName("name placeholder");
-        feature.setDescription("description placeholder");
     }
     
     @PostConstruct
@@ -35,46 +32,49 @@ public class HandleFeatureController extends BaseController {
     }
 
     public Long getId() {
-        return id;
+        return bean.getId();
     }
 
     public void initEdit(Long id) {
-        this.id = id;
-
-        feature = new JobFeature();
-        feature.setName("name placeholder");
-        feature.setDescription("description placeholder");
+        bean.setId(id);
 
         if (id != null) {
             JobFeature tmpfeature = featureServices.getFeatureById(Integer.parseInt(id + ""));
             if (tmpfeature == null) {
                 throw new IllegalArgumentException("jobFeature not found");
             }
-            feature = tmpfeature;
-
+            bean.setFeature(tmpfeature);
         }
 
         
     }
 
     public boolean isEditing() {
-        return id != null;
+        return bean.getId() != null;
     }
 
     public JobFeature getEntity() {
-        return feature;
+        return bean.getFeature();
     }
 
     public void setEntity(JobFeature entity) {
-        this.feature = entity;
+        bean.setFeature(entity);
+    }
+    
+    public HandleFeatureBean getBean() {
+        return bean;
+    }
+
+    public void setBean(HandleFeatureBean bean) {
+        this.bean = bean;
     }
 
     public String save() {
 
         if (isEditing()) {
-            featureServices.updateFeature(feature);
+            featureServices.updateFeature(bean.getFeature());
         } else {
-            featureServices.createFeature(feature);
+            featureServices.createFeature(bean.getFeature());
         }
 
         return "/features/showAllFeatures.xhtml?faces-redirect=true";
