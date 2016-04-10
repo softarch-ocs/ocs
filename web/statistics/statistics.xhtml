@@ -10,9 +10,9 @@
         <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
               
         <h:outputScript>
-           var genderData = #{ statisticsController.genderData };
-           var areaData = #{ statisticsController.areaData };
-           var yearData = #{ statisticsController.yearData };
+           var genderData = #{ statisticsController.bean.genderData };
+           var areaData = #{ statisticsController.bean.areaData };
+           var yearData = #{ statisticsController.bean.yearData };
         </h:outputScript>
         <h:outputScript library="js" name="statistics.js"></h:outputScript>
         

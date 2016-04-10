@@ -17,7 +17,7 @@
                     <fieldset>
 
                         <!-- Form Name -->
-                        <legend><h:outputText value='#{handleJobController.isEditing() ? handleJobController.getEntity().name : "New Job"}'></h:outputText></legend>
+                        <legend><h:outputText value='#{handleJobController.bean.isEditing() ? handleJobController.bean.getEntity().name : "New Job"}'></h:outputText></legend>
                         <div class="alert alert-danger" role="alert" jsf:rendered="#{not empty facesContext.messageList}">
                             <h:messages></h:messages>
                         </div>
@@ -30,7 +30,7 @@
                                         name="nameInput"
                                         type="text"
                                         placeholder="name"
-                                        value="#{handleJobController.getEntity().name}"
+                                        value="#{handleJobController.bean.getEntity().name}"
                                         styleClass ="form-control input-md"
                                         required="required"
                                         requiredMessage="Required"/>
@@ -48,7 +48,7 @@
                                         type="text"
                                         pattern="[0-9]+"
                                         placeholder="salary"
-                                        value="#{handleJobController.getEntity().salary}"
+                                        value="#{handleJobController.bean.getEntity().salary}"
                                         styleClass ="form-control input-md"
                                         required="required"
                                         requiredMessage="Required"/>
@@ -65,7 +65,7 @@
                                     name="descriptionInput"
                                     type="text"
                                     placeholder="description"
-                                    value="#{handleJobController.getEntity().description}"
+                                    value="#{handleJobController.bean.getEntity().description}"
                                     styleClass ="form-control input-md"
                                     required="required"
                                     requiredMessage="Required"/>
@@ -75,8 +75,8 @@
                         <!-- Job areas -->
                         <div class="form-group">
                                 <label for="nameInput">Areas</label>
-                                <h:selectOneMenu value="#{handleJobController.getEntity().jobArea}"  converter="#{jobAreaConverter}" class="form-control" >
-                                   <f:selectItems value="#{handleJobController.areas}" var="area" itemValue="#{area}" itemLabel="#{area.name}" />
+                                <h:selectOneMenu value="#{handleJobController.bean.getEntity().jobArea}"  converter="#{jobAreaConverter}" class="form-control" >
+                                   <f:selectItems value="#{handleJobController.bean.areas}" var="area" itemValue="#{area}" itemLabel="#{area.name}" />
                             </h:selectOneMenu>
                         </div>
                         

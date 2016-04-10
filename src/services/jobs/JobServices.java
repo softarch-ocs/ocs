@@ -174,6 +174,7 @@ public class JobServices {
         try(TransactionContext ctx = new TransactionContext(session)){
 
             session.update( newJob );
+            
             ctx.commit();
 
         }catch ( HibernateException e ) {
