@@ -69,11 +69,12 @@ public class UserService {
         sessionMap.put("USER_ID", user.getId());
     }
 
-    public void logout() {
-        Map<String, Object> sessionMap
-                = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
-
-        sessionMap.remove("USER_ID");
+    public String logout() {
+        FacesContext.getCurrentInstance()
+                .getExternalContext()
+                .invalidateSession();
+        
+        return "/index.xhtml";
     }
 
     public User getLoggedInUser() {
