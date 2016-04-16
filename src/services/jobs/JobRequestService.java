@@ -8,17 +8,19 @@ import data.entities.JobRequest;
 import data.entities.JobRequest.Status;
 import data.entities.User;
 import data.entities.UsersJobs;
-import java.sql.Date;
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import services.FeatureServices;
@@ -44,6 +46,7 @@ public class JobRequestService {
             session.save(jobRequest);
             ctx.commit();
         } catch (HibernateException ex) {
+            System.out.println(ex);
             throw new OcsPersistenceException(ex);
         }
     }
@@ -56,6 +59,30 @@ public class JobRequestService {
             tx = session.beginTransaction();
             jobRequests = session.createCriteria(JobRequest.class).setFetchMode("user", FetchMode.JOIN)
                     .setFetchMode("job", FetchMode.JOIN).addOrder(Order.asc("id")).list();
+            tx.commit();
+        } catch (HibernateException e) {
+            if (tx != null) {
+                tx.rollback();
+            }
+            throw new OcsPersistenceException(e);
+        }
+
+        return jobRequests;
+    }
+    
+    public List<JobRequest> readActiveJobRequests() {
+        Session session = sessionFactory.getCurrentSession();
+        Transaction tx = null;
+        List<JobRequest> jobRequests = null;
+        try {
+            tx = session.beginTransaction();
+            jobRequests = session
+                    .createCriteria(JobRequest.class)
+                    .add(Restrictions.eq("status", JobRequest.Status.ACTIVE))
+                    .setFetchMode("user", FetchMode.JOIN)
+                    .setFetchMode("user.jobFeatures", FetchMode.JOIN)
+                    .addOrder(Order.asc("id"))
+                    .list();
             tx.commit();
         } catch (HibernateException e) {
             if (tx != null) {
@@ -147,8 +174,7 @@ public class JobRequestService {
                 UsersJobs userJobs = new UsersJobs();
                 userJobs.setUser(jobRequest.getUser());
                 userJobs.setJob(jobRequest.getJob());
-                Calendar calendar = Calendar.getInstance();
-                userJobs.setStartTime(new Date(calendar.getTime().getTime()));
+                userJobs.setStartTime(new Date());
                 userJobs.setEndTime(null);
                 session.save(userJobs);
             }
