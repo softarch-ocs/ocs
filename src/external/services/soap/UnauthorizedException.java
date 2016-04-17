@@ -1,4 +1,4 @@
-package external.services;
+package external.services.soap;
 
 public class UnauthorizedException extends Exception {
 

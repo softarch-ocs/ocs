@@ -7,7 +7,7 @@
     </servlet>
     <servlet>
         <servlet-name>GetEmployeesToEvaluate</servlet-name>
-        <servlet-class>external.services.GetEmployeesToEvaluate</servlet-class>
+        <servlet-class>external.services.soap.GetEmployeesToEvaluate</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
     <servlet-mapping>
@@ -16,7 +16,7 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>GetEmployeesToEvaluate</servlet-name>
-        <url-pattern>/GetEmployeesToEvaluate</url-pattern>
+        <url-pattern>/soap/GetEmployeesToEvaluate</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>index.xhtml</welcome-file>

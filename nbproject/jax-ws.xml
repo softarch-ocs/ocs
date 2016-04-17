@@ -2,7 +2,7 @@
 <jax-ws xmlns="http://www.netbeans.org/ns/jax-ws/1">
   <services>
     <service name="GetEmployeesToEvaluate">
-      <implementation-class>external.services.GetEmployeesToEvaluate</implementation-class>
+      <implementation-class>external.services.soap.GetEmployeesToEvaluate</implementation-class>
     </service>
   </services>
   <clients/>

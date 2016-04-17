@@ -1,6 +1,5 @@
-package external.services;
+package external.services.soap;
 
-import data.dao.HibernateUtil;
 import data.entities.JobFeature;
 import data.entities.JobRequest;
 import data.entities.User;
@@ -15,7 +14,8 @@ import services.UserService;
 import services.jobs.JobRequestService;
 
 
-@WebService(serviceName = "GetEmployeesToEvaluate")
+@WebService(serviceName = "GetEmployeesToEvaluate", 
+        targetNamespace = "http://192.168.0.30/ocs/soap/")
 public class GetEmployeesToEvaluate {
     private JobRequestService jobRequestService;
     private UserService userService;
