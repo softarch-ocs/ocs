@@ -135,7 +135,7 @@ public class UserService {
         }
     }
 
-    private User getUserByEmailAndPassword(String email, String password) {
+    public User getUserByEmailAndPassword(String email, String password) {
         Session session = sessionFactory.getCurrentSession();
 
         try (TransactionContext ctx = new TransactionContext(session)) {

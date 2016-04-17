@@ -3,6 +3,7 @@ package external.services;
 import data.dao.HibernateUtil;
 import data.entities.JobFeature;
 import data.entities.JobRequest;
+import data.entities.User;
 import external.dto.EmployeeToEvaluateDto;
 import external.dto.EmployeesToEvaluateDto;
 import java.util.ArrayList;
@@ -10,21 +11,35 @@ import java.util.List;
 import javax.jws.WebService;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
+import services.UserService;
 import services.jobs.JobRequestService;
 
 
 @WebService(serviceName = "GetEmployeesToEvaluate")
 public class GetEmployeesToEvaluate {
     private JobRequestService jobRequestService;
+    private UserService userService;
+    
+    public GetEmployeesToEvaluate(UserService userService, 
+            JobRequestService jobRequestService) {
+        this.userService = userService;
+        this.jobRequestService = jobRequestService;
+    }
     
     public GetEmployeesToEvaluate() {
-        jobRequestService = new JobRequestService(
-                HibernateUtil.getSessionFactory());
+        this(new UserService(), new JobRequestService());
     }
 
     @WebMethod(operationName = "get")
     public EmployeesToEvaluateDto get(@WebParam(name = "userName") String userName, 
-            @WebParam(name = "password") String password) {
+            @WebParam(name = "password") String password) throws UnauthorizedException {
+        User user = userService.getUserByEmailAndPassword(userName, password);
+        
+        if (user == null || !user.hasRole(User.Role.WEB_SERVICE)) {
+            throw new UnauthorizedException(
+                    "You are not authorized to access this resource");
+        }
+        
         EmployeesToEvaluateDto result = new EmployeesToEvaluateDto();
         
         List<JobRequest> requests = 

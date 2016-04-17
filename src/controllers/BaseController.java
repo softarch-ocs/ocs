@@ -24,7 +24,7 @@ public abstract class BaseController {
         }
         
         User user = userService.getLoggedInUser();
-        if (user == null || user.getRole().compareTo(role) < 0) {
+        if (user == null || !user.hasRole(role)) {
             FacesContext context = FacesContext.getCurrentInstance();
             ExternalContext externalContext = context.getExternalContext();
             HttpServletRequest request = (HttpServletRequest)externalContext.getRequest();
