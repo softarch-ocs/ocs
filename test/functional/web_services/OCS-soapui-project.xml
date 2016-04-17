@@ -1,5 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<con:soapui-project id="c388e41e-ba51-489d-94e0-af7a7f2153cb" activeEnvironment="Default" name="OCS" soapui-version="5.2.1" abortOnError="false" runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" id="e377d28f-956a-486c-9573-530fb5d52c6e" wsaVersion="NONE" name="GetEmployeesToEvaluateSoapBinding" type="wsdl" bindingName="{http://services.external/}GetEmployeesToEvaluateSoapBinding" soapVersion="1_1" anonymous="optional" definition="http://192.168.0.30/ocs/GetEmployeesToEvaluate?wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="http://192.168.0.30/ocs/GetEmployeesToEvaluate?wsdl"><con:part><con:url>http://192.168.0.30/ocs/GetEmployeesToEvaluate?wsdl</con:url><con:content><![CDATA[<wsdl:definitions name="GetEmployeesToEvaluate" targetNamespace="http://services.external/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://services.external/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http">
+<con:soapui-project id="c388e41e-ba51-489d-94e0-af7a7f2153cb" activeEnvironment="Default" name="OCS" soapui-version="5.2.1" abortOnError="false" runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.actions.iface.tools.soapui.TestRunnerAction@values-local"><![CDATA[<xml-fragment xmlns:con="http://eviware.com/soapui/config">
+  <con:entry key="Environment" value="Default"/>
+  <con:entry key="Global Properties" value=""/>
+  <con:entry key="TestSuite" value="TestSuite"/>
+  <con:entry key="Password" value=""/>
+  <con:entry key="TestRunner Path" value=""/>
+  <con:entry key="Tool Args" value=""/>
+  <con:entry key="Ignore Errors" value="false"/>
+  <con:entry key="Host:Port" value=""/>
+  <con:entry key="user-settings.xml Password" value=""/>
+  <con:entry key="WSS Password Type" value=""/>
+  <con:entry key="Save Project" value="false"/>
+  <con:entry key="Enable UI" value="false"/>
+  <con:entry key="System Properties" value=""/>
+  <con:entry key="Domain" value=""/>
+  <con:entry key="Coverage Report" value="false"/>
+  <con:entry key="Export JUnit Results" value="false"/>
+  <con:entry key="Export JUnit Results with test properties" value="false"/>
+  <con:entry key="Open Report" value="false"/>
+  <con:entry key="Project Properties" value=""/>
+  <con:entry key="Export All" value="false"/>
+  <con:entry key="Project Password" value=""/>
+  <con:entry key="Report Format(s)" value=""/>
+  <con:entry key="TestCase" value="&lt;all>"/>
+  <con:entry key="Print Report" value="false"/>
+  <con:entry key="Username" value=""/>
+  <con:entry key="Root Folder" value=""/>
+  <con:entry key="Select Report Type" value=""/>
+  <con:entry key="Save After" value="false"/>
+  <con:entry key="Add Settings" value="false"/>
+  <con:entry key="Endpoint" value=""/>
+</xml-fragment>]]></con:setting></con:settings><con:interface xsi:type="con:WsdlInterface" id="e377d28f-956a-486c-9573-530fb5d52c6e" wsaVersion="NONE" name="GetEmployeesToEvaluateSoapBinding" type="wsdl" bindingName="{http://services.external/}GetEmployeesToEvaluateSoapBinding" soapVersion="1_1" anonymous="optional" definition="http://192.168.0.30/ocs/GetEmployeesToEvaluate?wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="http://192.168.0.30/ocs/GetEmployeesToEvaluate?wsdl"><con:part><con:url>http://192.168.0.30/ocs/GetEmployeesToEvaluate?wsdl</con:url><con:content><![CDATA[<wsdl:definitions name="GetEmployeesToEvaluate" targetNamespace="http://services.external/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://services.external/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http">
   <wsdl:types>
     <xs:schema elementFormDefault="unqualified" targetNamespace="http://services.external/" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
       <xs:element name="get" type="tns:get"/>
@@ -81,13 +112,29 @@
    <soapenv:Header/>
    <soapenv:Body>
       <ser:get>
+      </ser:get>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="61b97534-6fa5-4a8c-b81d-7dc5248d4b6f" name="SOAP Response"/><con:assertion type="Not SOAP Fault Assertion" id="b9d1ea83-461f-4874-a733-ffecd62ddd50" name="SOAP Fault"/><con:assertion type="Simple Contains" id="f6632565-2d9d-4ff4-80a6-4d942b679f45" name="Contains"><con:configuration><token>ns1:UnauthorizedException</token><ignoreCase>true</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:assertion type="Simple Contains" id="79f05e8b-fc9e-42df-b8eb-14c213aa06b0"><con:configuration/></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://services.external/GetEmployeesToEvaluate/get"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="17d46f6b-53ba-4933-97d6-091bbf0e7aa8" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="Unauthorized request gets error" searchProperties="true"><con:settings/><con:testStep type="request" id="f96a7a81-dad7-4307-bbb6-49f937648115" name="SOAP - GetEmployeesToEvaluate"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>GetEmployeesToEvaluateSoapBinding</con:interface><con:operation>get</con:operation><con:request name="SOAP - GetEmployeesToEvaluate" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="c4327162-fc6e-4504-9c60-755aee96c101"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://192.168.0.30:8230/ocs/GetEmployeesToEvaluate</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://services.external/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <ser:get>
          <!--Optional:-->
          <userName>hello</userName>
          <!--Optional:-->
          <password>sdfghjk</password>
       </ser:get>
    </soapenv:Body>
-</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="61b97534-6fa5-4a8c-b81d-7dc5248d4b6f" name="SOAP Response"/><con:assertion type="Not SOAP Fault Assertion" id="b9d1ea83-461f-4874-a733-ffecd62ddd50" name="SOAP Fault"/><con:assertion type="Simple Contains" id="f6632565-2d9d-4ff4-80a6-4d942b679f45" name="Contains"><con:configuration><token>ns1:UnauthorizedException</token><ignoreCase>true</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:assertion type="Simple Contains"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://services.external/GetEmployeesToEvaluate/get"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="d7caaffe-cf40-463c-82af-e615f35ac30f" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="Authenticated request gets results" searchProperties="true"><con:settings/><con:testStep type="request" id="6f62a0cd-45e9-4dab-ab2d-ae1b15a58efd" name="SOAP - GetEmployeesToEvaluate"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>GetEmployeesToEvaluateSoapBinding</con:interface><con:operation>get</con:operation><con:request name="SOAP - GetEmployeesToEvaluate" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="5b96442e-d5e1-4467-a27d-bfe025797681"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://192.168.0.30:8230/ocs/GetEmployeesToEvaluate</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://services.external/">
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="61b97534-6fa5-4a8c-b81d-7dc5248d4b6f" name="SOAP Response"/><con:assertion type="Not SOAP Fault Assertion" id="b9d1ea83-461f-4874-a733-ffecd62ddd50" name="SOAP Fault"/><con:assertion type="Simple Contains" id="f6632565-2d9d-4ff4-80a6-4d942b679f45" name="Contains"><con:configuration><token>ns1:UnauthorizedException</token><ignoreCase>true</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:assertion type="Simple Contains" id="79f05e8b-fc9e-42df-b8eb-14c213aa06b0"><con:configuration/></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://services.external/GetEmployeesToEvaluate/get"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="0a528ed3-60f4-4ddb-9a78-52804adfc47d" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="User without WEB_SERVICE role is not authorized" searchProperties="true"><con:settings/><con:testStep type="request" id="b1108206-cf6a-4908-bbae-dc6dd828e43b" name="SOAP - GetEmployeesToEvaluate"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>GetEmployeesToEvaluateSoapBinding</con:interface><con:operation>get</con:operation><con:request name="SOAP - GetEmployeesToEvaluate" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="c4327162-fc6e-4504-9c60-755aee96c101"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://192.168.0.30:8230/ocs/GetEmployeesToEvaluate</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://services.external/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <ser:get>
+         <!--Optional:-->
+         <userName>ah@ah.com</userName>
+         <!--Optional:-->
+         <password>ah@ah.com</password>
+      </ser:get>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="61b97534-6fa5-4a8c-b81d-7dc5248d4b6f" name="SOAP Response"/><con:assertion type="Not SOAP Fault Assertion" id="b9d1ea83-461f-4874-a733-ffecd62ddd50" name="SOAP Fault"/><con:assertion type="Simple Contains" id="f6632565-2d9d-4ff4-80a6-4d942b679f45" name="Contains"><con:configuration><token>ns1:UnauthorizedException</token><ignoreCase>true</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:assertion type="Simple Contains" id="79f05e8b-fc9e-42df-b8eb-14c213aa06b0"><con:configuration/></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://services.external/GetEmployeesToEvaluate/get"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="d7caaffe-cf40-463c-82af-e615f35ac30f" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="Authenticated request gets results" searchProperties="true"><con:settings/><con:testStep type="request" id="6f62a0cd-45e9-4dab-ab2d-ae1b15a58efd" name="SOAP - GetEmployeesToEvaluate"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>GetEmployeesToEvaluateSoapBinding</con:interface><con:operation>get</con:operation><con:request name="SOAP - GetEmployeesToEvaluate" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="5b96442e-d5e1-4467-a27d-bfe025797681"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://192.168.0.30:8230/ocs/GetEmployeesToEvaluate</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://services.external/">
    <soapenv:Header/>
    <soapenv:Body>
       <ser:get>
