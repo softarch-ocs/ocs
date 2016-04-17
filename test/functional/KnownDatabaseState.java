@@ -14,7 +14,7 @@ public class KnownDatabaseState extends ExternalResource {
     private static final String USER_NAME = "user";
     private static final String PASSWORD = "user";
     private static final String BACKUP_FILE = 
-            "functional_tests/test_database2.sql";
+            "scripts/test_database.sql";
     
     private static String cachedBackupFile;
 
