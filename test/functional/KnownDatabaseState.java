@@ -10,9 +10,9 @@ import org.junit.rules.ExternalResource;
 
 public class KnownDatabaseState extends ExternalResource {
     private static final String CONNECTION_STRING = 
-            "jdbc:mysql://localhost:3306/ocs?allowMultiQueries=true";
-    private static final String USER_NAME = "root";
-    private static final String PASSWORD = "";
+            "jdbc:mysql://192.168.0.30:3306/ocs?allowMultiQueries=true";
+    private static final String USER_NAME = "user";
+    private static final String PASSWORD = "user";
     private static final String BACKUP_FILE = 
             "functional_tests/test_database2.sql";
     

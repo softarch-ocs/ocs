@@ -73,7 +73,7 @@ public class UserService {
         FacesContext.getCurrentInstance()
                 .getExternalContext()
                 .invalidateSession();
-        
+
         return "/index.xhtml";
     }
 
@@ -151,17 +151,17 @@ public class UserService {
             throw new OcsPersistenceException(ex);
         }
     }
-    
-    public void updateUser( User newUser ){
+
+    public void updateUser(User newUser) {
 
         Session session = sessionFactory.getCurrentSession();
 
-        try( TransactionContext ctx = new TransactionContext(session) ){
+        try (TransactionContext ctx = new TransactionContext(session)) {
 
-            session.update( newUser );
+            session.update(newUser);
             ctx.commit();
 
-        }catch ( HibernateException e ) {
+        } catch (HibernateException e) {
             throw new OcsPersistenceException(e);
         }
     }
