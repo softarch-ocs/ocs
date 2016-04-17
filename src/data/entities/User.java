@@ -9,7 +9,7 @@ import java.util.Objects;
 public class User implements Serializable {
 
     public static enum Role {
-        USER, ADMIN;
+        USER, WEB_SERVICE, ADMIN;
     }
     
     public static enum Gender {
@@ -127,6 +127,14 @@ public class User implements Serializable {
 
     public void setGender(Gender gender) {
         this.gender = gender;
+    }
+    
+    public boolean hasRole(Role role) {
+        if (role == null) {
+            throw new IllegalArgumentException("role cannot be null");
+        }
+        
+        return getRole().compareTo(role) >= 0;
     }
     
     @Override
