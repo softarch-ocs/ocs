@@ -1,0 +1,363 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project id="c388e41e-ba51-489d-94e0-af7a7f2153cb" activeEnvironment="Default" name="OCS" soapui-version="5.2.1" abortOnError="false" runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" id="e377d28f-956a-486c-9573-530fb5d52c6e" wsaVersion="NONE" name="GetEmployeesToEvaluateSoapBinding" type="wsdl" bindingName="{http://services.external/}GetEmployeesToEvaluateSoapBinding" soapVersion="1_1" anonymous="optional" definition="http://192.168.0.30/ocs/GetEmployeesToEvaluate?wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="http://192.168.0.30/ocs/GetEmployeesToEvaluate?wsdl"><con:part><con:url>http://192.168.0.30/ocs/GetEmployeesToEvaluate?wsdl</con:url><con:content><![CDATA[<wsdl:definitions name="GetEmployeesToEvaluate" targetNamespace="http://services.external/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://services.external/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http">
+  <wsdl:types>
+    <xs:schema elementFormDefault="unqualified" targetNamespace="http://services.external/" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:element name="get" type="tns:get"/>
+      <xs:element name="getResponse" type="tns:getResponse"/>
+      <xs:complexType name="get">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="userName" type="xs:string"/>
+          <xs:element minOccurs="0" name="password" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="getResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:employeesToEvaluateDto"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="employeesToEvaluateDto">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="employees" nillable="true" type="tns:employeeToEvaluateDto"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="employeeToEvaluateDto">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="document" type="xs:string"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="features" nillable="true" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="get">
+    <wsdl:part element="tns:get" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getResponse">
+    <wsdl:part element="tns:getResponse" name="parameters"></wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="GetEmployeesToEvaluate">
+    <wsdl:operation name="get">
+      <wsdl:input message="tns:get" name="get"></wsdl:input>
+      <wsdl:output message="tns:getResponse" name="getResponse"></wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="GetEmployeesToEvaluateSoapBinding" type="tns:GetEmployeesToEvaluate">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="get">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="get">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="GetEmployeesToEvaluate">
+    <wsdl:port binding="tns:GetEmployeesToEvaluateSoapBinding" name="GetEmployeesToEvaluatePort">
+      <soap:address location="http://192.168.0.30:8230/ocs/GetEmployeesToEvaluate"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://192.168.0.30:8230/ocs/GetEmployeesToEvaluate</con:endpoint></con:endpoints><con:operation id="ecbd341c-88cc-4714-b84f-4d85f8e7500f" isOneWay="false" action="" name="get" bindingOperationName="get" type="Request-Response" outputName="getResponse" inputName="get" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="a09fb039-6d9e-4ff2-b894-71a6df84d0a2" name="Unauthenticated request"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://192.168.0.30:8230/ocs/GetEmployeesToEvaluate</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://services.external/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <ser:get>
+         <!--Optional:-->
+         <userName>hello</userName>
+         <!--Optional:-->
+         <password>sdfghjk</password>
+      </ser:get>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://services.external/GetEmployeesToEvaluate/get"/><con:wsrmConfig version="1.2"/></con:call><con:call id="c9bb1b08-b482-4eae-954f-53268d7ffe83" name="Authenticated request"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://192.168.0.30:8230/ocs/GetEmployeesToEvaluate</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://services.external/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <ser:get>
+         <!--Optional:-->
+         <userName>webservice@ocs.com</userName>
+         <!--Optional:-->
+         <password>webservice@ocs.com</password>
+      </ser:get>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://services.external/GetEmployeesToEvaluate/get"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:testSuite id="3f58477b-b5be-4e76-ae6e-e569518fe55e" name="TestSuite"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase id="624456c1-2b18-4d5e-94f3-b98ffced185a" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="Unauthenticated request gets error" searchProperties="true"><con:settings/><con:testStep type="request" id="28ab7c40-5eec-4735-b3ae-29ead8138597" name="SOAP - GetEmployeesToEvaluate"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>GetEmployeesToEvaluateSoapBinding</con:interface><con:operation>get</con:operation><con:request name="SOAP - GetEmployeesToEvaluate" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="c4327162-fc6e-4504-9c60-755aee96c101"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://192.168.0.30:8230/ocs/GetEmployeesToEvaluate</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://services.external/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <ser:get>
+         <!--Optional:-->
+         <userName>hello</userName>
+         <!--Optional:-->
+         <password>sdfghjk</password>
+      </ser:get>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="61b97534-6fa5-4a8c-b81d-7dc5248d4b6f" name="SOAP Response"/><con:assertion type="Not SOAP Fault Assertion" id="b9d1ea83-461f-4874-a733-ffecd62ddd50" name="SOAP Fault"/><con:assertion type="Simple Contains" id="f6632565-2d9d-4ff4-80a6-4d942b679f45" name="Contains"><con:configuration><token>ns1:UnauthorizedException</token><ignoreCase>true</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:assertion type="Simple Contains"/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://services.external/GetEmployeesToEvaluate/get"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="d7caaffe-cf40-463c-82af-e615f35ac30f" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="Authenticated request gets results" searchProperties="true"><con:settings/><con:testStep type="request" id="6f62a0cd-45e9-4dab-ab2d-ae1b15a58efd" name="SOAP - GetEmployeesToEvaluate"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>GetEmployeesToEvaluateSoapBinding</con:interface><con:operation>get</con:operation><con:request name="SOAP - GetEmployeesToEvaluate" outgoingWss="" incomingWss="" timeout="" sslKeystore="" useWsAddressing="false" useWsReliableMessaging="false" wssPasswordType="" id="5b96442e-d5e1-4467-a27d-bfe025797681"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://192.168.0.30:8230/ocs/GetEmployeesToEvaluate</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://services.external/">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <ser:get>
+         <!--Optional:-->
+         <userName>webservice@ocs.com</userName>
+         <!--Optional:-->
+         <password>webservice@ocs.com</password>
+      </ser:get>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:assertion type="SOAP Response" id="fca9df2e-abab-41be-8322-c2a9105515fd" name="SOAP Response"/><con:assertion type="SOAP Fault Assertion" id="ab0c1af2-bd9a-4a21-9922-834a1ae710b1" name="Not SOAP Fault"/><con:assertion type="Simple Contains" id="3822b829-3766-42bc-abb2-92ffc28da6e9" name="Contains"><con:configuration><token><![CDATA[<employees>
+               <document>123465</document>
+               <features>Excel</features>
+               <features>Manejo de personas</features>
+               <features>Resolucion de problemas</features>
+               <features>Trabajo en equipo</features>
+               <features>Manejo de recursos</features>
+            </employees>
+            <employees>
+               <document>123465</document>
+               <features>Excel</features>
+               <features>Manejo de personas</features>
+               <features>Resolucion de problemas</features>
+               <features>Trabajo en equipo</features>
+               <features>Manejo de recursos</features>
+            </employees>
+            <employees>
+               <document>123465</document>
+               <features>Excel</features>
+               <features>Manejo de personas</features>
+               <features>Resolucion de problemas</features>
+               <features>Trabajo en equipo</features>
+               <features>Manejo de recursos</features>
+            </employees>
+            <employees>
+               <document>123465</document>
+               <features>Excel</features>
+               <features>Manejo de personas</features>
+               <features>Resolucion de problemas</features>
+               <features>Trabajo en equipo</features>
+               <features>Manejo de recursos</features>
+            </employees>
+            <employees>
+               <document>123465</document>
+               <features>Excel</features>
+               <features>Manejo de personas</features>
+               <features>Resolucion de problemas</features>
+               <features>Trabajo en equipo</features>
+               <features>Manejo de recursos</features>
+            </employees>
+            <employees>
+               <document>123465</document>
+               <features>Excel</features>
+               <features>Manejo de personas</features>
+               <features>Resolucion de problemas</features>
+               <features>Trabajo en equipo</features>
+               <features>Manejo de recursos</features>
+            </employees>
+            <employees>
+               <document>123465</document>
+               <features>Excel</features>
+               <features>Manejo de personas</features>
+               <features>Resolucion de problemas</features>
+               <features>Trabajo en equipo</features>
+               <features>Manejo de recursos</features>
+            </employees>
+            <employees>
+               <document>123465</document>
+               <features>Excel</features>
+               <features>Manejo de personas</features>
+               <features>Resolucion de problemas</features>
+               <features>Trabajo en equipo</features>
+               <features>Manejo de recursos</features>
+            </employees>
+            <employees>
+               <document>123465</document>
+               <features>Excel</features>
+               <features>Manejo de personas</features>
+               <features>Resolucion de problemas</features>
+               <features>Trabajo en equipo</features>
+               <features>Manejo de recursos</features>
+            </employees>
+            <employees>
+               <document>123465</document>
+               <features>Excel</features>
+               <features>Manejo de personas</features>
+               <features>Resolucion de problemas</features>
+               <features>Trabajo en equipo</features>
+               <features>Manejo de recursos</features>
+            </employees>
+            <employees>
+               <document>123465</document>
+               <features>SQL</features>
+               <features>Java</features>
+               <features>C++</features>
+               <features>Selenium.</features>
+               <features>Photoshop</features>
+               <features>Trabajo en equipo</features>
+               <features>Resolucion de problemas</features>
+               <features>Manejo de recursos</features>
+               <features>Manejo de personas</features>
+               <features>Excel</features>
+            </employees>
+            <employees>
+               <document>123465</document>
+               <features>SQL</features>
+               <features>Java</features>
+               <features>C++</features>
+               <features>Selenium.</features>
+               <features>Photoshop</features>
+               <features>Trabajo en equipo</features>
+               <features>Resolucion de problemas</features>
+               <features>Manejo de recursos</features>
+               <features>Manejo de personas</features>
+               <features>Excel</features>
+            </employees>
+            <employees>
+               <document>123465</document>
+               <features>SQL</features>
+               <features>Java</features>
+               <features>C++</features>
+               <features>Selenium.</features>
+               <features>Photoshop</features>
+               <features>Trabajo en equipo</features>
+               <features>Resolucion de problemas</features>
+               <features>Manejo de recursos</features>
+               <features>Manejo de personas</features>
+               <features>Excel</features>
+            </employees>
+            <employees>
+               <document>123465</document>
+               <features>SQL</features>
+               <features>Java</features>
+               <features>C++</features>
+               <features>Selenium.</features>
+               <features>Photoshop</features>
+               <features>Trabajo en equipo</features>
+               <features>Resolucion de problemas</features>
+               <features>Manejo de recursos</features>
+               <features>Manejo de personas</features>
+               <features>Excel</features>
+            </employees>
+            <employees>
+               <document>123465</document>
+               <features>SQL</features>
+               <features>Java</features>
+               <features>C++</features>
+               <features>Selenium.</features>
+               <features>Photoshop</features>
+               <features>Trabajo en equipo</features>
+               <features>Resolucion de problemas</features>
+               <features>Manejo de recursos</features>
+               <features>Manejo de personas</features>
+               <features>Excel</features>
+            </employees>
+            <employees>
+               <document>123465</document>
+               <features>SQL</features>
+               <features>Java</features>
+               <features>C++</features>
+               <features>Selenium.</features>
+               <features>Photoshop</features>
+               <features>Trabajo en equipo</features>
+               <features>Resolucion de problemas</features>
+               <features>Manejo de recursos</features>
+               <features>Manejo de personas</features>
+               <features>Excel</features>
+            </employees>
+            <employees>
+               <document>123465</document>
+               <features>SQL</features>
+               <features>Java</features>
+               <features>C++</features>
+               <features>Selenium.</features>
+               <features>Photoshop</features>
+               <features>Trabajo en equipo</features>
+               <features>Resolucion de problemas</features>
+               <features>Manejo de recursos</features>
+               <features>Manejo de personas</features>
+               <features>Excel</features>
+            </employees>
+            <employees>
+               <document>123465</document>
+               <features>SQL</features>
+               <features>Java</features>
+               <features>C++</features>
+               <features>Selenium.</features>
+               <features>Photoshop</features>
+               <features>Trabajo en equipo</features>
+               <features>Resolucion de problemas</features>
+               <features>Manejo de recursos</features>
+               <features>Manejo de personas</features>
+               <features>Excel</features>
+            </employees>
+            <employees>
+               <document>123465</document>
+               <features>SQL</features>
+               <features>Java</features>
+               <features>C++</features>
+               <features>Selenium.</features>
+               <features>Photoshop</features>
+               <features>Trabajo en equipo</features>
+               <features>Resolucion de problemas</features>
+               <features>Manejo de recursos</features>
+               <features>Manejo de personas</features>
+               <features>Excel</features>
+            </employees>
+            <employees>
+               <document>123465</document>
+               <features>SQL</features>
+               <features>Java</features>
+               <features>C++</features>
+               <features>Selenium.</features>
+               <features>Photoshop</features>
+               <features>Trabajo en equipo</features>
+               <features>Resolucion de problemas</features>
+               <features>Manejo de recursos</features>
+               <features>Manejo de personas</features>
+               <features>Excel</features>
+            </employees>
+            <employees>
+               <document>154687</document>
+               <features>Manejo de recursos</features>
+               <features>Trabajo en equipo</features>
+               <features>Manejo de personas</features>
+               <features>Resolucion de problemas</features>
+               <features>Java</features>
+               <features>SQL</features>
+            </employees>
+            <employees>
+               <document>154687</document>
+               <features>Manejo de recursos</features>
+               <features>Trabajo en equipo</features>
+               <features>Manejo de personas</features>
+               <features>Resolucion de problemas</features>
+               <features>Java</features>
+               <features>SQL</features>
+            </employees>
+            <employees>
+               <document>154687</document>
+               <features>Manejo de recursos</features>
+               <features>Trabajo en equipo</features>
+               <features>Manejo de personas</features>
+               <features>Resolucion de problemas</features>
+               <features>Java</features>
+               <features>SQL</features>
+            </employees>
+            <employees>
+               <document>154687</document>
+               <features>Manejo de recursos</features>
+               <features>Trabajo en equipo</features>
+               <features>Manejo de personas</features>
+               <features>Resolucion de problemas</features>
+               <features>Java</features>
+               <features>SQL</features>
+            </employees>
+            <employees>
+               <document>154687</document>
+               <features>Manejo de recursos</features>
+               <features>Trabajo en equipo</features>
+               <features>Manejo de personas</features>
+               <features>Resolucion de problemas</features>
+               <features>Java</features>
+               <features>SQL</features>
+            </employees>
+            <employees>
+               <document>154687</document>
+               <features>Manejo de recursos</features>
+               <features>Trabajo en equipo</features>
+               <features>Manejo de personas</features>
+               <features>Resolucion de problemas</features>
+               <features>Java</features>
+               <features>SQL</features>
+            </employees>]]></token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://services.external/GetEmployeesToEvaluate/get"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:properties/></con:testSuite><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/><con:sensitiveInformation/></con:soapui-project>
