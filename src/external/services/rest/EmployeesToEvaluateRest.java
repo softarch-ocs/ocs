@@ -6,24 +6,17 @@ import data.entities.JobRequest;
 import data.entities.User;
 import external.dto.EmployeeToEvaluateDto;
 import external.dto.EmployeesToEvaluateDto;
-import external.services.soap.UnauthorizedException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.StringTokenizer;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
-import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
 import javax.ws.rs.Path;
-import javax.ws.rs.PUT;
 import javax.ws.rs.WebApplicationException;
-import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Request;
 import javax.ws.rs.core.Response;
-import javax.xml.ws.WebServiceException;
 import services.UserService;
 import services.jobs.JobRequestService;
 
@@ -42,7 +35,6 @@ public class EmployeesToEvaluateRest {
         this.userService = userService;
         
     }
-   
 
     public EmployeesToEvaluateRest() {
         this(new JobRequestService(), new UserService());
@@ -53,7 +45,6 @@ public class EmployeesToEvaluateRest {
      * @param userName
      * @param password
      * @return an instance of external.dto.EmployeesToEvaluateDto
-     * @throws external.services.soap.UnauthorizedException
      */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
@@ -92,15 +83,5 @@ public class EmployeesToEvaluateRest {
         
         return result;
     }
-
-    /**
-     * PUT method for updating or creating an instance of EmployeesToEvaluateRest
-     * @param content representation for the resource
-     */
-    /* @PUT
-    @Consumes(MediaType.APPLICATION_JSON)
-    public void putJson(EmployeesToEvaluateDto content) {
-    }
-    */
 }
 
