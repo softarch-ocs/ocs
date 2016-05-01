@@ -14,12 +14,14 @@
                         <thead>
                             <tr>
                                 <th>Name</th>
+                                <th>Skill Test</th>
                                 <th>Description</th>
                             </tr>
                         </thead>
                         <ui:repeat var="feature" value="#{userFeaturesController.getUserFeatures()}" varStatus="status">
                             <tr>
                                 <td>#{feature.name}</td>
+                                <td>#{feature.skillTest}</td>
                                 <td>#{feature.description}</td>
                                 <td>
                                     <h:form>

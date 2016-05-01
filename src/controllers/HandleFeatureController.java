@@ -70,11 +70,14 @@ public class HandleFeatureController extends BaseController {
     }
 
     public String save() {
-
+        JobFeature feature = bean.getFeature();
+        if( feature.getSkillTest().equals("") ) {
+            feature.setSkillTest(null);
+        }
         if (isEditing()) {
-            featureServices.updateFeature(bean.getFeature());
+            featureServices.updateFeature(feature);
         } else {
-            featureServices.createFeature(bean.getFeature());
+            featureServices.createFeature(feature);
         }
 
         return "/features/showAllFeatures.xhtml?faces-redirect=true";

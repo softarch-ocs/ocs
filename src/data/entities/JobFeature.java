@@ -5,7 +5,8 @@ import java.io.Serializable;
 public class JobFeature implements Serializable {
     private int id;
     private String name;
-    private String description;
+    private String description;    
+    private String skillTest;
 
     public int getId() {
         return id;
@@ -22,6 +23,14 @@ public class JobFeature implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
+    
+    public String getSkillTest() {
+        return skillTest;
+    }
+    
+    public void setSkillTest( String skillTest ) {
+        this.skillTest = skillTest;
+    }
 
     public String getDescription() {
         return description;
@@ -37,11 +46,12 @@ public class JobFeature implements Serializable {
         if (o == null || getClass() != o.getClass()) return false;
 
         JobFeature that = (JobFeature) o;
-
+                
         if (id != that.id) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
+        if (skillTest != null ? !skillTest.equals(that.skillTest) : that.skillTest != null) return false;
         if (description != null ? !description.equals(that.description) : that.description != null) return false;
-
+        
         return true;
     }
 
@@ -50,6 +60,7 @@ public class JobFeature implements Serializable {
         int result = id;
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);
+        result = 31 * result + (skillTest != null ? skillTest.hashCode() : 0);
         return result;
     }
 }
