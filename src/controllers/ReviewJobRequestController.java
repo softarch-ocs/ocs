@@ -2,6 +2,7 @@ package controllers;
 
 import data.entities.JobRequest;
 import data.entities.User;
+import java.util.ArrayList;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -44,6 +45,11 @@ public class ReviewJobRequestController extends BaseController {
         if (bean.getJobRequest() == null) {
             bean.setJobRequest(new JobRequest());
         }
+        //TODO init skills and physical results with WS 
+        ArrayList<String> as = new ArrayList<>();
+        as.add("c++");
+        as.add("java");
+        bean.setSkillsExamResults(as);
     }
 
     public ReviewJobRequestBean getBean() {
