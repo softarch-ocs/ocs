@@ -37,6 +37,9 @@
     <property name="description">
       <column length="140" name="description" not-null="true" sql-type="varchar(140)"/>
     </property>
+    <property name="skillTest">
+      <column length="140" name="skillTest" not-null="false" sql-type="varchar(140)"/>
+    </property>
   </class>
   <class name="data.entities.User" table="User">
     <id name="id">

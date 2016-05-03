@@ -31,7 +31,22 @@
                                         requiredMessage="Required"/>
 
                         </div>
+                        
+                        <!-- Text input-->
+                        <div class="form-group">
+                            <label for="nameInput">Skill Test</label>
 
+                                <h:inputText
+                                        id="skillInput"
+                                        name="skillTestInput"
+                                        type="text"
+                                        placeholder="skillTest"
+                                        value="#{handleFeatureController.getEntity().skillTest}"
+                                        styleClass ="form-control input-md"
+                                        />
+
+                        </div>
+                        
                         <!-- Description input-->
 
                         <div class="form-group">

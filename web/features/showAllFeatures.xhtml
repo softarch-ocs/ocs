@@ -16,6 +16,7 @@
                     <thead>
                         <tr>
                             <th>Name</th>
+                            <th>Skill Test</th>
                             <th>Description</th>
                         </tr>
                     </thead>
@@ -23,8 +24,8 @@
                         <tr>
 
                             <td><a href='editFeature.xhtml?id=${feature.id}'>#{feature.name}</a></td>
+                            <td>#{feature.skillTest}</td>
                             <td>#{feature.description}</td>
-
                         </tr>
 
                     </ui:repeat>

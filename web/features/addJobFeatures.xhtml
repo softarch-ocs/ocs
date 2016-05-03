@@ -16,6 +16,7 @@
                     <thead>
                         <tr>
                             <th>Name</th>
+                            <th>Skill Test</th>
                             <th>Description</th>
                         </tr>
                     </thead>
@@ -26,6 +27,7 @@
                         <h:form rendered="#{!jobFeaturesController.isFeatureInJob( feature )}">
                             <tr>
                                 <td>#{feature.name}</td>
+                                <td>#{feature.skillTest}</td>
                                 <td>#{feature.description}</td>
                                 <td>
                                     <h:commandLink 
