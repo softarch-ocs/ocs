@@ -8,6 +8,12 @@ import data.entities.JobRequest;
 import data.entities.JobRequest.Status;
 import data.entities.User;
 import data.entities.UsersJobs;
+import external.services.soap.clients.BpelPostulateEmployeePortType;
+import external.services.soap.clients.BpelPostulateEmployeeService;
+import external.services.soap.clients.Employee;
+import external.services.soap.clients.Gender;
+import external.services.soap.clients.PostulateEmployeeRequestDto;
+import external.services.soap.clients.PostulateEmployeeResponseDto;
 import java.util.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -30,6 +36,8 @@ import services.exceptions.OcsValidationException;
 public class JobRequestService {
 
     private SessionFactory sessionFactory;
+    private static final String BPEL_USERNAME = "cobertura98";
+    private static final String BPEL_PASSWORD = "cobertura98";
 
     public JobRequestService(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
@@ -37,6 +45,51 @@ public class JobRequestService {
 
     public JobRequestService() {
         this(HibernateUtil.getSessionFactory());
+    }
+    
+    public void postulateForExternalValidation(JobRequest jobRequest) {
+        if (jobRequest == null) {
+            throw new IllegalArgumentException("jobRequest cannot be null");
+        }
+        
+        PostulateEmployeeRequestDto request = new PostulateEmployeeRequestDto();
+        
+        request.setUserName(BPEL_USERNAME);
+        request.setPassword(BPEL_PASSWORD);
+        
+        User user = jobRequest.getUser();
+        
+        if (user == null) {
+            throw new IllegalArgumentException("jobRequest has no user");
+        }
+        
+        Employee employee = new Employee();
+        
+        employee.setDocument(user.getPersonalId());
+        employee.setEmail(user.getEmail());
+        employee.setFirstName(user.getFirstName());
+        employee.setLastName(user.getLastName());
+        employee.setGender(User.Gender.MALE.equals(user.getGender()) ? 
+                Gender.MALE : Gender.FEMALE);
+        
+        request.setEmployee(employee);
+        
+        Job job = jobRequest.getJob();
+        if (job == null) {
+            throw new IllegalArgumentException("jobRequest has no job");
+        }
+        
+        if (job.getJobFeatures() != null) {
+            for(JobFeature feature : job.getJobFeatures()) {
+                String skillTest = feature.getSkillTest();
+                
+                if (skillTest == null) continue;
+                
+                request.getFeatures().add(skillTest);
+            }
+        }
+        
+        bpelPostulateEmployeeOperation(request);
     }
 
     public void createJobRequest(JobRequest jobRequest) {
@@ -49,6 +102,8 @@ public class JobRequestService {
             System.out.println(ex);
             throw new OcsPersistenceException(ex);
         }
+        
+        postulateForExternalValidation(jobRequest);
     }
 
     public List readAllJobRequest() {
@@ -231,4 +286,9 @@ public class JobRequestService {
         }
     }
 
+    private static PostulateEmployeeResponseDto bpelPostulateEmployeeOperation(PostulateEmployeeRequestDto request) {
+        BpelPostulateEmployeeService service = new external.services.soap.clients.BpelPostulateEmployeeService();
+        BpelPostulateEmployeePortType port = service.getBpelPostulateEmployeePort();
+        return port.bpelPostulateEmployeeOperation(request);
+    }
 }

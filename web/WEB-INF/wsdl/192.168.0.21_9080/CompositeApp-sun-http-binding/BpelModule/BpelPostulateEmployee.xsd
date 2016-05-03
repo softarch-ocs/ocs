@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns:tns="http://xml.netbeans.org/schema/BpelPostulateEmployee" xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://xml.netbeans.org/schema/BpelPostulateEmployee">
+    <xsd:element name="postulate" type="tns:postulate"/>
+
+    <xsd:element name="postulateResponse" type="tns:postulateResponse"/>
+
+    <xsd:complexType name="postulate">
+    <xsd:sequence>
+    <xsd:element minOccurs="0" name="parameter" type="tns:postulateEmployeeRequestDto"/>
+    </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="postulateEmployeeRequestDto">
+    <xsd:sequence>
+    <xsd:element minOccurs="0" name="employee" type="tns:employee"/>
+    <xsd:element maxOccurs="unbounded" minOccurs="0" name="features" nillable="true" type="xsd:string"/>
+    <xsd:element minOccurs="0" name="password" type="xsd:string"/>
+    <xsd:element minOccurs="0" name="userName" type="xsd:string"/>
+    </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="employee">
+    <xsd:sequence>
+    <xsd:element minOccurs="0" name="document" type="xsd:string"/>
+    <xsd:element minOccurs="0" name="email" type="xsd:string"/>
+    <xsd:element minOccurs="0" name="firstName" type="xsd:string"/>
+    <xsd:element minOccurs="0" name="gender" type="tns:gender"/>
+    <xsd:element minOccurs="0" name="lastName" type="xsd:string"/>
+    </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="postulateResponse">
+    <xsd:sequence>
+    <xsd:element minOccurs="0" name="return" type="tns:postulateEmployeeResponseDto"/>
+    </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="postulateEmployeeResponseDto">
+    <xsd:sequence>
+    <xsd:element minOccurs="0" name="errorMessage" type="xsd:string"/>
+    <xsd:element name="success" type="xsd:boolean"/>
+    </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:simpleType name="gender">
+    <xsd:restriction base="xsd:string">
+    <xsd:enumeration value="MALE"/>
+    <xsd:enumeration value="FEMALE"/>
+    </xsd:restriction>
+    </xsd:simpleType>
+</xsd:schema>
