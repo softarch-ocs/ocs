@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns:tns="http://xml.netbeans.org/schema/BpelVerifyEmployeesStatus" xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://xml.netbeans.org/schema/BpelVerifyEmployeesStatus">
+    <xsd:element name="verifyEmployees" type="tns:verifyEmployees"/>
+
+    <xsd:element name="verifyEmployeesResponse" type="tns:verifyEmployeesResponse"/>
+
+    <xsd:complexType name="verifyEmployees">
+    <xsd:sequence>
+    <xsd:element minOccurs="0" name="parameter" type="tns:verifyEmployeesStatusRequestDto"/>
+    </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="verifyEmployeesStatusRequestDto">
+    <xsd:sequence>
+    <xsd:element maxOccurs="unbounded" minOccurs="0" name="employees" nillable="true" type="xsd:string"/>
+    </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="verifyEmployeesResponse">
+    <xsd:sequence>
+    <xsd:element minOccurs="0" name="return" type="tns:verifyEmployeesStatusResponseDto"/>
+    </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="verifyEmployeesStatusResponseDto">
+    <xsd:sequence>
+    <xsd:element maxOccurs="unbounded" minOccurs="0" name="skillResults" nillable="true" type="tns:resultDto"/>
+    <xsd:element maxOccurs="unbounded" minOccurs="0" name="physicalResults" nillable="true" type="tns:resultDto"/>
+    </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="resultDto">
+    <xsd:sequence>
+    <xsd:element minOccurs="0" name="document" type="xsd:string"/>
+    <xsd:element maxOccurs="unbounded" minOccurs="0" name="tests" nillable="true" type="tns:testResultDto"/>
+    </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:complexType name="testResultDto">
+    <xsd:sequence>
+    <xsd:element minOccurs="0" name="comment" type="xsd:string"/>
+    <xsd:element minOccurs="0" name="name" type="xsd:string"/>
+    <xsd:element minOccurs="0" name="status" type="tns:status"/>
+    </xsd:sequence>
+    </xsd:complexType>
+
+    <xsd:simpleType name="status">
+    <xsd:restriction base="xsd:string">
+    <xsd:enumeration value="PASS"/>
+    <xsd:enumeration value="FAIL"/>
+    <xsd:enumeration value="PENDING"/>
+    </xsd:restriction>
+    </xsd:simpleType>
+</xsd:schema>

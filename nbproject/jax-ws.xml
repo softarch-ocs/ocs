@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jax-ws xmlns="http://www.netbeans.org/ns/jax-ws/1">
-  <services/>
+  <services>
+    <service name="GetEmployeesToEvaluate">
+      <implementation-class>external.services.soap.GetEmployeesToEvaluate</implementation-class>
+    </service>
+  </services>
   <clients>
     <client name="BpelPostulateEmployeePort">
       <wsdl-url>http://arch-bpel:9080/BpelPostulateEmployeeService/BpelPostulateEmployeePort?wsdl</wsdl-url>
@@ -35,6 +39,42 @@
         <wsimport-option>
           <wsimport-option-name>package</wsimport-option-name>
           <wsimport-option-value>external.services.soap.clients</wsimport-option-value>
+        </wsimport-option>
+      </wsimport-options>
+    </client>
+    <client name="BpelVerifyEmployeesStatusPort">
+      <wsdl-url>http://arch-bpel:9080/BpelVerifyEmployeesStatusService/BpelVerifyEmployeesStatusPort?wsdl</wsdl-url>
+      <local-wsdl-file>arch-bpel_9080/BpelVerifyEmployeesStatusService/BpelVerifyEmployeesStatusPort.wsdl</local-wsdl-file>
+      <package-name forceReplace="true">external.services.soap.clients.verify</package-name>
+      <catalog-file>catalog.xml</catalog-file>
+      <wsimport-options>
+        <wsimport-option>
+          <wsimport-option-name>extension</wsimport-option-name>
+          <wsimport-option-value>true</wsimport-option-value>
+        </wsimport-option>
+        <wsimport-option>
+          <wsimport-option-name>verbose</wsimport-option-name>
+          <wsimport-option-value>true</wsimport-option-value>
+        </wsimport-option>
+        <wsimport-option>
+          <wsimport-option-name>fork</wsimport-option-name>
+          <wsimport-option-value>false</wsimport-option-value>
+        </wsimport-option>
+        <wsimport-option>
+          <wsimport-option-name>wsdlLocation</wsimport-option-name>
+          <wsimport-option-value>http://arch-bpel:9080/BpelVerifyEmployeesStatusService/BpelVerifyEmployeesStatusPort?wsdl</wsimport-option-value>
+        </wsimport-option>
+        <wsimport-option>
+          <wsimport-option-name>xnocompile</wsimport-option-name>
+          <wsimport-option-value>true</wsimport-option-value>
+        </wsimport-option>
+        <wsimport-option>
+          <wsimport-option-name>xendorsed</wsimport-option-name>
+          <wsimport-option-value>true</wsimport-option-value>
+        </wsimport-option>
+        <wsimport-option>
+          <wsimport-option-name>package</wsimport-option-name>
+          <wsimport-option-value>external.services.soap.clients.verify</wsimport-option-value>
         </wsimport-option>
       </wsimport-options>
     </client>

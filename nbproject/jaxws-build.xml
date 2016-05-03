@@ -10,6 +10,23 @@
                 JAX-WS WSGEN SECTION
                 ===================
             -->
+    <target name="wsgen-init" depends="init, -do-compile">
+        <mkdir dir="${build.generated.sources.dir}/jax-ws/resources/"/>
+        <mkdir dir="${build.classes.dir}"/>
+        <mkdir dir="${build.classes.dir}/META-INF"/>
+        <property name="j2ee.platform.wsgen.classpath" value="${libs.jaxws21.classpath}"/>
+        <taskdef name="wsgen" classname="com.sun.tools.ws.ant.WsGen">
+            <classpath path="${java.home}/../lib/tools.jar:${build.classes.dir}:${j2ee.platform.wsgen.classpath}:${javac.classpath}"/>
+        </taskdef>
+    </target>
+    <target name="wsgen-GetEmployeesToEvaluate" depends="wsgen-init">
+        <copy todir="${build.classes.dir}/META-INF">
+            <fileset dir="${webinf.dir}" includes="wsit-external.services.soap.GetEmployeesToEvaluate.xml"/>
+        </copy>
+        <wsgen sourcedestdir="${build.generated.sources.dir}/jax-ws" resourcedestdir="${build.generated.sources.dir}/jax-ws/resources/" destdir="${build.generated.sources.dir}/jax-ws" verbose="true" keep="true" genwsdl="true" sei="external.services.soap.GetEmployeesToEvaluate" xendorsed="true">
+            <classpath path="${java.home}/../lib/tools.jar:${build.classes.dir}:${j2ee.platform.wsgen.classpath}:${javac.classpath}"/>
+        </wsgen>
+    </target>
     <!--
                 ===================
                 JAX-WS WSIMPORT SECTION
@@ -42,5 +59,21 @@
         <delete dir="${build.generated.sources.dir}/jax-ws/external/services/soap/clients"/>
         <delete dir="${build.generated.dir}/jax-wsCache/BpelPostulateEmployeePort"/>
     </target>
-    <target name="wsimport-client-generate" depends="wsimport-client-BpelPostulateEmployeePort"/>
+    <target name="wsimport-client-BpelVerifyEmployeesStatusPort" depends="wsimport-init">
+        <mkdir dir="${build.generated.dir}/jax-wsCache/BpelVerifyEmployeesStatusPort"/>
+        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/BpelVerifyEmployeesStatusPort" destdir="${build.generated.dir}/jax-wsCache/BpelVerifyEmployeesStatusPort" wsdl="${basedir}/xml-resources/web-service-references/BpelVerifyEmployeesStatusPort/wsdl/arch-bpel_9080/BpelVerifyEmployeesStatusService/BpelVerifyEmployeesStatusPort.wsdl" catalog="catalog.xml" encoding="${source.encoding}" extension="true" verbose="true" fork="false" wsdlLocation="http://arch-bpel:9080/BpelVerifyEmployeesStatusService/BpelVerifyEmployeesStatusPort?wsdl" xnocompile="true" xendorsed="true" package="external.services.soap.clients.verify">
+            <depends file="${basedir}/xml-resources/web-service-references/BpelVerifyEmployeesStatusPort/wsdl/arch-bpel_9080/BpelVerifyEmployeesStatusService/BpelVerifyEmployeesStatusPort.wsdl"/>
+            <produces dir="${build.generated.dir}/jax-wsCache/BpelVerifyEmployeesStatusPort"/>
+        </wsimport>
+        <copy todir="${build.generated.sources.dir}/jax-ws">
+            <fileset dir="${build.generated.dir}/jax-wsCache/BpelVerifyEmployeesStatusPort">
+                <include name="**/*.java"/>
+            </fileset>
+        </copy>
+    </target>
+    <target name="wsimport-client-clean-BpelVerifyEmployeesStatusPort" depends="-init-project">
+        <delete dir="${build.generated.sources.dir}/jax-ws/external/services/soap/clients/verify"/>
+        <delete dir="${build.generated.dir}/jax-wsCache/BpelVerifyEmployeesStatusPort"/>
+    </target>
+    <target name="wsimport-client-generate" depends="wsimport-client-BpelPostulateEmployeePort, wsimport-client-BpelVerifyEmployeesStatusPort"/>
 </project>

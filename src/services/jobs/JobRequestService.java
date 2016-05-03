@@ -14,6 +14,8 @@ import external.services.soap.clients.Employee;
 import external.services.soap.clients.Gender;
 import external.services.soap.clients.PostulateEmployeeRequestDto;
 import external.services.soap.clients.PostulateEmployeeResponseDto;
+import external.services.soap.clients.verify.VerifyEmployeesStatusRequestDto;
+import external.services.soap.clients.verify.VerifyEmployeesStatusResponseDto;
 import java.util.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -31,6 +33,7 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import services.FeatureServices;
 import services.exceptions.OcsPersistenceException;
+import services.exceptions.OcsServiceException;
 import services.exceptions.OcsValidationException;
 
 public class JobRequestService {
@@ -89,7 +92,11 @@ public class JobRequestService {
             }
         }
         
-        bpelPostulateEmployeeOperation(request);
+        try {
+            bpelPostulateEmployeeOperation(request);
+        } catch (Exception ex) {
+            throw new OcsServiceException("Cannot perform postulate request", ex);
+        }
     }
 
     public void createJobRequest(JobRequest jobRequest) {
@@ -103,7 +110,30 @@ public class JobRequestService {
             throw new OcsPersistenceException(ex);
         }
         
-        postulateForExternalValidation(jobRequest);
+        try {
+            postulateForExternalValidation(jobRequest);
+        } catch(OcsServiceException ex) {
+            System.err.println("Unable to postulate for external review: " + 
+                    jobRequest.getId());
+            ex.printStackTrace();
+        }
+    }
+    
+    public VerifyEmployeesStatusResponseDto getExamsResults(JobRequest jobRequest) {
+        VerifyEmployeesStatusRequestDto request = new VerifyEmployeesStatusRequestDto();
+        
+        User user = jobRequest.getUser();
+        
+        if (user == null) {
+            throw new IllegalArgumentException("jobRequest has no user");
+        }
+        
+        request.getEmployees().add(user.getPersonalId());
+        try {
+            return bpelVerifyEmployeesStatusOperation(request);
+        } catch(Exception ex) {
+            throw new OcsServiceException("Unable to fetch external results", ex);
+        }
     }
 
     public List readAllJobRequest() {
@@ -291,4 +321,12 @@ public class JobRequestService {
         BpelPostulateEmployeePortType port = service.getBpelPostulateEmployeePort();
         return port.bpelPostulateEmployeeOperation(request);
     }
+
+    private static VerifyEmployeesStatusResponseDto bpelVerifyEmployeesStatusOperation(external.services.soap.clients.verify.VerifyEmployeesStatusRequestDto request) {
+        external.services.soap.clients.verify.BpelVerifyEmployeesStatusService service = new external.services.soap.clients.verify.BpelVerifyEmployeesStatusService();
+        external.services.soap.clients.verify.BpelVerifyEmployeesStatusPortType port = service.getBpelVerifyEmployeesStatusPort();
+        return port.bpelVerifyEmployeesStatusOperation(request);
+    }
+    
+    
 }
