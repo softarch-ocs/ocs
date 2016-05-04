@@ -212,7 +212,8 @@ public class JobRequestService {
             jobRequest = (JobRequest) session.createCriteria(JobRequest.class)
                     .add(Restrictions.eq("id", jobRequestId))
                     .setFetchMode("user", FetchMode.JOIN)
-                    .setFetchMode("job", FetchMode.JOIN).uniqueResult();
+                    .setFetchMode("job", FetchMode.JOIN)
+                    .uniqueResult();
             tx.commit();
         } catch (HibernateException e) {
             if (tx != null) {

@@ -139,6 +139,7 @@ public class JobServices {
                 throw new IllegalArgumentException("job");
             }
             features = job.getJobFeatures();
+            features.get(0);
             ctx.commit();
 
         }catch ( HibernateException e ) {

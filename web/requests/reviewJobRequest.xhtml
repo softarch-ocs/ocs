@@ -8,7 +8,7 @@
     template="/WEB-INF/layout.xhtml"
     xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <ui:define name="content">
-        #{reviewJobRequestController.setJobRequest(param['id'])}
+        #{reviewJobRequestController.initJobRequest(param['id'])}
 
         <h1>Review a job request</h1>
 
@@ -39,39 +39,38 @@
                 <h3 class="panel-title">Physical Exams</h3>
             </div>
             <div class="panel-body" >
-                <c:choose>
-                    <c:when test="#{empty reviewJobRequestController.bean.physicalExamResults}">
-                        Sorry, there aren't any results yet, please try again later.
-                    </c:when>
-                    <c:otherwise>
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Fulfills</th>
-                                </tr>
-                            </thead>
-                            <ui:repeat value="#{reviewJobRequestController.bean.physicalExamResults}" var="entry">
-                                <tr>
-                                    <td>#{entry}</td>
-                                    <td>yes</td>
-                                    <!--
-                                    <td>#{entry}</td>
-                                     <td>
-                                    <ui:fragment rendered="#{entry}">
-                                        <span class="glyphicon glyphicon-ok" style="color:green"></span>
-                                    </ui:fragment>
-                                    <ui:fragment rendered="#{!entry}" >
-                                        <span class="glyphicon glyphicon-remove" style="color:red"></span>
-                                    </ui:fragment>
-                                </td>
-                                    -->
-                                </tr>
-                            </ui:repeat>
+                <div jsf:rendered="#{empty reviewJobRequestController.bean.physicalExamResults}">
+                    Sorry, there aren't any results yet, please try again later.
+                </div>
+                <table class="table" jsf:rendered="#{not empty reviewJobRequestController.bean.physicalExamResults}">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Comments</th>
+                            <th>Fulfills</th>
 
-                        </table>
-                    </c:otherwise>
-                </c:choose>
+                        </tr>
+                    </thead>
+                    <ui:repeat value="#{reviewJobRequestController.bean.physicalExamResults}" var="entry">
+                        <tr>
+                            <td>#{entry.name}</td>
+                            <td>#{entry.comment}</td>
+                            <td>
+                                <ui:fragment rendered="#{entry.status.value() == 'PASS'}">
+                                    <span class="glyphicon glyphicon-ok" style="color:green"></span>
+                                </ui:fragment>
+                                <ui:fragment rendered="#{entry.status.value() == 'FAIL'}" >
+                                    <span class="glyphicon glyphicon-remove" style="color:red"></span>
+                                </ui:fragment>
+                                <ui:fragment rendered="#{entry.status.value() == 'PENDING'}" >
+                                    <span class="glyphicon glyphicon-time" style="color:gray"></span>
+                                </ui:fragment>
+
+                                #{entry.status.value()}
+                        </td>
+                        </tr>
+                    </ui:repeat>
+                </table>
             </div>
         </div>
 
@@ -80,40 +79,38 @@
                 <h3 class="panel-title" >Skills Exams</h3>
             </div>
             <div class="panel-body">
-              
-                <c:choose>
-                    <c:when test="#{empty reviewJobRequestController.bean.skillsExamResults}">
-                        Sorry, there aren't any results yet, please try again later.
-                    </c:when>
-                    <c:otherwise>
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Fulfills</th>
-                                </tr>
-                            </thead>
-                            <ui:repeat value="#{reviewJobRequestController.bean.skillsExamResults}" var="entry">
-                                <tr>
-                                    <td>#{entry}</td>
-                                    <td>yes</td>
-                                    <!--
-                                    <td>#{entry}</td>
-                                     <td>
-                                    <ui:fragment rendered="#{entry}">
-                                        <span class="glyphicon glyphicon-ok" style="color:green"></span>
-                                    </ui:fragment>
-                                    <ui:fragment rendered="#{!entry}" >
-                                        <span class="glyphicon glyphicon-remove" style="color:red"></span>
-                                    </ui:fragment>
-                                </td>
-                                    -->
-                                </tr>
-                            </ui:repeat>
+                <div jsf:rendered="#{empty reviewJobRequestController.bean.skillsExamResults}">
+                    Sorry, there aren't any results yet, please try again later.
+                </div>
+                <table class="table" jsf:rendered="#{not empty reviewJobRequestController.bean.skillsExamResults}">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Comments</th>
+                            <th>Fulfills</th>
 
-                        </table>
-                    </c:otherwise>
-                </c:choose>
+                        </tr>
+                    </thead>
+                    <ui:repeat value="#{reviewJobRequestController.bean.skillsExamResults}" var="entry">
+                        <tr>
+                            <td>#{entry.name}</td>
+                            <td>#{entry.comment}</td>
+                            <td>
+                                <ui:fragment rendered="#{entry.status.value() == 'PASS'}">
+                                    <span class="glyphicon glyphicon-ok" style="color:green"></span>
+                                </ui:fragment>
+                                <ui:fragment rendered="#{entry.status.value() == 'FAIL'}" >
+                                    <span class="glyphicon glyphicon-remove" style="color:red"></span>
+                                </ui:fragment>
+                                <ui:fragment rendered="#{entry.status.value() == 'PENDING'}" >
+                                    <span class="glyphicon glyphicon-time" style="color:gray"></span>
+                                </ui:fragment>
+
+                                #{entry.status.value()}
+                        </td>
+                        </tr>
+                    </ui:repeat>
+                </table>
             </div>
         </div>
 

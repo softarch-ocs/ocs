@@ -2,8 +2,11 @@
 package presentation.beans;
 
 import data.entities.JobRequest;
+import external.services.soap.clients.verify.ResultDto;
+import external.services.soap.clients.verify.TestResultDto;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
@@ -11,8 +14,8 @@ import javax.faces.bean.ViewScoped;
 @ViewScoped
 public class ReviewJobRequestBean implements Serializable{
     private JobRequest jobRequest;
-    private ArrayList<String> physicalExamResults;
-    private ArrayList<String> skillsExamResults;
+    private List<TestResultDto> physicalExamResults;
+    private List<TestResultDto> skillsExamResults;
 
     public JobRequest getJobRequest() {
         return jobRequest;
@@ -22,19 +25,19 @@ public class ReviewJobRequestBean implements Serializable{
         this.jobRequest = jobRequest;
     }
 
-    public ArrayList<String> getPhysicalExamResults() {
+    public List<TestResultDto> getPhysicalExamResults() {
         return physicalExamResults;
     }
 
-    public void setPhysicalExamResults(ArrayList<String> physicalExamResults) {
+    public void setPhysicalExamResults(List<TestResultDto> physicalExamResults) {
         this.physicalExamResults = physicalExamResults;
     }
 
-    public ArrayList<String> getSkillsExamResults() {
+    public List<TestResultDto> getSkillsExamResults() {
         return skillsExamResults;
     }
 
-    public void setSkillsExamResults(ArrayList<String> skillsExamResults) {
+    public void setSkillsExamResults(List<TestResultDto> skillsExamResults) {
         this.skillsExamResults = skillsExamResults;
     }
     
