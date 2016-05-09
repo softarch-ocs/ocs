@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:ns="http://xml.netbeans.org/schema/BpelPostulateEmployee" xmlns:plnk="http://docs.oasis-open.org/wsbpel/2.0/plnktype" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://j2ee.netbeans.org/wsdl/BpelModule/src/BpelPostulateEmployee" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="BpelPostulateEmployee" targetNamespace="http://j2ee.netbeans.org/wsdl/BpelModule/src/BpelPostulateEmployee">
+  <types>
+    <xsd:schema targetNamespace="http://j2ee.netbeans.org/wsdl/BpelModule/src/BpelPostulateEmployee">
+            <xsd:import namespace="http://xml.netbeans.org/schema/BpelPostulateEmployee" schemaLocation="http://192.168.0.21:9080/CompositeApp-sun-http-binding/BpelModule/BpelPostulateEmployee.xsd"/>
+        </xsd:schema>
+  </types>
+  <message name="BpelPostulateEmployeeOperationRequest">
+    <part name="request" type="ns:postulateEmployeeRequestDto">
+    </part>
+  </message>
+  <message name="BpelPostulateEmployeeOperationResponse">
+    <part name="response" type="ns:postulateEmployeeResponseDto">
+    </part>
+  </message>
+  <portType name="BpelPostulateEmployeePortType">
+    <operation name="BpelPostulateEmployeeOperation">
+      <input message="tns:BpelPostulateEmployeeOperationRequest" name="input1">
+    </input>
+      <output message="tns:BpelPostulateEmployeeOperationResponse" name="output1">
+    </output>
+    </operation>
+  </portType>
+  <binding name="BpelPostulateEmployeeBinding" type="tns:BpelPostulateEmployeePortType">
+    <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="BpelPostulateEmployeeOperation">
+      <soap:operation/>
+      <input name="input1">
+        <soap:body namespace="http://j2ee.netbeans.org/wsdl/BpelModule/src/BpelPostulateEmployee" use="literal"/>
+      </input>
+      <output name="output1">
+        <soap:body namespace="http://j2ee.netbeans.org/wsdl/BpelModule/src/BpelPostulateEmployee" use="literal"/>
+      </output>
+    </operation>
+  </binding>
+  <service name="BpelPostulateEmployeeService">
+    <port binding="tns:BpelPostulateEmployeeBinding" name="BpelPostulateEmployeePort">
+      <soap:address location="http://192.168.0.21:9080/BpelPostulateEmployeeService/BpelPostulateEmployeePort"/>
+    </port>
+  </service>
+    <plnk:partnerLinkType name="BpelPostulateEmployee">
+        <!-- A partner link type is automatically generated when a new port type is added. Partner link types are used by BPEL processes. 
+In a BPEL process, a partner link represents the interaction between the BPEL process and a partner service. Each partner link is associated with a partner link type.
+A partner link type characterizes the conversational relationship between two services. The partner link type can have one or two roles.-->
+        <plnk:role name="BpelPostulateEmployeePortTypeRole" portType="tns:BpelPostulateEmployeePortType"/>
+    </plnk:partnerLinkType>
+</definitions>

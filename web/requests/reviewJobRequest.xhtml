@@ -5,9 +5,10 @@
     xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
     xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
     xmlns:jsf="http://xmlns.jcp.org/jsf"
-    template="/WEB-INF/layout.xhtml">
+    template="/WEB-INF/layout.xhtml"
+    xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <ui:define name="content">
-        #{reviewJobRequestController.setJobRequest(param['id'])}
+        #{reviewJobRequestController.initJobRequest(param['id'])}
 
         <h1>Review a job request</h1>
 
@@ -30,6 +31,86 @@
             </div>
             <div class="panel-body" >
                 #{reviewJobRequestController.jobRequest.job.name}
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Physical Exams</h3>
+            </div>
+            <div class="panel-body" >
+                <div jsf:rendered="#{empty reviewJobRequestController.bean.physicalExamResults}">
+                    Sorry, there aren't any results yet, please try again later.
+                </div>
+                <table class="table" jsf:rendered="#{not empty reviewJobRequestController.bean.physicalExamResults}">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Comments</th>
+                            <th>Fulfills</th>
+
+                        </tr>
+                    </thead>
+                    <ui:repeat value="#{reviewJobRequestController.bean.physicalExamResults}" var="entry">
+                        <tr>
+                            <td>#{entry.name}</td>
+                            <td>#{entry.comment}</td>
+                            <td>
+                                <ui:fragment rendered="#{entry.status.value() == 'PASS'}">
+                                    <span class="glyphicon glyphicon-ok" style="color:green"></span>
+                                </ui:fragment>
+                                <ui:fragment rendered="#{entry.status.value() == 'FAIL'}" >
+                                    <span class="glyphicon glyphicon-remove" style="color:red"></span>
+                                </ui:fragment>
+                                <ui:fragment rendered="#{entry.status.value() == 'PENDING'}" >
+                                    <span class="glyphicon glyphicon-time" style="color:gray"></span>
+                                </ui:fragment>
+
+                                #{entry.status.value()}
+                        </td>
+                        </tr>
+                    </ui:repeat>
+                </table>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title" >Skills Exams</h3>
+            </div>
+            <div class="panel-body">
+                <div jsf:rendered="#{empty reviewJobRequestController.bean.skillsExamResults}">
+                    Sorry, there aren't any results yet, please try again later.
+                </div>
+                <table class="table" jsf:rendered="#{not empty reviewJobRequestController.bean.skillsExamResults}">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Comments</th>
+                            <th>Fulfills</th>
+
+                        </tr>
+                    </thead>
+                    <ui:repeat value="#{reviewJobRequestController.bean.skillsExamResults}" var="entry">
+                        <tr>
+                            <td>#{entry.name}</td>
+                            <td>#{entry.comment}</td>
+                            <td>
+                                <ui:fragment rendered="#{entry.status.value() == 'PASS'}">
+                                    <span class="glyphicon glyphicon-ok" style="color:green"></span>
+                                </ui:fragment>
+                                <ui:fragment rendered="#{entry.status.value() == 'FAIL'}" >
+                                    <span class="glyphicon glyphicon-remove" style="color:red"></span>
+                                </ui:fragment>
+                                <ui:fragment rendered="#{entry.status.value() == 'PENDING'}" >
+                                    <span class="glyphicon glyphicon-time" style="color:gray"></span>
+                                </ui:fragment>
+
+                                #{entry.status.value()}
+                        </td>
+                        </tr>
+                    </ui:repeat>
+                </table>
             </div>
         </div>
 

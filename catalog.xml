@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
+    <system systemId="http://arch-bpel:9080/BpelPostulateEmployeeService/BpelPostulateEmployeePort?wsdl" uri="xml-resources/web-service-references/BpelPostulateEmployeePort/wsdl/arch-bpel_9080/BpelPostulateEmployeeService/BpelPostulateEmployeePort.wsdl"/>
+    <system systemId="http://192.168.0.21:9080/CompositeApp-sun-http-binding/BpelModule/BpelPostulateEmployee.xsd" uri="xml-resources/web-service-references/BpelPostulateEmployeePort/wsdl/192.168.0.21_9080/CompositeApp-sun-http-binding/BpelModule/BpelPostulateEmployee.xsd"/>
+    <system systemId="http://arch-bpel:9080/BpelVerifyEmployeesStatusService/BpelVerifyEmployeesStatusPort?wsdl" uri="xml-resources/web-service-references/BpelVerifyEmployeesStatusPort/wsdl/arch-bpel_9080/BpelVerifyEmployeesStatusService/BpelVerifyEmployeesStatusPort.wsdl"/>
+    <system systemId="http://daniels-mbp:9080/CompositeApp-sun-http-binding/BpelModule/BpelVerifyEmployeesStatus.xsd" uri="xml-resources/web-service-references/BpelVerifyEmployeesStatusPort/wsdl/daniels-mbp_9080/CompositeApp-sun-http-binding/BpelModule/BpelVerifyEmployeesStatus.xsd"/>
+</catalog>
