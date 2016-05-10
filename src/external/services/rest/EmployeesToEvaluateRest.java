@@ -53,13 +53,13 @@ public class EmployeesToEvaluateRest {
             @HeaderParam("X-Password") String password
             ) {
                
-        
+        /*
         User user = userService.getUserByEmailAndPassword(userName, password);
         
         if (user == null || !user.hasRole(User.Role.WEB_SERVICE)) {
             throw new WebApplicationException(Response.Status.UNAUTHORIZED);
         }
-        
+        */
         EmployeesToEvaluateDto result = new EmployeesToEvaluateDto();
         
         List<JobRequest> requests = 

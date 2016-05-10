@@ -2,7 +2,6 @@ package services;
 
 import data.dao.HibernateUtil;
 import data.dao.TransactionContext;
-import data.entities.Job;
 import data.entities.User;
 import java.util.List;
 import java.util.Map;
@@ -14,17 +13,20 @@ import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import services.exceptions.OcsPersistenceException;
+import services.security.LDAPService;
 
 public class UserService {
 
     private SessionFactory sessionFactory;
+    private LDAPService ldapService;
 
-    public UserService(SessionFactory sessionFactory) {
+    public UserService(SessionFactory sessionFactory, LDAPService ldapService) {
         this.sessionFactory = sessionFactory;
+        this.ldapService = ldapService;
     }
 
     public UserService() {
-        this(HibernateUtil.getSessionFactory());
+        this(HibernateUtil.getSessionFactory(), new LDAPService());
     }
 
     public void registerNewUser(User user) {
@@ -47,9 +49,13 @@ public class UserService {
             throw new IllegalArgumentException("password");
         }
 
-        User user = getUserByEmailAndPassword(email, password);
+        User user = getUserByEmail(email);
 
         if (user == null) {
+            return false;
+        }
+
+        if (!ldapService.login(email, password)) {
             return false;
         }
 
@@ -135,13 +141,12 @@ public class UserService {
         }
     }
 
-    public User getUserByEmailAndPassword(String email, String password) {
+    public User getUserByEmail(String email) {
         Session session = sessionFactory.getCurrentSession();
 
         try (TransactionContext ctx = new TransactionContext(session)) {
             List<User> results = (List<User>) session.createCriteria(User.class)
                     .add(Restrictions.eq("email", email))
-                    .add(Restrictions.eq("password", password))
                     .list();
 
             ctx.commit();

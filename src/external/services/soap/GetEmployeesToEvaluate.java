@@ -33,13 +33,14 @@ public class GetEmployeesToEvaluate {
     @WebMethod(operationName = "get")
     public EmployeesToEvaluateDto get(@WebParam(name = "userName") String userName, 
             @WebParam(name = "password") String password) throws UnauthorizedException {
+        /*
         User user = userService.getUserByEmailAndPassword(userName, password);
         
         if (user == null || !user.hasRole(User.Role.WEB_SERVICE)) {
             throw new UnauthorizedException(
                     "You are not authorized to access this resource");
         }
-        
+        */
         EmployeesToEvaluateDto result = new EmployeesToEvaluateDto();
         
         List<JobRequest> requests = 
