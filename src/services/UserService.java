@@ -34,6 +34,7 @@ public class UserService {
 
         try (TransactionContext ctx = new TransactionContext(session)) {
             session.save(user);
+            ldapService.register(user);
             ctx.commit();
         } catch (HibernateException ex) {
             throw new OcsPersistenceException(ex);
