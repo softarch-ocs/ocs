@@ -51,9 +51,6 @@
     <property name="email">
       <column length="45" name="email" not-null="true" sql-type="varchar(45)"/>
     </property>
-    <property name="password">
-      <column length="45" name="password" not-null="true" sql-type="varchar(45)"/>
-    </property>
     <property name="phoneNumber">
       <column length="15" name="phoneNumber" not-null="true" sql-type="varchar(15)"/>
     </property>

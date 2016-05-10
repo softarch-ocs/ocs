@@ -108,6 +108,7 @@ CREATE TABLE `jobfeature` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(45) NOT NULL,
   `description` varchar(140) NOT NULL,
+  `skillTest` varchar(140),
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -118,7 +119,7 @@ CREATE TABLE `jobfeature` (
 
 LOCK TABLES `jobfeature` WRITE;
 /*!40000 ALTER TABLE `jobfeature` DISABLE KEYS */;
-INSERT INTO `jobfeature` VALUES (1,'SQL','Lenguaje para base de datos'),(2,'Java','Lenguaje de programacion.'),(3,'C++','Lenguaje de programacion.'),(4,'Selenium.','Suite de testing'),(5,'Photoshop','Software de edicion'),(6,'Excel','Hojas de calculo'),(7,'Resolucion de problemas','Experiencia y habilidad para resolver problemas.'),(8,'Manejo de personas','Experiencia y habilidad en manejo de personas'),(9,'Trabajo en equipo','Tiene experiencia en trabajar en equipo'),(10,'Manejo de recursos','Experiencia y habilidad en manejo de recursos.');
+INSERT INTO `jobfeature` VALUES (1,'SQL','Lenguaje para base de datos', NULL),(2,'Java','Lenguaje de programacion.', NULL),(3,'C++','Lenguaje de programacion.', NULL),(4,'Selenium.','Suite de testing', NULL),(5,'Photoshop','Software de edicion', NULL),(6,'Excel','Hojas de calculo', NULL),(7,'Resolucion de problemas','Experiencia y habilidad para resolver problemas.', NULL),(8,'Manejo de personas','Experiencia y habilidad en manejo de personas', NULL),(9,'Trabajo en equipo','Tiene experiencia en trabajar en equipo', NULL),(10,'Manejo de recursos','Experiencia y habilidad en manejo de recursos.', NULL);
 /*!40000 ALTER TABLE `jobfeature` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -162,7 +163,6 @@ DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `email` varchar(45) NOT NULL,
-  `password` varchar(45) NOT NULL,
   `phoneNumber` varchar(15) NOT NULL,
   `address` varchar(45) NOT NULL,
   `firstName` varchar(45) NOT NULL,
@@ -181,7 +181,17 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'ah@ah.com','ah@ah.com','7531592','carrera 565 ds','Andres','Hernandez','123465',0,1,'1994-01-31'),(2,'admin@ocs.com','admin@ocs.com','7531592','carrera 565 ds','Admin','1','123465',2,0,'1993-05-05'),(3,'carlos@ocs.com','carlos@ocs.com','1451587','calle 484  d84','Carlos','Diaz','1564877',0,1,'1985-01-02'),(4,'cl@gmail.com','cl@gmail.com','7531592','calle 484  d84','Claudia','Mendoza','123465',0,0,'1961-10-20'),(5,'juan@velez.c','juan@velez.c','7531592','calle 484  d84','Juan','Velez','154687',0,1,'1995-06-30'),(6,'mau@za.c','mau@za.c','7531592','calle 484  d84','Mauricio','Za','465487987',0,1,'1976-04-15'),(7,'hernan@o.com','hernan@o.com','7531592','calle 484  d84','Hernan','Wess','123465',0,1,'1976-04-14'),(8,'xim@xi.xi','xim@xi.xi','7531592','calle 484  d84','Ximena','Xi','154687',0,0,'1985-01-03'),(9,'pau@p.c','pau@p.c','7531592','calle 484  d84','Paula','Q','154687',0,0,'1976-04-17'),(10,'webservice@ocs.com','webservice@ocs.com','7531592','carrera 565 ds','Web Service','1','123465',1,0,'1993-05-05');
+INSERT INTO `user` VALUES 
+(1,'ah@ah.com','7531592','carrera 565 ds','Andres','Hernandez','123465',0,1,'1994-01-31'),
+(2,'admin@ocs.com','7531592','carrera 565 ds','Admin','1','123465',2,0,'1993-05-05'),
+(3,'carlos@ocs.com','1451587','calle 484  d84','Carlos','Diaz','1564877',0,1,'1985-01-02'),
+(4,'cl@gmail.com','7531592','calle 484  d84','Claudia','Mendoza','123465',0,0,'1961-10-20'),
+(5,'juan@velez.c','7531592','calle 484  d84','Juan','Velez','154687',0,1,'1995-06-30'),
+(6,'mau@za.c','7531592','calle 484  d84','Mauricio','Za','465487987',0,1,'1976-04-15'),
+(7,'hernan@o.com','7531592','calle 484  d84','Hernan','Wess','123465',0,1,'1976-04-14'),
+(8,'xim@xi.xi','7531592','calle 484  d84','Ximena','Xi','154687',0,0,'1985-01-03'),
+(9,'pau@p.c','7531592','calle 484  d84','Paula','Q','154687',0,0,'1976-04-17'),
+(10,'webservice@ocs.com','7531592','carrera 565 ds','Web Service','1','123465',1,0,'1993-05-05');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
