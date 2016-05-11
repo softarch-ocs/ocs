@@ -119,7 +119,7 @@ CREATE TABLE `jobfeature` (
 
 LOCK TABLES `jobfeature` WRITE;
 /*!40000 ALTER TABLE `jobfeature` DISABLE KEYS */;
-INSERT INTO `jobfeature` VALUES (1,'SQL','Lenguaje para base de datos', 'Desarrolador'),(2,'Java','Lenguaje de programacion.', 'Desarrolador'),(3,'C++','Lenguaje de programacion.', 'Desarrolador'),(4,'Selenium.','Suite de testing', 'Desarrolador de front-end'),(5,'Photoshop','Software de edicion', 'Desarrolador de front-end'),(6,'Excel','Hojas de calculo', NULL),(7,'Resolucion de problemas','Experiencia y habilidad para resolver problemas.', 'Arquitecto de software'),(8,'Manejo de personas','Experiencia y habilidad en manejo de personas', 'Arquitecto de software'),(9,'Trabajo en equipo','Tiene experiencia en trabajar en equipo', 'Consultor ITIL'),(10,'Manejo de recursos','Experiencia y habilidad en manejo de recursos.', 'Arquitecto de software');
+INSERT INTO `jobfeature` VALUES (1,'SQL','Lenguaje para base de datos', 'Desarrollador'),(2,'Java','Lenguaje de programacion.', 'Desarrollador'),(3,'C++','Lenguaje de programacion.', 'Desarrollador'),(4,'Selenium.','Suite de testing', NULL),(5,'Photoshop','Software de edicion', NULL),(6,'Excel','Hojas de calculo', NULL),(7,'Resolucion de problemas','Experiencia y habilidad para resolver problemas.', NULL),(8,'Manejo de personas','Experiencia y habilidad en manejo de personas', NULL),(9,'Trabajo en equipo','Tiene experiencia en trabajar en equipo', 'Consultor ITIL'),(10,'Manejo de recursos','Experiencia y habilidad en manejo de recursos.', NULL);
 /*!40000 ALTER TABLE `jobfeature` ENABLE KEYS */;
 UNLOCK TABLES;
 
