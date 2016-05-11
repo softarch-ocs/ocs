@@ -5,7 +5,7 @@
 <hibernate-configuration>
   <session-factory>
 
-    <property name="connection.url">jdbc:mysql://arch-h30:3306/OCS?createDatabaseIfNotExist=true</property>
+    <property name="connection.url">jdbc:mysql://arch-db:3306/OCS?createDatabaseIfNotExist=true</property>
     <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
     <property name="connection.username">user</property>
     <property name="connection.password">user</property>
