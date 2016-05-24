@@ -1,6 +1,6 @@
 package services.security;
 
-import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
+import java.util.Base64;
 import data.entities.User;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -86,7 +86,7 @@ public class LDAPService {
         try {
             MessageDigest md5 = MessageDigest.getInstance("MD5");
             byte[] passwordInBytes = password.getBytes();
-            return Base64.encode(md5.digest(passwordInBytes));
+            return new String(Base64.getEncoder().encode(md5.digest(passwordInBytes)));
 
         } catch (NoSuchAlgorithmException ex) {
             Logger.getLogger(LDAPService.class.getName()).log(Level.SEVERE, null, ex);
